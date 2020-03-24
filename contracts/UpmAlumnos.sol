@@ -1,12 +1,12 @@
 pragma solidity >=0.5.12 <0.6.0;
 
-contract TfmAlumnos {
+contract UpmAlumnos {
     
     address public owner;
     
     uint public numAlumnos;
-    address[] public listaAlumnos;                      // TODO: no ponerlo public y hacer funcion con modifiers?
-    mapping(address => Alumno) public mapAlumnosAddr;   // TODO: no ponerlo public y hacer funcion con modifiers?
+    address[] public listaAlumnos;
+    mapping(address => Alumno) public mapAlumnosAddr;
     
     constructor() public {
         owner = msg.sender;
@@ -22,16 +22,13 @@ contract TfmAlumnos {
         uint32 telefMovil;
         uint256 fechaNac;
         string idUpm;
-        bool existsAlum;
     }
-    
-    
 
-    function alumnosLength() public view returns(
-        uint _numAlumnos
-    ) {
-        _numAlumnos = listaAlumnos.length;
+    function actualizarOwner(address _newOwner) public soloOwner() {
+        owner = _newOwner;
     }
+    
+    
     
     function crearAlumno(
         address _addrEthAlum,
@@ -42,15 +39,14 @@ contract TfmAlumnos {
         uint32 _telefMovil,
         uint256 _fechaNac,
         string memory _idUpm
-    ) public returns(
+    ) public soloOwner() returns(
         uint _indexAlum
     ) {
-        require(!mapAlumnosAddr[_addrEthAlum].existsAlum, "crearAlumno - Alumno ya creado.");
-        // TODO: require campos
+        require(mapAlumnosAddr[_addrEthAlum].addrEthAlum == address(0), "crearAlumno - Alumno ya creado.");
         
         _indexAlum = listaAlumnos.length;
         
-        mapAlumnosAddr[_addrEthAlum] = Alumno(_addrEthAlum, _indexAlum, _nombre, _apellidos, _dni, _correoUpm, _telefMovil, _fechaNac, _idUpm, true);
+        mapAlumnosAddr[_addrEthAlum] = Alumno(_addrEthAlum, _indexAlum, _nombre, _apellidos, _dni, _correoUpm, _telefMovil, _fechaNac, _idUpm);
         
         listaAlumnos.push(_addrEthAlum);
         
@@ -69,7 +65,7 @@ contract TfmAlumnos {
         uint256 _fechaNac,
         string memory _idUpm
     ) {
-        require(mapAlumnosAddr[_addrEthAlum].existsAlum, "leerAlumnoAddr - Alumno no creado.");
+        require(mapAlumnosAddr[_addrEthAlum].addrEthAlum != address(0), "leerAlumnoAddr - Alumno no creado.");
         
         _indexAlum = mapAlumnosAddr[_addrEthAlum].indexAlum;
         _nombre = mapAlumnosAddr[_addrEthAlum].nombre;
@@ -89,9 +85,9 @@ contract TfmAlumnos {
         string memory _correoUpm,
         uint32 _telefMovil,
         uint256 _fechaNac,
-        string memory _idUpm)
-    public {
-        require(mapAlumnosAddr[_addrEthAlum].existsAlum, "actualizarAlumnoAddr - Alumno no creado.");
+        string memory _idUpm
+    ) public soloOwner() {
+        require(mapAlumnosAddr[_addrEthAlum].addrEthAlum != address(0), "actualizarAlumnoAddr - Alumno no creado.");
         
         mapAlumnosAddr[_addrEthAlum].nombre = _nombre;
         mapAlumnosAddr[_addrEthAlum].apellidos = _apellidos;
@@ -104,17 +100,21 @@ contract TfmAlumnos {
     
     function borrarAlumnoAddr(
         address _addrEthAlum
-    ) public {
-        require(mapAlumnosAddr[_addrEthAlum].existsAlum, "borrarAlumnoAddr - Alumno no creado.");
+    ) public soloOwner {
+        require(mapAlumnosAddr[_addrEthAlum].addrEthAlum != address(0), "borrarAlumnoAddr - Alumno no creado.");
         
         uint _indexAlum = mapAlumnosAddr[_addrEthAlum].indexAlum;
         
-        mapAlumnosAddr[_addrEthAlum].existsAlum = false;
         delete mapAlumnosAddr[_addrEthAlum];
-        
         delete listaAlumnos[_indexAlum];
         
         numAlumnos--;
+    }
+
+
+    modifier soloOwner() {
+        require(msg.sender == owner, "Sólo el owner puede hacer esta operación.");
+        _;
     }
     
 }

@@ -1,21 +1,26 @@
-let TfmAsignatura = artifacts.require("TfmAsignatura");
+let UpmAsignatura = artifacts.require("UpmAsignatura");
 
-contract("TfmAsignatura", accounts => {
-	let tfmAsignatura;
+contract("UpmAsignatura", accounts => {
+	let upmAsignatura;
+
+	let desplegador = accounts[0];
+	let addrEthProf = accounts[1];
+	let addrEthAlum = accounts[2];
+	let newOwner = accounts[3];
+	let newCoordinador = accounts[8];
+	let coordinador = accounts[9];
 
 	before(async() => {
-		tfmAsignatura = await TfmAsignatura.deployed();
-		console.log("TfmAsignatura =", tfmAsignatura.address);
+		upmAsignatura = await UpmAsignatura.deployed();
+		console.log("UpmAsignatura =", upmAsignatura.address);
 	});
 
 	it("El owner es quien ha desplegado el contrato.", async () => {
-		let owner = await tfmAsignatura.owner();
-		let desplegador = accounts[0];
+		let owner = await upmAsignatura.owner();
 		assert.equal(owner, desplegador, "El owner debe ser quien ha desplegado el contrato.");
 	});
 
 	it("Los valores iniciales son los correctos.", async () => {
-		let coordinador = "0x2aF1eB15b58A994b94A8196263fd866C32637747";
 		let nombreAsignatura = "Prueba 1";
 		let cursoAcademico = "2019-2020";
 		let codigoAsignatura = "COVID-19";
@@ -24,14 +29,14 @@ contract("TfmAsignatura", accounts => {
 		let cursoAno = 3;
 		let tipoAsignatura = 0;
 
-		let coordinadorAct = await tfmAsignatura.coordinador();
-		let nombreAsignaturaAct = await tfmAsignatura.nombreAsignatura();
-		let cursoAcademicoAct = await tfmAsignatura.cursoAcademico();
-		let codigoAsignaturaAct = await tfmAsignatura.codigoAsignatura();
-		let numCreditosAct = await tfmAsignatura.numCreditos();
-		let semestreAct = await tfmAsignatura.semestre();
-		let cursoAnoAct = await tfmAsignatura.cursoAno();
-		let tipoAsignaturaAct = await tfmAsignatura.tipoAsignatura();
+		let coordinadorAct = await upmAsignatura.coordinador();
+		let nombreAsignaturaAct = await upmAsignatura.nombreAsignatura();
+		let cursoAcademicoAct = await upmAsignatura.cursoAcademico();
+		let codigoAsignaturaAct = await upmAsignatura.codigoAsignatura();
+		let numCreditosAct = await upmAsignatura.numCreditos();
+		let semestreAct = await upmAsignatura.semestre();
+		let cursoAnoAct = await upmAsignatura.cursoAno();
+		let tipoAsignaturaAct = await upmAsignatura.tipoAsignatura();
 
 		assert.equal(coordinador, coordinadorAct, "El coordinador no coincide.");
 		assert.equal(nombreAsignatura, nombreAsignaturaAct, "El nombre de la asignatura no coincide.");
@@ -42,75 +47,53 @@ contract("TfmAsignatura", accounts => {
 		assert.equal(cursoAno, cursoAnoAct, "El curso no coincide.");
 		assert.equal(tipoAsignatura, tipoAsignaturaAct, "El tipo de asignatura no coincide.");
 
-		let numAlumnos = await tfmAsignatura.numAlumnos();
-		let numProfesores = await tfmAsignatura.numProfesores();
-		let numEvaluaciones = await tfmAsignatura.numEvaluaciones();
+		let numAlumnos = await upmAsignatura.numAlumnos();
+		let numProfesores = await upmAsignatura.numProfesores();
+		let numEvaluaciones = await upmAsignatura.numEvaluaciones();
 
 		assert.equal(0, numAlumnos, "No debe haber ningun alumno registrado.");
 		assert.equal(0, numProfesores, "No debe haber ningun profesor registrado.");
 		assert.equal(0, numEvaluaciones, "No debe haber ninguna evaluacion creada.");
 	});
 
-	// añadir profesor
 	it("Se crea correctamente un profesor", async() => {
-		let addrEthProf = accounts[1];
-
 		// comprobar que hay 0 profesores
-		let numProfesores = await tfmAsignatura.numProfesores();
+		let numProfesores = await upmAsignatura.numProfesores();
 		assert.equal(0, numProfesores, "Todavia no debe haber ningun profesor registrado.");
 
 		// crear profesor
-		let tx = await tfmAsignatura.anadirProfesor(addrEthProf);
+		let tx = await upmAsignatura.anadirProfesor(addrEthProf);
 		//console.log(tx);
 
 		// comprobar que hay 1 profesor
-		numProfesores = await tfmAsignatura.numProfesores();
+		numProfesores = await upmAsignatura.numProfesores();
 		assert.equal(1, numProfesores, "Debe haber un profesor registrado.");
 
 		// obtener profesor creado
-		let indexProf = await tfmAsignatura.mapProfesores(addrEthProf);
-		let profesor = await tfmAsignatura.listaProfesores(indexProf);
+		let indexProf = await upmAsignatura.mapProfesores(addrEthProf);
+		let profesor = await upmAsignatura.listaProfesores(indexProf);
 
 		// comprobar campos
 		assert.equal(addrEthProf, profesor, "La direccion del profesor debe coincidir.")
 	});
 
-	// eliminar profesor
-	it("Se elimina correctamente un profesor", async () => {
-		let addrEthProf = accounts[1];
-
-		// comprobar que hay 1 profesor
-		let numProfesores = await tfmAsignatura.numProfesores();
-		assert.equal(1, numProfesores, "Todavia debe haber un profesor registrado.");
-
-		// eliminar profesor
-		let tx = await tfmAsignatura.eliminarProfesor(addrEthProf);
-		//console.log(tx);
-
-		// comprobar que hay 0 profesores
-		numProfesores = await tfmAsignatura.numProfesores();
-		assert.equal(0, numProfesores, "No debe haber ningun profesor registrado.");
-	});
-
 	// añadir alumno
 	it("Se crea correctamente un alumno", async() => {
-		let addrEthAlum = accounts[1];
-
 		// comprobar que hay 0 alumnos
-		let numAlumnos = await tfmAsignatura.numAlumnos();
+		let numAlumnos = await upmAsignatura.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavia no debe haber ningun alumno registrado.");
 
 		// crear alumno
-		let tx = await tfmAsignatura.anadirAlumno(addrEthAlum);
+		let tx = await upmAsignatura.anadirAlumno(addrEthAlum);
 		//console.log(tx);
 
 		// comprobar que hay 1 alumno
-		numAlumnos = await tfmAsignatura.numAlumnos();
+		numAlumnos = await upmAsignatura.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe haber un alumno registrado.");
 
 		// obtener alumno creado
-		let indexAlum = await tfmAsignatura.mapAlumnos(addrEthAlum);
-		let alumno = await tfmAsignatura.listaAlumnos(indexAlum);
+		let indexAlum = await upmAsignatura.mapAlumnos(addrEthAlum);
+		let alumno = await upmAsignatura.listaAlumnos(indexAlum);
 
 		// comprobar campos
 		assert.equal(addrEthAlum, alumno, "La direccion del alumno debe coincidir.")
@@ -127,19 +110,19 @@ contract("TfmAsignatura", accounts => {
 		let tipoConvocatoria = 0; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 
 		// comprobar que hay 0 evaluaciones
-		let numEvaluaciones = await tfmAsignatura.numEvaluaciones();
+		let numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(0, numEvaluaciones, "Todavia no debe haber ninguna evaluacion creada.");
 
 		// crear evaluacion
-		let tx = await tfmAsignatura.crearEvaluacion(nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria);
+		let tx = await upmAsignatura.crearEvaluacion(nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria);
 		//console.log(tx);
 
 		// comprobar que hay 1 evaluacion
-		numEvaluaciones = await tfmAsignatura.numEvaluaciones();
+		numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(1, numEvaluaciones, "Debe haber una evaluacion creada.");
 
 		// obtener evaluacion creada
-		let evaluacion = await tfmAsignatura.listaEvaluaciones(0);
+		let evaluacion = await upmAsignatura.listaEvaluaciones(0);
 		//console.log(evaluacion);
 
 		// comprobar campos
@@ -163,11 +146,11 @@ contract("TfmAsignatura", accounts => {
 		let tipoConvocatoria = 0; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 
 		// comprobar que hay 1 evaluacion
-		let numEvaluaciones = await tfmAsignatura.numEvaluaciones();
+		let numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(1, numEvaluaciones, "Debe haber una evaluacion creada.");
 
 		// obtener evaluacion creada
-		let evaluacion = await tfmAsignatura.leerEvaluacion(0);
+		let evaluacion = await upmAsignatura.leerEvaluacion(0);
 		//console.log(evaluacion);
 
 		// comprobar campos
@@ -192,14 +175,14 @@ contract("TfmAsignatura", accounts => {
 		let newTipoConvocatoria = 1; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 
 		// comprobar que hay 1 evaluacion
-		let numEvaluaciones = await tfmAsignatura.numEvaluaciones();
+		let numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(1, numEvaluaciones, "Debe haber una evaluacion creada.");
 
 		// actualizar evaluacion
-		await tfmAsignatura.actualizarEvaluacion(index, newNombre, newFecha, newObligatoria, newNotaMinima, newPorcAportacion, newTipoConvocatoria);
+		await upmAsignatura.actualizarEvaluacion(index, newNombre, newFecha, newObligatoria, newNotaMinima, newPorcAportacion, newTipoConvocatoria);
 
 		// obtener evaluacion actualizada
-		let evaluacion = await tfmAsignatura.listaEvaluaciones(0);
+		let evaluacion = await upmAsignatura.listaEvaluaciones(0);
 		//console.log(evaluacion);
 
 		// comprobar campos
@@ -215,26 +198,25 @@ contract("TfmAsignatura", accounts => {
 	// crear nota
 	it("Se crea correctamente una nota", async() => {
 		// datos
-		let addrEthAlum = accounts[1];
 		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
 
 		// comprobar que hay 0 notas
-		let numNotas = await tfmAsignatura.numNotas();
+		let numNotas = await upmAsignatura.numNotas();
 		assert.equal(0, numNotas, "No debe haber ninguna nota creada.");
 
 		// crear nota
-		let tx = await tfmAsignatura.crearNota(addrEthAlum, tipoConvocatoria, indexEval, tipoNota, calificacion);
+		let tx = await upmAsignatura.crearNota(addrEthAlum, tipoConvocatoria, indexEval, tipoNota, calificacion);
 		//console.log(tx);
 
 		// comprobar que hay 1 nota
-		numNotas = await tfmAsignatura.numNotas();
+		numNotas = await upmAsignatura.numNotas();
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// obtener nota creada
-		let nota = await tfmAsignatura.calificaciones(addrEthAlum, tipoConvocatoria, indexEval);
+		let nota = await upmAsignatura.mapNotas(addrEthAlum, tipoConvocatoria, indexEval);
 
 		// comprobar campos
 		assert.equal(tipoNota, nota.tipoNota, "El tipo de nota debe coincidir.");
@@ -245,19 +227,17 @@ contract("TfmAsignatura", accounts => {
 	// leer nota
 	it("Se lee correctamente una nota", async () => {
 		// datos
-		let addrEthAlum = accounts[1];
 		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
 
 		// comprobar que hay 1 nota
-		let numNotas = await tfmAsignatura.numNotas();
+		let numNotas = await upmAsignatura.numNotas();
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// leer nota
-		let nota = await tfmAsignatura.leerNota(addrEthAlum, tipoConvocatoria, indexEval);
-		//console.log(nota);
+		let nota = await upmAsignatura.leerNota(addrEthAlum, tipoConvocatoria, indexEval);
 
 		// comprobar campos
 		assert.equal(tipoNota, nota._tipoNota, "El tipo de nota debe coincidir.");
@@ -269,19 +249,17 @@ contract("TfmAsignatura", accounts => {
 	/*
 	it("Se lee correctamente mi nota", async () => {
 		// datos
-		let addrEthAlum = accounts[1];
-		console.log(addrEthAlum);
 		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
 
 		// comprobar que hay 1 nota
-		let numNotas = await tfmAsignatura.numNotas();
+		let numNotas = await upmAsignatura.numNotas();
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// leer nota
-		let nota = await tfmAsignatura.leerNota(tipoConvocatoria, indexEval, {from: accounts[0]});
+		let nota = await upmAsignatura.leerNota(tipoConvocatoria, indexEval, {from: addrEthAlum});
 
 		// comprobar campos
 		assert.equal(tipoNota, nota._tipoNota, "El tipo de nota debe coincidir.");
@@ -292,22 +270,20 @@ contract("TfmAsignatura", accounts => {
 	// actualizar nota
 	it("Se actualiza correctamente una nota", async () => {
 		// datos
-		let addrEthAlum = accounts[1];
 		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let newTipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let newCalificacion = 70;
 
 		// comprobar que hay 1 nota
-		let numNotas = await tfmAsignatura.numNotas();
+		let numNotas = await upmAsignatura.numNotas();
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// actualizar nota
-		await tfmAsignatura.actualizarNota(addrEthAlum, tipoConvocatoria, indexEval, newTipoNota, newCalificacion);
+		await upmAsignatura.actualizarNota(addrEthAlum, tipoConvocatoria, indexEval, newTipoNota, newCalificacion);
 
 		// obtener nota actualizada
-		let nota = await tfmAsignatura.calificaciones(addrEthAlum, tipoConvocatoria, indexEval);
-		//console.log(nota);
+		let nota = await upmAsignatura.mapNotas(addrEthAlum, tipoConvocatoria, indexEval);
 
 		// comprobar campos
 		assert.equal(newTipoNota, nota.tipoNota, "El tipo de nota debe coincidir.");
@@ -317,37 +293,134 @@ contract("TfmAsignatura", accounts => {
 
 	// borrar nota
 	it("Se elimina correctamente una nota", async () => {
-		let addrEthAlum = accounts[1];
 		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 
 		// comprobar que hay 1 nota
-		let numNotas = await tfmAsignatura.numNotas();
+		let numNotas = await upmAsignatura.numNotas();
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// eliminar nota
-		let tx = await tfmAsignatura.borrarNota(addrEthAlum, tipoConvocatoria, indexEval);
+		let tx = await upmAsignatura.borrarNota(addrEthAlum, tipoConvocatoria, indexEval);
 		//console.log(tx);
 
 		// comprobar que hay 0 alumnos
-		numNotas = await tfmAsignatura.numNotas();
+		numNotas = await upmAsignatura.numNotas();
 		assert.equal(0, numNotas, "No debe haber ninguna nota registrada.");
+	});
+
+	it("No se permite actualizar el coordinador a un profesor", async () => {
+		
+		let errorMsg = "Sólo el owner o el coordinador pueden hacer esta operación.";
+        let error = false;
+
+		// comprobar el coordinador inicial
+		let coordInicial = await upmAsignatura.coordinador();
+		assert.equal(coordinador, coordInicial, "El coordinador inicial no coincide.");
+
+		// comprobar que hay 1 profesor
+		let numProfesores = await upmAsignatura.numProfesores();
+		assert.equal(1, numProfesores, "Debe haber un profesor.");
+
+		// intentar actualizar coordinador siendo profesor
+		try {
+            await upmAsignatura.actualizarCoordinador(newCoordinador, {from: addrEthProf});
+        } catch(err) {
+            error = err.toString().includes(errorMsg);
+        } finally {
+            assert.equal(true, error, "Alguien que no es el owner no debería poder actualizar el owner.");
+        }
+
+		// comprobar que no se ha actualizado el coordinador
+		let coordActualizado = await upmAsignatura.coordinador();
+		assert.equal(coordinador, coordActualizado, "No se debería haber actualizado el coordinador.");
+	});
+
+	it("El owner actualiza correctamente el coordinador", async () => {
+
+		// comprobar el coordinador inicial
+		let coordInicial = await upmAsignatura.coordinador();
+		assert.equal(coordinador, coordInicial, "El coordinador inicial no coincide.");
+
+		// actualizar coordinador
+		await upmAsignatura.actualizarCoordinador(newCoordinador);
+
+		// comprobar el coordinador actualizado
+		let coordActualizado = await upmAsignatura.coordinador();
+		assert.equal(newCoordinador, coordActualizado, "El coordinador actualizado no coincide.");
 	});
 
 	// eliminar alumno
 	it("Se elimina correctamente un alumno", async () => {
-		let addrEthAlum = accounts[1];
 
 		// comprobar que hay 1 alumno
-		let numAlumnos = await tfmAsignatura.numAlumnos();
+		let numAlumnos = await upmAsignatura.numAlumnos();
 		assert.equal(1, numAlumnos, "Todavia debe haber un alumno registrado.");
 
 		// eliminar alumno
-		let tx = await tfmAsignatura.eliminarAlumno(addrEthAlum);
+		let tx = await upmAsignatura.eliminarAlumno(addrEthAlum);
 		//console.log(tx);
 
 		// comprobar que hay 0 alumnos
-		numAlumnos = await tfmAsignatura.numAlumnos();
+		numAlumnos = await upmAsignatura.numAlumnos();
 		assert.equal(0, numAlumnos, "No debe haber ningun alumno registrado.");
 	});
+
+	// eliminar profesor
+	it("Se elimina correctamente un profesor", async () => {
+
+		// comprobar que hay 1 profesor
+		let numProfesores = await upmAsignatura.numProfesores();
+		assert.equal(1, numProfesores, "Todavia debe haber un profesor registrado.");
+
+		// eliminar profesor
+		let tx = await upmAsignatura.eliminarProfesor(addrEthProf);
+		//console.log(tx);
+
+		// comprobar que hay 0 profesores
+		numProfesores = await upmAsignatura.numProfesores();
+		assert.equal(0, numProfesores, "No debe haber ningun profesor registrado.");
+	});
+
+	it("No se permite actualizar el owner a quien no es owner", async () => {
+        
+        
+        let errorMsg = "Sólo el owner puede hacer esta operación.";
+        let error = false;
+
+        // comprobar el owner actual
+        let owner = await upmAsignatura.owner();
+        assert.equal(desplegador, owner, "El owner debe ser quien ha desplegado el contrato.");
+
+        // intentar actualizar el owner
+        try {
+            await upmAsignatura.actualizarOwner(newOwner, {from: newOwner});
+        } catch(err) {
+            error = err.toString().includes(errorMsg);
+        } finally {
+            assert.equal(true, error, "Alguien que no es el owner no debería poder actualizar el owner.");
+        }
+
+        // comprobar que el owner no se ha actualizado
+        let newOwnerAct = await upmAsignatura.owner();
+        assert.equal(desplegador, newOwnerAct, "El owner se ha actualizado y no tendría que haber ocurrido.");
+    });
+
+    it("El owner actualiza correctamente el owner", async () => {
+
+        // comprobar el owner actual
+        let owner = await upmAsignatura.owner();
+        assert.equal(desplegador, owner, "El owner debe ser quien ha desplegado el contrato.");
+
+        // actualizar owner
+        await upmAsignatura.actualizarOwner(newOwner);
+
+        // comprobar que el owner se ha actualizado
+        let newOwnerAct = await upmAsignatura.owner();
+        assert.equal(newOwner, newOwnerAct, "El owner no se ha actualizado correctamente.");
+    });
+
+	/*it("", async () => {
+		assert.equal(expected, actual, msg);
+	});*/
 });

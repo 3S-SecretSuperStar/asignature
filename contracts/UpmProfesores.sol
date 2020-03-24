@@ -1,12 +1,12 @@
 pragma solidity >=0.5.12 <0.6.0;
 
-contract TfmProfesores {
+contract UpmProfesores {
     
     address public owner;
     
     uint8 public numProfesores;
-    address[] public listaProfesores;                          // TODO: no ponerlo public y hacer funcion con modifiers?
-    mapping(address => Profesor) public mapProfesoresAddr;     // TODO: no ponerlo public y hacer funcion con modifiers?
+    address[] public listaProfesores;
+    mapping(address => Profesor) public mapProfesoresAddr;
     
     constructor() public {
         owner = msg.sender;
@@ -22,16 +22,13 @@ contract TfmProfesores {
         uint32 telefMovil;
         uint256 fechaNac;
         string idUpm;
-        bool existsProf;
     }
-    
-    
 
-    function profesoresLength() public view returns(
-        uint _numProfesores
-    ) {
-        _numProfesores = listaProfesores.length;
+    function actualizarOwner(address _newOwner) public soloOwner() {
+        owner = _newOwner;
     }
+    
+    
     
     function crearProfesor(
         address _addrEthProf,
@@ -42,16 +39,14 @@ contract TfmProfesores {
         uint32 _telefMovil,
         uint256 _fechaNac,
         string memory _idUpm
-    ) public returns(
+    ) public soloOwner() returns(
         uint8 _indexProf
     ) {
-        require(!mapProfesoresAddr[_addrEthProf].existsProf, "crearProfesor - Ya existe un profesor con esta direccion.");
-        // TODO: require campos
+        require(mapProfesoresAddr[_addrEthProf].addrEthProf == address(0), "crearProfesor - Profesor ya creado.");
         
         _indexProf = uint8(listaProfesores.length);
         
-        mapProfesoresAddr[_addrEthProf] = Profesor(_addrEthProf, _indexProf, _nombre, _apellidos, _dni, _correoUpm, _telefMovil, _fechaNac, _idUpm, true);
-        
+        mapProfesoresAddr[_addrEthProf] = Profesor(_addrEthProf, _indexProf, _nombre, _apellidos, _dni, _correoUpm, _telefMovil, _fechaNac, _idUpm);
         listaProfesores.push(_addrEthProf);
         
         numProfesores++;
@@ -69,7 +64,7 @@ contract TfmProfesores {
         uint256 _fechaNac, 
         string memory _idUpm
     ) {
-        require(mapProfesoresAddr[_addrEthProf].existsProf, "leerProfesorAddr - Profesor no creado.");
+        require(mapProfesoresAddr[_addrEthProf].addrEthProf != address(0), "leerProfesorAddr - Profesor no creado.");
         
         _indexProf = mapProfesoresAddr[_addrEthProf].indexProf;
         _nombre = mapProfesoresAddr[_addrEthProf].nombre;
@@ -90,8 +85,8 @@ contract TfmProfesores {
         uint32 _telefMovil,
         uint256 _fechaNac,
         string memory _idUpm
-    ) public {
-        require(mapProfesoresAddr[_addrEthProf].existsProf, "actualizarProfesorAddr - Profesor no creado.");
+    ) public soloOwner() {
+        require(mapProfesoresAddr[_addrEthProf].addrEthProf != address(0), "actualizarProfesorAddr - Profesor no creado.");
         
         mapProfesoresAddr[_addrEthProf].nombre = _nombre;
         mapProfesoresAddr[_addrEthProf].apellidos = _apellidos;
@@ -104,17 +99,22 @@ contract TfmProfesores {
     
     function borrarProfesorAddr(
         address _addrEthProf
-    ) public {
-        require(mapProfesoresAddr[_addrEthProf].existsProf, "borrarProfesorAddr - Profesor no creado.");
+    ) public soloOwner() {
+        require(mapProfesoresAddr[_addrEthProf].addrEthProf != address(0), "borrarProfesorAddr - Profesor no creado.");
         
         uint8 _indexProf = mapProfesoresAddr[_addrEthProf].indexProf;
 
-        mapProfesoresAddr[_addrEthProf].existsProf = false;
         delete mapProfesoresAddr[_addrEthProf];
-        
         delete listaProfesores[_indexProf];
         
         numProfesores--;
+    }
+
+
+
+    modifier soloOwner() {
+        require(msg.sender == owner, "Sólo el owner puede hacer esta operación.");
+        _;
     }
     
 }
