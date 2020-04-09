@@ -2,6 +2,10 @@ body {
   margin: 10;
 }
 
+input {
+  display: block;
+}
+
 table {
   border-collapse: collapse;
 }

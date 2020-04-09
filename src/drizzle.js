@@ -1,14 +1,14 @@
 // Importar los artefactos de los contratos
-import TfmAlumnos from './contracts/TfmAlumnos.json';
-import TfmAsignatura from './contracts/TfmAsignatura.json';
-import TfmCatalogo from './contracts/TfmCatalogo.json';
-import TfmProfesores from './contracts/TfmProfesores.json';
+import UpmAlumnos from './contracts/UpmAlumnos.json';
+import UpmAsignatura from './contracts/UpmAsignatura.json';
+import UpmCatalogo from './contracts/UpmCatalogo.json';
+import UpmProfesores from './contracts/UpmProfesores.json';
 
 require('dotenv').config();
 
 // Opciones de Drizzle:
 const options = {
-	contracts: [TfmAlumnos, TfmAsignatura, TfmCatalogo, TfmProfesores],
+	contracts: [UpmAlumnos, UpmAsignatura, UpmCatalogo, UpmProfesores],
     web3: {
     	fallback: {
     		type: "ws",

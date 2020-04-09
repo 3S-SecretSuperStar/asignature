@@ -27,6 +27,14 @@ contract UpmAlumnos {
     function actualizarOwner(address _newOwner) public soloOwner() {
         owner = _newOwner;
     }
+
+    function miDireccion() public view returns(address _miDireccion) {
+        _miDireccion = msg.sender;
+    }
+
+    function alumnosLength() public view returns(uint _alumnosLength) {
+        _alumnosLength = listaAlumnos.length;
+    }
     
     
     

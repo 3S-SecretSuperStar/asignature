@@ -27,6 +27,10 @@ contract UpmProfesores {
     function actualizarOwner(address _newOwner) public soloOwner() {
         owner = _newOwner;
     }
+
+    function miDireccion() public view returns(address _miDireccion) {
+        _miDireccion = msg.sender;
+    }
     
     
     

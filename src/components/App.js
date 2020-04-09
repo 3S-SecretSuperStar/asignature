@@ -9,17 +9,13 @@ import {
 } from "react-router-dom";
 
 import Header from './Header';
-import Evaluaciones from "./Evaluaciones";
-import Alumnos from "./Alumnos";
-import Calificaciones from "./Calificaciones";
+import GestionAlumnos from './GestionAlumnos';
 
 const Navegacion = () => (
     <nav>
         <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/evaluaciones/">Evaluaciones</Link></li>
-            <li><Link to="/alumnos/">Alumnos</Link></li>
-            <li><Link to="/calificaciones/">Calificaciones</Link></li>
+            <li><Link to="/gestion-de-alumnos">Gestión de alumnos</Link></li>
         </ul>
     </nav>
 );
@@ -31,32 +27,22 @@ export default () => (
 
             if (!initialized) {
                 return (
-                    <main><h1><span role="img">⚙</span>️ Cargando dapp...</h1></main>
+                    <main><h1><span role="img">⚙</span>️ Cargando dApp...</h1></main>
                 );
             }
 
             return (
                 <Router>
-                    <Navegacion/>
+                    <Navegacion />
 
                     <Header drizzle={drizzle}
-                            drizzleState={drizzleState}/>
+                            drizzleState={drizzleState} />
 
-                    <Route path="/" exact>
-                        <p>Bienvenido a la práctica de BCDA. </p>
+                    <Route path="/gestion-de-alumnos">
+                        <GestionAlumnos drizzle={drizzle}
+                                        drizzleState={drizzleState} />
                     </Route>
-                    < Route path="/evaluaciones/">
-                        <Evaluaciones drizzle={drizzle}
-                                      drizzleState={drizzleState}/>
-                    </Route>
-                    <Route path="/alumnos/">
-                        <Alumnos drizzle={drizzle}
-                                 drizzleState={drizzleState}/>
-                    </Route>
-                    <Route path="/calificaciones/">
-                        <Calificaciones drizzle={drizzle}
-                                        drizzleState={drizzleState}/>
-                    </Route>
+                    
                 </Router>
             )
         }}
