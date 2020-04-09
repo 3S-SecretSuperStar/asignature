@@ -8,9 +8,8 @@ class ListaAlumnos extends React.Component {
 
 	state = {
 		ready: false,
-		alumnosLengthKey: null,
+		ownAlumnosLengthKey: null,
 		numAlumnosKey: null,
-		alumno1Key: null,
 	};
 
 	componentDidMount() {
@@ -30,11 +29,11 @@ class ListaAlumnos extends React.Component {
 		let changed = false;
 
 		let {
-			alumnosLengthKey, numAlumnosKey, alumno1Key
+			ownAlumnosLengthKey, numAlumnosKey
 		} = JSON.parse(JSON.stringify(this.state));
 
-		if (!alumnosLengthKey) {
-			alumnosLengthKey = instance.methods.alumnosLength.cacheCall();
+		if (!ownAlumnosLengthKey) {
+			ownAlumnosLengthKey = instance.methods.alumnosLength.cacheCall();
 			changed = true;
 		}
 
@@ -43,16 +42,10 @@ class ListaAlumnos extends React.Component {
 			changed = true;
 		}
 
-		if (!alumno1Key && alumnosLengthKey) {
-			alumno1Key = instance.methods.listaAlumnos.cacheCall(1);
-			changed = true;
-		}
-
 		if (changed) {
 			this.setState({
-				alumnosLengthKey,
+				ownAlumnosLengthKey,
 				numAlumnosKey,
-				alumno1Key,
 			});
 		}
 
@@ -66,18 +59,14 @@ class ListaAlumnos extends React.Component {
             return <span>Initializing...</span>;
         }
 
-        let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
-        alumnosLength = alumnosLength ? alumnosLength.value : -1;
+        let ownAlumnosLength = instanceState.alumnosLength[this.state.ownAlumnosLengthKey];
+        ownAlumnosLength = ownAlumnosLength ? ownAlumnosLength.value : -1;
 
         let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
         numAlumnos = numAlumnos ? numAlumnos.value : -2;
 
-        let alumno1 = instanceState.listaAlumnos[this.state.alumno1Key];
-        alumno1 = alumno1 ? alumno1.value : -3;
-        console.log('alumno1:', alumno1);
-
         let tbodyListaAlumnos = [];
-        for (let i = 0; i < alumnosLength; i++) {
+        for (let i = 0; i < ownAlumnosLength; i++) {
         	tbodyListaAlumnos[i] = (
         		<ContractData	key={i}
         						drizzle={drizzle}
@@ -97,6 +86,7 @@ class ListaAlumnos extends React.Component {
 															<td>{alumno.addrEthAlum}</td>
 															<td>{alumno.nombre}</td>
 															<td>{alumno.apellidos}</td>
+															<td>{alumno.correoUpm}</td>
 														</tr>
 					        						)} />
         							
@@ -107,7 +97,7 @@ class ListaAlumnos extends React.Component {
 
 		return (
 			<>
-				<p>{alumnosLength} alumnosLength</p>
+				<p>{ownAlumnosLength} ownAlumnosLength</p>
 				<p>{numAlumnos} alumnos</p>
 
 				<table>
@@ -116,6 +106,7 @@ class ListaAlumnos extends React.Component {
 							<th>Dirección</th>
 							<th>Nombre</th>
 							<th>Apellidos</th>
+							<th>Correo</th>
 						</tr>
 					</thead>
 					<tbody>
