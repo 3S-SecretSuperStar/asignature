@@ -19,6 +19,10 @@ contract UpmCatalogo {
     function miDireccion() public view returns(address _miDireccion) {
         _miDireccion = msg.sender;
     }
+
+    function asignaturasLength() public view returns(uint _asignaturasLength) {
+        _asignaturasLength = listaAsignaturas.length;
+    }
     
 
 

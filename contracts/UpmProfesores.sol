@@ -31,6 +31,10 @@ contract UpmProfesores {
     function miDireccion() public view returns(address _miDireccion) {
         _miDireccion = msg.sender;
     }
+
+    function profesoresLength() public view returns(uint _profesoresLength) {
+        _profesoresLength = listaProfesores.length;
+    }
     
     
     

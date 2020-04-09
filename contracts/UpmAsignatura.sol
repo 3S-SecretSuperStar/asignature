@@ -89,6 +89,14 @@ contract UpmAsignatura {
     function miDireccion() public view returns(address _miDireccion) {
         _miDireccion = msg.sender;
     }
+
+    function alumnosLength() public view returns(uint _alumnosLength) {
+        _alumnosLength = listaAlumnos.length;
+    }
+
+    function profesoresLength() public view returns(uint _profesoresLength) {
+        _profesoresLength = listaProfesores.length;
+    }
     
 
     // EVALUACIONES

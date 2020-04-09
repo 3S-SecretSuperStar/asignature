@@ -37,7 +37,7 @@ class ListaAlumnos2 extends React.Component {
 			changed = true;
 		}
 
-		if (this.props.alumnosLength != -1 && !alumnosArrayKeys) {
+		if (this.props.alumnosLength !== -1 && !alumnosArrayKeys) {
 			alumnosArrayKeys = [];
 			for (let i = 0; i < this.props.alumnosLength; i++) {
 				alumnosArrayKeys[i] = instance.methods.listaAlumnos.cacheCall(i);
@@ -79,7 +79,7 @@ class ListaAlumnos2 extends React.Component {
 
         let tbodyListaAlumnos = [];
         for (let i = 0; i < alumnos.length; i++) {
-        	if (alumnos[i] != -10  && alumnos[i] != "0x0000000000000000000000000000000000000000") {
+        	if (alumnos[i] !== -10  && alumnos[i] !== "0x0000000000000000000000000000000000000000") {
         		tbodyListaAlumnos[i] = (
 	        		<ContractData	key={i}
 	        						drizzle={drizzle}
