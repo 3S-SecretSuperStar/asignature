@@ -98,7 +98,7 @@ class ListaProfesores extends React.Component {
 		return (
 			<>
 				<p>{ownProfesoresLength} ownProfesoresLength</p>
-				<p>{numProfesores} profesor</p>
+				<p>{numProfesores} profesores</p>
 
 				<table>
 					<thead>

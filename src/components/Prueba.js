@@ -17,22 +17,22 @@ const Prueba = (props) => {
 	useEffect(() => {
 		setA(5);
 		console.log('useEffect1');
-	});
+	}, []);
 
 	useEffect(() => {
 		setReady(true);
 		console.log('useEffect2');
-	});
+	}, []);
 
 	useEffect(() => {
 		setDrizzle(props.drizzle);
 		console.log('useEffect3');
-	});
+	}, [props]);
 
 	useEffect(() => {
 		setDrizzleState(props.drizzleState);
 		console.log('useEffect4');
-	});
+	}, [props]);
 
 	useEffect(() => {
 		console.log('useEffect5');
@@ -40,14 +40,16 @@ const Prueba = (props) => {
 		console.log(drizzle);
 		console.log('drizzleState');
 		console.log(drizzleState);
-	});
+	}, [props]);
 
 	// esto no vale, hay que crearlo fuera como una variable normal const x = [<></>];
 	useEffect(() => {
 		console.log('useEffect6');
-		let x = [<h3>asdf</h3>];
-		setReturnar([<h3>asdf</h3>]);
-	});
+		let x = [<p>martes</p>];
+		setReturnar([<p>martes</p>]);
+	}, []);
+
+	const mm = [<p>miercoles</p>];
 
 	/*
 	useEffect(() => {
@@ -61,6 +63,7 @@ const Prueba = (props) => {
 	return (
 		<>
 			<h2>Prueba</h2>
+			{mm}
 		</>
 	);
 }
