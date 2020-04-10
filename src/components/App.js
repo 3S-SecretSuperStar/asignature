@@ -11,13 +11,18 @@ import {
 import Header from './Header';
 import GestionAlumnos from './GestionAlumnos';
 import GestionProfesores from './GestionProfesores';
+import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
+
+import Prueba from './Prueba';
 
 const Navegacion = () => (
     <nav>
         <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/gestion-de-alumnos">Gestión de alumnos</Link></li>
-            <li><Link to="/gestion-de-profesores">Gestión de profesores</Link></li>
+            <li><Link to="/gestion-alumnos">Gestión de alumnos</Link></li>
+            <li><Link to="/gestion-profesores">Gestión de profesores</Link></li>
+            <li><Link to="/gestion-catalogo-asignaturas">Gestión del catálogo de asignaturas</Link></li>
+            <li><Link to="/prueba/2">Prueba 2</Link></li>
         </ul>
     </nav>
 );
@@ -37,17 +42,26 @@ export default () => (
                 <Router>
                     <Navegacion />
 
-                    <Header drizzle={drizzle}
-                            drizzleState={drizzleState} />
+                    <Header />
 
-                    <Route path="/gestion-de-alumnos">
+                    <Route path="/gestion-alumnos">
                         <GestionAlumnos drizzle={drizzle}
                                         drizzleState={drizzleState} />
                     </Route>
 
-                    <Route path="/gestion-de-profesores">
+                    <Route path="/gestion-profesores">
                         <GestionProfesores  drizzle={drizzle}
                                             drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route path="/gestion-catalogo-asignaturas">
+                        <GestionCatalogoAsignaturas drizzle={drizzle}
+                                                    drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route path="/prueba/:id">
+                        <Prueba drizzle={drizzle}
+                                drizzleState={drizzleState} />
                     </Route>
                     
                 </Router>
