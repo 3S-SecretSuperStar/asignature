@@ -8,9 +8,6 @@ class MainAsignatura extends React.Component {
 
 	state = {
 		ready: false,
-		miDireccionKey: null,
-		profesoresLengthKey: null,
-		ownerKey: null,
 	};
 
 	componentDidMount() {
@@ -20,39 +17,12 @@ class MainAsignatura extends React.Component {
 	componentDidUpdate() {
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmProfesores;
+		const instanceState = drizzleState.contracts.UpmAsignatura;
 		if (!instanceState || !instanceState.initialized) return;
 
-		const instance = drizzle.contracts.UpmProfesores;
+		const instance = drizzle.contracts.UpmAsignatura;
 
-		let changed = false;
-
-		let {
-			miDireccionKey, profesoresLengthKey, ownerKey
-		} = JSON.parse(JSON.stringify(this.state));
-
-		if (!miDireccionKey) {
-            miDireccionKey = instance.methods.miDireccion.cacheCall();
-            changed = true;
-        }
-
-        if (!profesoresLengthKey) {
-			profesoresLengthKey = instance.methods.profesoresLength.cacheCall();
-			changed = true;
-		}
-
-		if (!ownerKey) {
-			ownerKey = instance.methods.owner.cacheCall();
-			changed = true;
-		}
-
-		if (changed) {
-			this.setState({
-				miDireccionKey,
-				profesoresLengthKey,
-				ownerKey,
-			});
-		}
+		
 	}
 
 	render() {
@@ -61,22 +31,10 @@ class MainAsignatura extends React.Component {
 
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmProfesores;
+		const instanceState = drizzleState.contracts.UpmAsignatura;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
         }
-
-        let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
-        miDireccion = miDireccion ? miDireccion.value :"0x0";
-        console.log('*** miDireccion:', miDireccion);
-
-        let profesoresLength = instanceState.profesoresLength[this.state.profesoresLengthKey];
-        profesoresLength = profesoresLength ? profesoresLength.value : -1;
-        console.log('*** profesoresLength:', profesoresLength);
-
-        let owner = instanceState.owner[this.state.ownerKey];
-        owner = owner ? owner.value : "0x0";
-        console.log('*** owner:', owner);
 
         console.log('instanceState', instanceState);
 

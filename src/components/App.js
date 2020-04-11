@@ -13,6 +13,7 @@ import GestionAlumnos from './GestionAlumnos';
 import GestionProfesores from './GestionProfesores';
 import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 import Asignatura from './Asignatura';
+import DesplegarAsignatura from './DesplegarAsignatura';
 
 import Prueba from './Prueba';
 
@@ -26,6 +27,7 @@ const Navegacion = () => (
             <li><Link to="/asignatura/1">Asignatura 1</Link></li>
 
             <li><Link to="/prueba/8">Prueba 8</Link></li>
+            <li><Link to="/desplegar-asignatura">Desplegar asignatura</Link></li>
         </ul>
     </nav>
 );
@@ -70,6 +72,11 @@ export default () => (
                     <Route path="/asignatura/:idAsignatura">
                         <Asignatura drizzle={drizzle}
                                     drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route path="/desplegar-asignatura">
+                        <DesplegarAsignatura    drizzle={drizzle}
+                                                drizzleState={drizzleState} />
                     </Route>
                     
                 </Router>

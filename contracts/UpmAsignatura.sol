@@ -165,7 +165,7 @@ contract UpmAsignatura {
         address _addrEthProf
     ) public soloOwnerOCoordinador() {
         // comprobar que no esta creado el Profesor
-        if (listaProfesores.length != 0) {
+        if (numProfesores != 0) {
             uint indexArrayProf = mapProfesores[_addrEthProf];
             require(_addrEthProf != listaProfesores[indexArrayProf], "anadirProfesor - Profesor ya creado.");   
         }
@@ -179,12 +179,13 @@ contract UpmAsignatura {
         address _addrEthProf
     ) public soloOwnerOCoordinador() {
         // comprobar que esta creado el Profesor
-        require(listaProfesores.length != 0, "eliminarProfesor - No hay Profesores creados.");
+        require(numProfesores != 0, "eliminarProfesor - No hay Profesores creados.");
         uint indexArrayProf = mapProfesores[_addrEthProf];
         require(_addrEthProf == listaProfesores[indexArrayProf], "eliminarProfesor - Profesor no creado.");
         
         delete mapProfesores[_addrEthProf];
-        listaProfesores[indexArrayProf] = address(0);
+        //listaProfesores[indexArrayProf] = address(0);
+        delete listaProfesores[indexArrayProf];
         numProfesores--;
     }
     
@@ -196,7 +197,7 @@ contract UpmAsignatura {
         address _addrEthAlum
     ) public soloOwnerOCoordinadorOProfesor() {
         // comprobar que no esta creado el Alumno
-        if (listaAlumnos.length != 0) {
+        if (numAlumnos != 0) {
             uint indexArrayAlum = mapAlumnos[_addrEthAlum];
             require(_addrEthAlum != listaAlumnos[indexArrayAlum], "anadirAlumno - Alumno ya creado.");
         }
@@ -210,12 +211,13 @@ contract UpmAsignatura {
         address _addrEthAlum
     ) public soloOwnerOCoordinadorOProfesor() {
         // comprobar que esta creado el Alumno
-        require(listaAlumnos.length != 0, "eliminarAlumno - No hay Alumnos creados.");
+        require(numAlumnos != 0, "eliminarAlumno - No hay Alumnos creados.");
         uint indexArrayAlum = mapAlumnos[_addrEthAlum];
         require(_addrEthAlum == listaAlumnos[indexArrayAlum], "eliminarAlumno - Alumno no creado.");
         
         delete mapAlumnos[_addrEthAlum];
-        listaAlumnos[indexArrayAlum] = address(0);
+        //listaAlumnos[indexArrayAlum] = address(0);
+        delete listaAlumnos[indexArrayAlum];
         numAlumnos--;
     }
     
@@ -350,7 +352,7 @@ contract UpmAsignatura {
         bool isOwner = msg.sender == owner;
         bool isCoordinador = msg.sender == coordinador;
         uint indexArrayProf = mapProfesores[msg.sender];
-        bool isProfesor = (listaProfesores.length > 0) && (msg.sender == listaProfesores[indexArrayProf]);
+        bool isProfesor = (numProfesores > 0) && (msg.sender == listaProfesores[indexArrayProf]);
         require(isOwner || isCoordinador || isProfesor, "Sólo el owner, el coordinador o un profesor pueden hacer esta operación.");
         _;
     }
@@ -359,16 +361,16 @@ contract UpmAsignatura {
         bool isOwner = msg.sender == owner;
         bool isCoordinador = msg.sender == coordinador;
         uint indexArrayProf = mapProfesores[msg.sender];
-        bool isProfesor = (listaProfesores.length > 0) && (msg.sender == listaProfesores[indexArrayProf]);
+        bool isProfesor = (numProfesores > 0) && (msg.sender == listaProfesores[indexArrayProf]);
         uint indexArrayAlum = mapAlumnos[msg.sender];
-        bool isAlumno = (listaAlumnos.length > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
+        bool isAlumno = (numAlumnos > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
         require(isOwner || isCoordinador || isProfesor || isAlumno, "Sólo el owner, el coordinador, un profesor o un alumno pueden hacer esta operación.");
         _;
     }
 
     modifier soloAlumno() {
         uint indexArrayAlum = mapAlumnos[msg.sender];
-        bool isAlumno = (listaAlumnos.length > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
+        bool isAlumno = (numAlumnos > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
         require(isAlumno, "Sólo un alumno puede hacer esta operación.");
         _;
     }

@@ -54,7 +54,7 @@ class Asdf extends React.Component {
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-		console.log('-----', this.props);
+		//console.log('-----', this.props);
 
         const instanceState = drizzleState.contracts.UpmProfesores;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

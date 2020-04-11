@@ -29,6 +29,8 @@ class EliminarAsignatura extends React.Component {
 
 		const instance = drizzle.contracts.UpmCatalogo;
 
+
+
 	}
 
 	eliminarAsignatura = (event) => {
@@ -55,6 +57,10 @@ class EliminarAsignatura extends React.Component {
 		);
 
 		// limpiar formulario
+		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
+		document.getElementById('eliminar-asignatura-form').reset();
+
+		// eliminar contrato dinámicamente
 	}
 
 	render() {
@@ -63,13 +69,15 @@ class EliminarAsignatura extends React.Component {
         const instanceState = drizzleState.contracts.UpmCatalogo;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
+
+        //console.log('# renderEliminar #', document.querySelector('#addrEthAsignatura').value); 
 
 		return (
-			<form onSubmit={this.eliminarAsignatura}>
+			<form onSubmit={this.eliminarAsignatura}  id="eliminar-asignatura-form">
 				<label htmlFor="addrEthAsignatura">Dirección Ethereum de la asignatura</label>
-				<input type="text" id="addrEthAsignatura" name="addrEthAsignatura" />
-				
+				<input type="text" id="addrEthAsignatura" name="addrEthAsignatura" ref="addrEthAsignatura" />
+
 				<button type="submit">Eliminar asignatura</button>
 			</form>
 		);

@@ -8,7 +8,7 @@ require('dotenv').config();
 
 // Opciones de Drizzle:
 const options = {
-	contracts: [UpmAlumnos, UpmAsignatura, UpmCatalogo, UpmProfesores],
+	contracts: [UpmAlumnos, UpmCatalogo, UpmProfesores/*, UpmAsignatura*/],
     web3: {
     	fallback: {
     		type: "ws",

@@ -3,8 +3,7 @@ import React from 'react';
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaAsignaturas from './ListaAsignaturas';
-import CrearAsignatura from './CrearAsignatura';
-import EliminarAsignatura from './EliminarAsignatura';
+import AnadirAsignatura from './AnadirAsignatura';
 
 const {ContractData} = newContextComponents;
 
@@ -91,12 +90,8 @@ class GestionCatalogoAsignaturas extends React.Component {
 									drizzleState={drizzleState}
 									asignaturasLength={asignaturasLength} />
 
-				<h3>Crear asignatura</h3>
-				<CrearAsignatura	drizzle={drizzle}
-									drizzleState={drizzleState} />
-
-				<h3>Eliminar asignatura</h3>
-				<EliminarAsignatura	drizzle={drizzle}
+				<h3>Añadir asignatura</h3>
+				<AnadirAsignatura	drizzle={drizzle}
 									drizzleState={drizzleState} />
 			</>
 		);

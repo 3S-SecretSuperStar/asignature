@@ -29,7 +29,7 @@ contract UpmCatalogo {
     function anadirAsignatura(
         address _addrContractAsignatura
     ) public soloOwner() {
-        // comprobar que no esta creada
+        // comprobar que no esta ya añadida
         if (listaAsignaturas.length != 0) {
             uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura];
             require(_addrContractAsignatura != listaAsignaturas[indexArrayAsig], "anadirAsignatura - Asignatura ya creada.");
@@ -45,12 +45,13 @@ contract UpmCatalogo {
         address _addrContractAsignatura
     ) public soloOwner() {
         // comprobar que esta creada la Asignatura
-        require(listaAsignaturas.length != 0, "eliminarAsignatura - No hay Asignaturas creadas.");
+        require(numAsignaturas != 0, "eliminarAsignatura - No hay Asignaturas creadas.");
         uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura];
         require(_addrContractAsignatura == listaAsignaturas[indexArrayAsig], "eliminarAsignatura - Asignatura no creada.");
         
         delete mapAsignaturas[_addrContractAsignatura];
-        listaAsignaturas[indexArrayAsig] = address(0);
+        // listaAsignaturas[indexArrayAsig] = address(0);
+        delete listaAsignaturas[indexArrayAsig];
         
         numAsignaturas--;
     }
