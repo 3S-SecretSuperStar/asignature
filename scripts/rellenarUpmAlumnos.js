@@ -8,6 +8,11 @@ module.exports = async callback => {
 
         let upmAlumnos = await UpmAlumnos.deployed();
 
+        let numAlumnos = await upmAlumnos.numAlumnos();
+        let alumnosLength = await upmAlumnos.alumnosLength();
+        console.log('numAlumnos:', numAlumnos.toNumber());
+        console.log('alumnosLength:', alumnosLength.toNumber());
+
         // crear un alumno
         await upmAlumnos.crearAlumno(
             accounts[3],
@@ -20,8 +25,8 @@ module.exports = async callback => {
             "89owkjhsgh835"
         );
 
-        let numAlumnos = await upmAlumnos.numAlumnos();
-        let alumnosLength = await upmAlumnos.alumnosLength();
+        numAlumnos = await upmAlumnos.numAlumnos();
+        alumnosLength = await upmAlumnos.alumnosLength();
         console.log('numAlumnos:', numAlumnos.toNumber());
         console.log('alumnosLength:', alumnosLength.toNumber());
 

@@ -8,6 +8,11 @@ module.exports = async callback => {
 
         let upmProfesores = await UpmProfesores.deployed();
 
+        let numProfesores = await upmProfesores.numProfesores();
+        let profesoresLength = await upmProfesores.profesoresLength();
+        console.log('numProfesores:', numProfesores.toNumber());
+        console.log('profesoresLength:', profesoresLength.toNumber());
+
         // crear un alumno
         await upmProfesores.crearProfesor(
             accounts[1],
@@ -20,8 +25,8 @@ module.exports = async callback => {
             "hgujik3tlgk3qkg434"
         );
 
-        let numProfesores = await upmProfesores.numProfesores();
-        let profesoresLength = await upmProfesores.profesoresLength();
+        numProfesores = await upmProfesores.numProfesores();
+        profesoresLength = await upmProfesores.profesoresLength();
         console.log('numProfesores:', numProfesores.toNumber());
         console.log('profesoresLength:', profesoresLength.toNumber());
 

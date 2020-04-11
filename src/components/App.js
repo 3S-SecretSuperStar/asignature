@@ -12,6 +12,9 @@ import Header from './Header';
 import GestionAlumnos from './GestionAlumnos';
 import GestionProfesores from './GestionProfesores';
 import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
+import Asignatura from './Asignatura';
+
+import Prueba from './Prueba';
 
 const Navegacion = () => (
     <nav>
@@ -20,6 +23,9 @@ const Navegacion = () => (
             <li><Link to="/gestion-alumnos">Gestión de alumnos</Link></li>
             <li><Link to="/gestion-profesores">Gestión de profesores</Link></li>
             <li><Link to="/gestion-catalogo-asignaturas">Gestión del catálogo de asignaturas</Link></li>
+            <li><Link to="/asignatura/1">Asignatura 1</Link></li>
+
+            <li><Link to="/prueba/8">Prueba 8</Link></li>
         </ul>
     </nav>
 );
@@ -54,6 +60,16 @@ export default () => (
                     <Route path="/gestion-catalogo-asignaturas">
                         <GestionCatalogoAsignaturas drizzle={drizzle}
                                                     drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route path="/prueba/:id">
+                        <Prueba drizzle={drizzle}
+                                drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route path="/asignatura/:idAsignatura">
+                        <Asignatura drizzle={drizzle}
+                                    drizzleState={drizzleState} />
                     </Route>
                     
                 </Router>

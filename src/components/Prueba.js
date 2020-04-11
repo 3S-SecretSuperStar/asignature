@@ -2,8 +2,11 @@ import React, {useEffect, useState} from 'react';
 
 import {useParams} from 'react-router-dom';
 
+import Asdf from './Asdf';
+
 const Prueba = (props) => {
 
+	/*
 	const [ready, setReady] = useState(false);
 	const [a, setA] = useState(null);
 	const [drizzle, setDrizzle] = useState(null);
@@ -50,6 +53,7 @@ const Prueba = (props) => {
 	}, []);
 
 	const mm = [<p>miercoles</p>];
+	*/
 
 	/*
 	useEffect(() => {
@@ -63,7 +67,7 @@ const Prueba = (props) => {
 	return (
 		<>
 			<h2>Prueba</h2>
-			{mm}
+			<Asdf drizzle={props.drizzle} drizzleState={props.drizzleState} id={useParams().id} />
 		</>
 	);
 }

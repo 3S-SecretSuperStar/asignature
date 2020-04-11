@@ -6,7 +6,7 @@ contract UpmCatalogo {
     
     uint public numAsignaturas;
     address[] public listaAsignaturas;
-    mapping(address => uint) public mapAsignaturas;
+    mapping(address => uint) public mapAsignaturas; // el índice del array
     
     constructor() public {
         owner = msg.sender;
