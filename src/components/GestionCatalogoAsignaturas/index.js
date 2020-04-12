@@ -3,7 +3,7 @@ import React from 'react';
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaAsignaturas from './ListaAsignaturas';
-import AnadirAsignatura from './AnadirAsignatura';
+import DesplegarYAnadirAsignatura from './DesplegarYAnadirAsignatura';
 
 const {ContractData} = newContextComponents;
 
@@ -14,6 +14,7 @@ class GestionCatalogoAsignaturas extends React.Component {
 		miDireccionKey: null,
 		ownerKey: null,
 		asignaturasLengthKey: null,
+		numAsignaturasKey: null,
 	};
 
 	componentDidMount() {
@@ -31,21 +32,26 @@ class GestionCatalogoAsignaturas extends React.Component {
 		let changed = false;
 
 		let {
-			miDireccionKey, ownerKey, asignaturasLengthKey
+			miDireccionKey, ownerKey, asignaturasLengthKey, numAsignaturasKey
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
-            miDireccionKey = instance.methods.miDireccion.cacheCall();
-            changed = true;
-        }
+			miDireccionKey = instance.methods.miDireccion.cacheCall();
+			changed = true;
+		}
 
 		if (!ownerKey) {
 			ownerKey = instance.methods.owner.cacheCall();
 			changed = true;
 		}
 
-        if (!asignaturasLengthKey) {
+		if (!asignaturasLengthKey) {
 			asignaturasLengthKey = instance.methods.asignaturasLength.cacheCall();
+			changed = true;
+		}
+
+		if (!numAsignaturasKey) {
+			numAsignaturasKey = instance.methods.numAsignaturas.cacheCall();
 			changed = true;
 		}
 
@@ -54,6 +60,7 @@ class GestionCatalogoAsignaturas extends React.Component {
 				miDireccionKey,
 				ownerKey,
 				asignaturasLengthKey,
+				numAsignaturasKey,
 			});
 		}
 	}
@@ -62,37 +69,41 @@ class GestionCatalogoAsignaturas extends React.Component {
 		const {drizzle, drizzleState} = this.props;
 
 		const instanceState = drizzleState.contracts.UpmCatalogo;
-        if (!this.state.ready || !instanceState || !instanceState.initialized) {
-            return <span>Initializing...</span>;
-        }
+		if (!this.state.ready || !instanceState || !instanceState.initialized) {
+			return <span>Initializing...</span>;
+		}
 
-        let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
-        miDireccion = miDireccion ? miDireccion.value :"0x0";
-        console.log('*** miDireccion:', miDireccion);
+		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
+		miDireccion = miDireccion ? miDireccion.value :"0x0";
+		console.log('*** miDireccion:', miDireccion);
 
-        let owner = instanceState.owner[this.state.ownerKey];
-        owner = owner ? owner.value : "0x0";
-        console.log('*** owner:', owner);
+		let owner = instanceState.owner[this.state.ownerKey];
+		owner = owner ? owner.value : "0x0";
+		console.log('*** owner:', owner);
 
-        let asignaturasLength = instanceState.asignaturasLength[this.state.asignaturasLengthKey];
-        asignaturasLength = asignaturasLength ? asignaturasLength.value : -1;
-        console.log('*** asignaturasLength:', asignaturasLength);
+		let asignaturasLength = instanceState.asignaturasLength[this.state.asignaturasLengthKey];
+		asignaturasLength = asignaturasLength ? asignaturasLength.value : -1;
+		console.log('*** asignaturasLength:', asignaturasLength);
+
+		let numAsignaturas = instanceState.numAsignaturas[this.state.numAsignaturasKey];
+		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
+		console.log('*** numAsignaturas:', numAsignaturas);
 
 		return (
 			<>
-				<p>Work in progress</p>
-
 				<h2>Gestión del catálogo de asignaturas</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
 
-				<h3>Lista de asignaturas</h3>
 				<ListaAsignaturas	drizzle={drizzle}
 									drizzleState={drizzleState}
-									asignaturasLength={asignaturasLength} />
+									asignaturasLength={asignaturasLength}
+									numAsignaturas={numAsignaturas}
+									miDireccion={miDireccion}
+									owner={owner} />
 
-				<h3>Añadir asignatura</h3>
-				<AnadirAsignatura	drizzle={drizzle}
-									drizzleState={drizzleState} />
+				<DesplegarYAnadirAsignatura	drizzle={drizzle}
+											drizzleState={drizzleState}
+											miDireccion={miDireccion} />
 			</>
 		);
 	}

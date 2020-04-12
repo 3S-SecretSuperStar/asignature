@@ -2,14 +2,15 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
+import {crearObjetoFromFormData} from '../../utils/funciones.js';
+
 const {ContractData} = newContextComponents;
 
 class ListaAlumnos extends React.Component {
 
 	state = {
 		ready: false,
-		ownAlumnosLengthKey: null,
-		numAlumnosKey: null,
+		alumnosAddrsKeys: []
 	};
 
 	componentDidMount() {
@@ -29,76 +30,90 @@ class ListaAlumnos extends React.Component {
 		let changed = false;
 
 		let {
-			ownAlumnosLengthKey, numAlumnosKey
+			alumnosAddrsKeys
 		} = JSON.parse(JSON.stringify(this.state));
 
-		if (!ownAlumnosLengthKey) {
-			ownAlumnosLengthKey = instance.methods.alumnosLength.cacheCall();
-			changed = true;
-		}
-
-		if (!numAlumnosKey) {
-			numAlumnosKey = instance.methods.numAlumnos.cacheCall();
+		for (let i = alumnosAddrsKeys.length; i < this.props.alumnosLength; i++) {
+			alumnosAddrsKeys[i] = instance.methods.listaAlumnos.cacheCall(i);
 			changed = true;
 		}
 
 		if (changed) {
 			this.setState({
-				ownAlumnosLengthKey,
-				numAlumnosKey,
+				alumnosAddrsKeys,
 			});
 		}
 
 	}
 
+	eliminarAlumno = (event) => {
+		event.preventDefault();
+
+		// obtener valores del formulario
+		const formData = new FormData(event.target);
+		let objFormData = crearObjetoFromFormData(formData);
+		console.log(objFormData);
+		let {addrEthAlum} = objFormData;
+
+		console.log("Has pulasdo el botón para eliminar el alumno", addrEthAlum);
+
+		// coger drizzle y drizzleState
+		const {drizzle, drizzleState} = this.props;
+		const instance = drizzle.contracts.UpmAlumnos;
+
+		// eliminar alumno
+		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
+			addrEthAlum
+		);
+	}
+
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-        const instanceState = drizzleState.contracts.UpmAlumnos;
-        if (!this.state.ready || !instanceState || !instanceState.initialized) {
-            return <span>Initializing...</span>;
-        }
+		const instanceState = drizzleState.contracts.UpmAlumnos;
+		if (!this.state.ready || !instanceState || !instanceState.initialized) {
+			return <span>Initializing...</span>;
+		}
 
-        let ownAlumnosLength = instanceState.alumnosLength[this.state.ownAlumnosLengthKey];
-        ownAlumnosLength = ownAlumnosLength ? ownAlumnosLength.value : -1;
+		let tbodyListaAlumnos = [];
+		for (let i = 0; i < this.props.alumnosLength; i++) {
+			let addrEthAlum = instanceState.listaAlumnos[this.state.alumnosAddrsKeys[i]];
+			addrEthAlum = addrEthAlum ? addrEthAlum.value : "";
 
-        let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
-        numAlumnos = numAlumnos ? numAlumnos.value : -2;
-
-        let tbodyListaAlumnos = [];
-        for (let i = 0; i < ownAlumnosLength; i++) {
-        	tbodyListaAlumnos[i] = (
-        		<ContractData	key={i}
-        						drizzle={drizzle}
-        						drizzleState={drizzleState}
-        						contract={"UpmAlumnos"}
-        						method={"listaAlumnos"}
-        						methodArgs={[i]}
-        						render={addrEthAlum => (
-        							<ContractData	key={`${i}${i}`}
-					        						drizzle={drizzle}
-					        						drizzleState={drizzleState}
-					        						contract={"UpmAlumnos"}
-					        						method={"mapAlumnosAddr"}
-					        						methodArgs={[addrEthAlum]}
-					        						render={alumno => (
-					        							<tr>
-															<td>{alumno.addrEthAlum}</td>
-															<td>{alumno.nombre}</td>
-															<td>{alumno.apellidos}</td>
-															<td>{alumno.correoUpm}</td>
-														</tr>
-					        						)} />
-        							
-        						)}
-				/>
-        	);
-        }
+			if (addrEthAlum != "" && addrEthAlum != "0x0000000000000000000000000000000000000000") {
+				tbodyListaAlumnos[i] = (
+					<ContractData	key={i}
+									drizzle={drizzle}
+									drizzleState={drizzleState}
+									contract={"UpmAlumnos"}
+									method={"mapAlumnosAddr"}
+									methodArgs={[addrEthAlum]}
+									render={(alumno) => (
+										<tr>
+											<td>{alumno.addrEthAlum}</td>
+											<td>{alumno.nombre}</td>
+											<td>{alumno.apellidos}</td>
+											<td>{alumno.correoUpm}</td>
+											<td>
+												<form onSubmit={this.eliminarAlumno}>
+													<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
+													<button type="submit">Eliminar alumno</button>
+												</form>
+											</td>
+										</tr>
+									)}
+					/>
+				);
+			}
+		}
 
 		return (
 			<>
-				<p>{ownAlumnosLength} ownAlumnosLength</p>
-				<p>{numAlumnos} alumnos</p>
+				<h3>Lista de alumnos creados</h3>
+				<p>(ToDo) No se muestran los eliminados, pero cuando creo un alumno no se actualiza</p>
+
+				<p>{this.props.alumnosLength} alumnosLength</p>
+				<p>{this.props.numAlumnos} alumnos</p>
 
 				<table>
 					<thead>
@@ -107,6 +122,7 @@ class ListaAlumnos extends React.Component {
 							<th>Nombre</th>
 							<th>Apellidos</th>
 							<th>Correo</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>

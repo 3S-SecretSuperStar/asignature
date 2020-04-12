@@ -13,6 +13,8 @@ module.exports = async callback => {
         console.log('numAsignaturas:', numAsignaturas.toNumber());
         console.log('asignaturasLength:', asignaturasLength.toNumber());
 
+        // desplegar una asignatura
+
         // añadir la UpmAsignatura ya creada
         await upmCatalogo.anadirAsignatura("0x5287103b2B410180A712C5EBaD61F89D59e420b1");
 

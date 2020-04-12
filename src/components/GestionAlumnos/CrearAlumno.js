@@ -1,15 +1,6 @@
 import React from 'react';
 
-// de cada input del form, crea un objeto:
-//    clave: atributo name
-//    valor: contenido del input
-function crearObjetoFromFormData(formData) {
-	let objFormData = {};
-	for (let key of formData.keys()) {
-		objFormData[key] = formData.get(key);
-	}
-	return objFormData;
-}
+import {crearObjetoFromFormData} from '../../utils/funciones.js';
 
 class CrearAlumno extends React.Component {
 
@@ -33,14 +24,15 @@ class CrearAlumno extends React.Component {
 
 	crearAlumno = (event) => {
 		event.preventDefault();
-		console.log('Has pulsado el botón para crear un alumno');
 
 		// obtener valores del formulario
 		const formData = new FormData(event.target);
-
 		let objFormData = crearObjetoFromFormData(formData);
-		console.log(objFormData);
 		let {addrEthAlum, nombre, apellidos, dni, correoUpm, telefMovil, fechaNac, idUpm} = objFormData;
+
+		// limpiar formulario
+		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
+		document.getElementById('crear-alumno-form').reset();
 
 		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
@@ -60,8 +52,6 @@ class CrearAlumno extends React.Component {
 			fechaNac,
 			idUpm
 		);
-
-		// limpiar formulario
 	}
 
 	render() {
@@ -73,25 +63,36 @@ class CrearAlumno extends React.Component {
         }        
 
 		return (
-			<form onSubmit={this.crearAlumno}>
-				<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
-				<input type="text" id="addrEthAlum" name="addrEthAlum" />
-				<label htmlFor="nombre">Nombre del alumno</label>
-				<input type="text" id="nombre" name="nombre" />
-				<label htmlFor="apellidos">Apellidos del alumno</label>
-				<input type="text" id="apellidos" name="apellidos" />
-				<label htmlFor="dni">DNI del alumno</label>
-				<input type="text" id="dni" name="dni" />
-				<label htmlFor="correoUpm">Correo de la UPM del alumno</label>
-				<input type="text" id="correoUpm" name="correoUpm" />
-				<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
-				<input type="text" id="telefMovil" name="telefMovil" />
-				<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
-				<input type="text" id="fechaNac" name="fechaNac" />
-				<label htmlFor="idUpm">ID de la UPM del alumno</label>
-				<input type="text" id="idUpm" name="idUpm" />
-				<button type="submit">Crear alumno</button>
-			</form>
+			<>
+				<h3>Crear alumno (ToDo borrar formulario)</h3>
+				<form onSubmit={this.crearAlumno} id="crear-alumno-form">
+					<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
+					<input type="text" id="addrEthAlum" name="addrEthAlum" />
+
+					<label htmlFor="nombre">Nombre del alumno</label>
+					<input type="text" id="nombre" name="nombre" />
+
+					<label htmlFor="apellidos">Apellidos del alumno</label>
+					<input type="text" id="apellidos" name="apellidos" />
+
+					<label htmlFor="dni">DNI del alumno</label>
+					<input type="text" id="dni" name="dni" />
+
+					<label htmlFor="correoUpm">Correo de la UPM del alumno</label>
+					<input type="text" id="correoUpm" name="correoUpm" />
+
+					<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
+					<input type="text" id="telefMovil" name="telefMovil" />
+
+					<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
+					<input type="text" id="fechaNac" name="fechaNac" />
+
+					<label htmlFor="idUpm">ID de la UPM del alumno</label>
+					<input type="text" id="idUpm" name="idUpm" />
+
+					<button type="submit">Crear alumno</button>
+				</form>
+			</>
 		);
 	}
 

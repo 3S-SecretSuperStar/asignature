@@ -3,9 +3,7 @@ import React from 'react';
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaProfesores from './ListaProfesores';
-import ListaProfesores2 from './ListaProfesores2';
 import CrearProfesor from './CrearProfesor';
-import EliminarProfesor from './EliminarProfesor';
 
 const {ContractData} = newContextComponents;
 
@@ -15,6 +13,7 @@ class GestionProfesores extends React.Component {
 		ready: false,
 		miDireccionKey: null,
 		profesoresLengthKey: null,
+		numProfesoresKey: null,
 		ownerKey: null,
 	};
 
@@ -33,7 +32,7 @@ class GestionProfesores extends React.Component {
 		let changed = false;
 
 		let {
-			miDireccionKey, profesoresLengthKey, ownerKey
+			miDireccionKey, profesoresLengthKey, numProfesoresKey, ownerKey
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
@@ -46,6 +45,11 @@ class GestionProfesores extends React.Component {
 			changed = true;
 		}
 
+		if (!numProfesoresKey) {
+			numProfesoresKey = instance.methods.numProfesores.cacheCall();
+			changed = true;
+		}
+
 		if (!ownerKey) {
 			ownerKey = instance.methods.owner.cacheCall();
 			changed = true;
@@ -55,6 +59,7 @@ class GestionProfesores extends React.Component {
 			this.setState({
 				miDireccionKey,
 				profesoresLengthKey,
+				numProfesoresKey,
 				ownerKey,
 			});
 		}
@@ -70,39 +75,28 @@ class GestionProfesores extends React.Component {
 
         let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
         miDireccion = miDireccion ? miDireccion.value :"0x0";
-        console.log('*** miDireccion:', miDireccion);
 
         let profesoresLength = instanceState.profesoresLength[this.state.profesoresLengthKey];
         profesoresLength = profesoresLength ? profesoresLength.value : -1;
-        console.log('*** profesoresLength:', profesoresLength);
+
+        let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
+        numProfesores = numProfesores ? numProfesores.value : -1;
 
         let owner = instanceState.owner[this.state.ownerKey];
         owner = owner ? owner.value : "0x0";
-        console.log('*** owner:', owner);
 
 		return (
 			<>
 				<h2>Gestión de profesores</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
 
-				<h3>Lista de profesores creados</h3>
-				<ListaProfesores 	drizzle={drizzle}
+				<ListaProfesores	drizzle={drizzle}
 									drizzleState={drizzleState}
-									profesoresLength={profesoresLength} />
+									profesoresLength={profesoresLength}
+									numProfesores={numProfesores} />
 
-				<h3>(2) Lista de profesores creados</h3>
-				<p>(ToDo) No se muestran los eliminados, pero cuando creo un profesor no se actualiza</p>
-				<ListaProfesores2 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									profesoresLength={profesoresLength} />
-
-				<h3>Crear profesor</h3>
 				<CrearProfesor 	drizzle={drizzle}
 								drizzleState={drizzleState} />
-
-				<h3>Eliminar profesor</h3>
-				<EliminarProfesor	drizzle={drizzle}
-									drizzleState={drizzleState} />
 
 				<h3>(ToDo) Actualizar profesor</h3>
 				<p>ToDo</p>

@@ -2,25 +2,15 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-const {ContractData} = newContextComponents;
+import {crearObjetoFromFormData} from '../../utils/funciones.js';
 
-// de cada input del form, crea un objeto:
-//    clave: atributo name
-//    valor: contenido del input
-function crearObjetoFromFormData(formData) {
-	let objFormData = {};
-	for (let key of formData.keys()) {
-		objFormData[key] = formData.get(key);
-	}
-	return objFormData;
-}
+const {ContractData} = newContextComponents;
 
 class ListaAsignaturas extends React.Component {
 
 	state = {
 		ready: false,
-		ownAsignaturasLengthKey: null,
-		numAsignaturasKey: null,
+		asignaturasAddrsKeys: []
 	};
 
 	componentDidMount() {
@@ -39,109 +29,114 @@ class ListaAsignaturas extends React.Component {
 
 		let changed = false;
 
-		let {
-			ownAsignaturasLengthKey, numAsignaturasKey
-		} = JSON.parse(JSON.stringify(this.state));
+		let {asignaturasAddrsKeys} = JSON.parse(JSON.stringify(this.state));
 
-		if (!ownAsignaturasLengthKey) {
-			ownAsignaturasLengthKey = instance.methods.asignaturasLength.cacheCall();
-			changed = true;
-		}
-
-		if (!numAsignaturasKey) {
-			numAsignaturasKey = instance.methods.numAsignaturas.cacheCall();
+		for (let i = asignaturasAddrsKeys.length; i < this.props.asignaturasLength; i++) {
+			asignaturasAddrsKeys[i] = instance.methods.listaAsignaturas.cacheCall(i);
 			changed = true;
 		}
 
 		if (changed) {
 			this.setState({
-				ownAsignaturasLengthKey,
-				numAsignaturasKey,
+				asignaturasAddrsKeys,
 			});
 		}
 
 	}
 
-	mandarEliminar = (event) => {
+	eliminarAsignatura = (event) => {
 		event.preventDefault();
 
 		// obtener valores del formulario
 		const formData = new FormData(event.target);
-
 		let objFormData = crearObjetoFromFormData(formData);
-		console.log(objFormData);
 		let {addrEthAsignatura} = objFormData;
 
 		console.log("Has pulsado el botón para mandar eliminar la asignatura", addrEthAsignatura);
 
-		// mandar transacción
+		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
-
-		const instanceState = drizzleState.contracts.UpmCatalogo;
-		if (!instanceState || !instanceState.initialized) return;
-
 		const instance = drizzle.contracts.UpmCatalogo;
+		const instanceState = drizzleState.contracts.UpmCatalogo;
 
-		const txId = instance.methods.eliminarAsignatura.cacheSend(
-			addrEthAsignatura
-		);
+		// eliminar asignatura del catálogo
+		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
 
 		// eliminar contrato dinámicamente
-		const contractName = "UpmAsignaturaPrueba";
-		drizzle.deleteContract(contractName);
+		//const contractName = "UpmAsignatura-" + addrEthAsignatura;
+		//drizzle.deleteContract(contractName);
 	}
 
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-        const instanceState = drizzleState.contracts.UpmCatalogo;
-        if (!this.state.ready || !instanceState || !instanceState.initialized) {
-            return <span>Initializing...</span>;
-        }
+		const instanceState = drizzleState.contracts.UpmCatalogo;
+		if (!this.state.ready || !instanceState || !instanceState.initialized) {
+			return <span>Initializing...</span>;
+		}
 
-        let ownAsignaturasLength = instanceState.asignaturasLength[this.state.ownAsignaturasLengthKey];
-        ownAsignaturasLength = ownAsignaturasLength ? ownAsignaturasLength.value : -1;
-        console.log('ownAsignaturasLength:', ownAsignaturasLength);
+		let direccionesAsignaturasAnadidas = [];
+		for (let i = 0; i < this.props.asignaturasLength; i++) {
+			let asignaturaAddr = instanceState.listaAsignaturas[this.state.asignaturasAddrsKeys[i]];
+			asignaturaAddr = asignaturaAddr ? asignaturaAddr.value : "";
 
-        let numAsignaturas = instanceState.numAsignaturas[this.state.numAsignaturasKey];
-        numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
-        console.log('numAsignaturas:', numAsignaturas);
+			if (asignaturaAddr != "" && asignaturaAddr != "0x0000000000000000000000000000000000000000") {
+				direccionesAsignaturasAnadidas.push(asignaturaAddr);
+			}
+		}
+		console.log('ListaAsignaturas - render - direccionesAsignaturasAnadidas', direccionesAsignaturasAnadidas);
 
-        console.log('this.props.asignaturasLength:', this.props.asignaturasLength);
+		console.log('ListaAsignaturas - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
-        let tbodyListaAsignaturas = [];
-        for (let i = 0; i < ownAsignaturasLength; i++) {
-        	tbodyListaAsignaturas[i] = (
-        		<ContractData	key={i}
-        						drizzle={drizzle}
-        						drizzleState={drizzleState}
-        						contract={"UpmCatalogo"}
-        						method={"listaAsignaturas"}
-        						methodArgs={[i]}
-        						render={address => (
-        							<tr>
-        								<td>{address}</td>
-        								<td>
-        									<form onSubmit={this.mandarEliminar}>
-        										<input type="hidden" value={address} name="addrEthAsignatura" />
-        										<button>Eliminar asignatura</button>
-        									</form>
-        								</td>
-        							</tr>
-        						)}
-				/>
-        	);
-        }
+		let tbodyListaAsignaturas = [];
+		for (let i in direccionesAsignaturasAnadidas) {
+			let asignaturaAddr = direccionesAsignaturasAnadidas[i];
+			tbodyListaAsignaturas[i] = (
+				<tr>
+					<td>{asignaturaAddr}</td>
+					<td>ToDo</td>
+					<td>
+						<form onSubmit={this.eliminarAsignatura}>
+							<input type="hidden" value={asignaturaAddr} name="addrEthAsignatura" />
+							<button type="submit">Eliminar asignatura</button>
+						</form>
+					</td>
+				</tr>
+			);
+		}
+
+		/*for (let i = 0; i < this.props.asignaturasLength; i++) {
+			let asignaturaAddr = instanceState.listaAsignaturas[this.state.asignaturasAddrsKeys[i]];
+			asignaturaAddr = asignaturaAddr ? asignaturaAddr.value : "";
+
+			if (asignaturaAddr != "" && asignaturaAddr != "0x0000000000000000000000000000000000000000") {
+				tbodyListaAsignaturas[i] = (
+					<tr>
+						<td>{asignaturaAddr}</td>
+						<td>ToDo</td>
+						<td>
+							<form onSubmit={this.eliminarAsignatura}>
+								<input type="hidden" value={asignaturaAddr} name="addrEthAsignatura" />
+								<button type="submit">Eliminar asignatura</button>
+							</form>
+						</td>
+					</tr>
+				);
+			}
+		}*/
 
 		return (
 			<>
-				<p>{ownAsignaturasLength} ownAsignaturasLength</p>
-				<p>{numAsignaturas} asignaturas</p>
+				<h3>Lista de asignaturas</h3>
+
+				<p>{this.props.asignaturasLength} asignaturasLength</p>
+				<p>{this.props.numAsignaturas} numAsignaturas</p>
 
 				<table>
 					<thead>
 						<tr>
 							<th>Dirección</th>
+							<th>Acceder</th>
 							<th>Eliminar</th>
 						</tr>
 					</thead>

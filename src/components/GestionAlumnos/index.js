@@ -3,9 +3,7 @@ import React from 'react';
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaAlumnos from './ListaAlumnos';
-import ListaAlumnos2 from './ListaAlumnos2';
 import CrearAlumno from './CrearAlumno';
-import EliminarAlumno from './EliminarAlumno';
 
 const {ContractData} = newContextComponents;
 
@@ -15,6 +13,7 @@ class GestionAlumnos extends React.Component {
 		ready: false,
 		miDireccionKey: null,
 		alumnosLengthKey: null,
+		numAlumnosKey: null,
 		ownerKey: null,
 	};
 
@@ -33,7 +32,7 @@ class GestionAlumnos extends React.Component {
 		let changed = false;
 
 		let {
-			miDireccionKey, alumnosLengthKey, ownerKey
+			miDireccionKey, alumnosLengthKey, numAlumnosKey, ownerKey
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
@@ -46,6 +45,11 @@ class GestionAlumnos extends React.Component {
 			changed = true;
 		}
 
+		if (!numAlumnosKey) {
+			numAlumnosKey = instance.methods.numAlumnos.cacheCall();
+			changed = true;
+		}
+
 		if (!ownerKey) {
 			ownerKey = instance.methods.owner.cacheCall();
 			changed = true;
@@ -55,6 +59,7 @@ class GestionAlumnos extends React.Component {
 			this.setState({
 				miDireccionKey,
 				alumnosLengthKey,
+				numAlumnosKey,
 				ownerKey,
 			});
 		}
@@ -70,38 +75,27 @@ class GestionAlumnos extends React.Component {
 
         let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
         miDireccion = miDireccion ? miDireccion.value :"0x0";
-        console.log('*** miDireccion:', miDireccion);
 
         let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
         alumnosLength = alumnosLength ? alumnosLength.value : -1;
-        console.log('*** alumnosLength:', alumnosLength);
+
+        let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
+        numAlumnos = numAlumnos ? numAlumnos.value : -1;
 
         let owner = instanceState.owner[this.state.ownerKey];
         owner = owner ? owner.value : "0x0";
-        console.log('*** owner:', owner);
 
 		return (
 			<>
 				<h2>Gestión de alumnos</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
 
-				<h3>Lista de alumnos creados</h3>
 				<ListaAlumnos 	drizzle={drizzle}
 								drizzleState={drizzleState}
-								alumnosLength={alumnosLength} />
+								alumnosLength={alumnosLength}
+								numAlumnos={numAlumnos} />
 
-				<h3>(2) Lista de alumnos creados</h3>
-				<p>(ToDo) No se muestran los eliminados, pero cuando creo un alumno no se actualiza</p>
-				<ListaAlumnos2 	drizzle={drizzle}
-								drizzleState={drizzleState}
-								alumnosLength={alumnosLength} />
-
-				<h3>Crear alumno</h3>
 				<CrearAlumno 	drizzle={drizzle}
-								drizzleState={drizzleState} />
-
-				<h3>Eliminar alumno</h3>
-				<EliminarAlumno drizzle={drizzle}
 								drizzleState={drizzleState} />
 
 				<h3>(ToDo) Actualizar alumno</h3>

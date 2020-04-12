@@ -2,14 +2,15 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
+import {crearObjetoFromFormData} from '../../utils/funciones.js';
+
 const {ContractData} = newContextComponents;
 
 class ListaProfesores extends React.Component {
 
 	state = {
 		ready: false,
-		ownProfesoresLengthKey: null,
-		numProfesoresKey: null,
+		profesoresAddrsKeys: []
 	};
 
 	componentDidMount() {
@@ -29,76 +30,89 @@ class ListaProfesores extends React.Component {
 		let changed = false;
 
 		let {
-			ownProfesoresLengthKey, numProfesoresKey
+			profesoresAddrsKeys
 		} = JSON.parse(JSON.stringify(this.state));
 
-		if (!ownProfesoresLengthKey) {
-			ownProfesoresLengthKey = instance.methods.profesoresLength.cacheCall();
-			changed = true;
-		}
-
-		if (!numProfesoresKey) {
-			numProfesoresKey = instance.methods.numProfesores.cacheCall();
+		for (let i = profesoresAddrsKeys.length; i < this.props.profesoresLength; i++) {
+			profesoresAddrsKeys[i] = instance.methods.listaProfesores.cacheCall(i);
 			changed = true;
 		}
 
 		if (changed) {
 			this.setState({
-				ownProfesoresLengthKey,
-				numProfesoresKey,
+				profesoresAddrsKeys
 			});
 		}
 
 	}
 
+	eliminarProfesor = (event) => {
+		event.preventDefault();
+
+		// obtener valores del formulario
+		const formData = new FormData(event.target);
+		let objFormData = crearObjetoFromFormData(formData);
+		console.log(objFormData);
+		let {addrEthProf} = objFormData;
+
+		console.log("Has pulasdo el botón para eliminar el alumno", addrEthProf);
+
+		// coger drizzle y drizzleState
+		const {drizzle, drizzleState} = this.props;
+		const instance = drizzle.contracts.UpmProfesores;
+
+		// eliminar alumno
+		const txId = instance.methods.borrarProfesorAddr.cacheSend(
+			addrEthProf
+		);
+	}
+
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-        const instanceState = drizzleState.contracts.UpmProfesores;
-        if (!this.state.ready || !instanceState || !instanceState.initialized) {
-            return <span>Initializing...</span>;
-        }
+		const instanceState = drizzleState.contracts.UpmProfesores;
+		if (!this.state.ready || !instanceState || !instanceState.initialized) {
+			return <span>Initializing...</span>;
+		}
 
-        let ownProfesoresLength = instanceState.profesoresLength[this.state.ownProfesoresLengthKey];
-        ownProfesoresLength = ownProfesoresLength ? ownProfesoresLength.value : -1;
+		let tbodyListaProfesores = [];
+		for (let i = 0; i < this.props.profesoresLength; i++) {
+			let addrEthProf = instanceState.listaProfesores[this.state.profesoresAddrsKeys[i]];
+			addrEthProf = addrEthProf ? addrEthProf.value : "";
 
-        let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
-        numProfesores = numProfesores ? numProfesores.value : -2;
-
-        let tbodyListaProfesores = [];
-        for (let i = 0; i < ownProfesoresLength; i++) {
-        	tbodyListaProfesores[i] = (
-        		<ContractData	key={i}
-        						drizzle={drizzle}
-        						drizzleState={drizzleState}
-        						contract={"UpmProfesores"}
-        						method={"listaProfesores"}
-        						methodArgs={[i]}
-        						render={addrEthProf => (
-        							<ContractData	key={`${i}${i}`}
-					        						drizzle={drizzle}
-					        						drizzleState={drizzleState}
-					        						contract={"UpmProfesores"}
-					        						method={"mapProfesoresAddr"}
-					        						methodArgs={[addrEthProf]}
-					        						render={profesor => (
-					        							<tr>
-															<td>{profesor.addrEthProf}</td>
-															<td>{profesor.nombre}</td>
-															<td>{profesor.apellidos}</td>
-															<td>{profesor.correoUpm}</td>
-														</tr>
-					        						)} />
-        							
-        						)}
-				/>
-        	);
-        }
+			if (addrEthProf != "" && addrEthProf != "0x0000000000000000000000000000000000000000") {
+				tbodyListaProfesores[i] = (
+					<ContractData	key={i}
+									drizzle={drizzle}
+									drizzleState={drizzleState}
+									contract={"UpmProfesores"}
+									method={"mapProfesoresAddr"}
+									methodArgs={[addrEthProf]}
+									render={(profesor) => (
+										<tr>
+											<td>{profesor.addrEthProf}</td>
+											<td>{profesor.nombre}</td>
+											<td>{profesor.apellidos}</td>
+											<td>{profesor.correoUpm}</td>
+											<td>
+												<form onSubmit={this.eliminarProfesor}>
+													<input type="hidden" value={addrEthProf} name="addrEthProf" />
+													<button type="submit">Eliminar profesor</button>
+												</form>
+											</td>
+										</tr>
+									)}
+					/>
+				);
+			}
+		}
 
 		return (
 			<>
-				<p>{ownProfesoresLength} ownProfesoresLength</p>
-				<p>{numProfesores} profesores</p>
+				<h3>Lista de profesores creados</h3>
+
+				<p>{this.props.profesoresLength} profesoresLength</p>
+				<p>{this.props.numProfesores} profesores</p>
 
 				<table>
 					<thead>
@@ -107,6 +121,7 @@ class ListaProfesores extends React.Component {
 							<th>Nombre</th>
 							<th>Apellidos</th>
 							<th>Correo</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
