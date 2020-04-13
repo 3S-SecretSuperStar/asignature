@@ -2,11 +2,11 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {crearObjetoFromFormData} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
-class ListaProfesores extends React.Component {
+class AsignaturaListaProfesores extends React.Component {
 
 	state = {
 		ready: false,
@@ -22,10 +22,10 @@ class ListaProfesores extends React.Component {
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmProfesores;
+		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!instanceState || !instanceState.initialized) return;
 
-		const instance = drizzle.contracts.UpmProfesores;
+		const instance = drizzle.contracts[this.props.contractName];
 
 		let changed = false;
 
@@ -40,7 +40,7 @@ class ListaProfesores extends React.Component {
 
 		if (changed) {
 			this.setState({
-				profesoresAddrsKeys
+				profesoresAddrsKeys,
 			});
 		}
 
@@ -55,22 +55,23 @@ class ListaProfesores extends React.Component {
 		console.log(objFormData);
 		let {addrEthProf} = objFormData;
 
-		console.log("Has pulasdo el botón para eliminar el profesor", addrEthProf);
+		console.log("Has pulsado el botón para eliminar el profesor", addrEthProf);
 
 		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts.UpmProfesores;
+		const instance = drizzle.contracts[this.props.contractName];
 
 		// eliminar profesor
-		const txId = instance.methods.borrarProfesorAddr.cacheSend(
-			addrEthProf
+		const txId = instance.methods.eliminarProfesor.cacheSend(
+			addrEthProf,
+			{from: this.props.miDireccion}
 		);
 	}
 
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmProfesores;
+		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
@@ -109,7 +110,7 @@ class ListaProfesores extends React.Component {
 
 		return (
 			<>
-				<h3>Lista de profesores creados</h3>
+				<h3>Lista de profesores añadidos</h3>
 
 				<p>{this.props.profesoresLength} profesoresLength</p>
 				<p>{this.props.numProfesores} profesores</p>
@@ -134,4 +135,4 @@ class ListaProfesores extends React.Component {
 
 }
 
-export default ListaProfesores;
+export default AsignaturaListaProfesores;

@@ -9,7 +9,10 @@ import {
 import {newContextComponents} from "drizzle-react-components";
 
 import AsignaturaDatos from './AsignaturaDatos';
-import AsignaturaAlumnos from './AsignaturaAlumnos';
+import AsignaturaAlumnos from './Alumnos/AsignaturaAlumnos';
+import AsignaturaProfesores from './Profesores/AsignaturaProfesores';
+import AsignaturaEvaluaciones from './Evaluaciones/AsignaturaEvaluaciones';
+import AsignaturaNotas from './Notas/AsignaturaNotas';
 
 import {jsonInterface} from '../../utils/varios.js';
 
@@ -236,15 +239,48 @@ class MainGestionAsignatura extends React.Component {
                 </Route>
 
                 <Route path="/gestion-asignatura/:addrEthAsig/profesores">
-					Profesores
+					<AsignaturaProfesores	drizzle={drizzle}
+											drizzleState={drizzleState}
+											contractName={this.state.contractName}
+											miDireccion={miDireccion}
+											owner={owner}
+											coordinador={coordinador}
+											alumnosLength={alumnosLength}
+											numAlumnos={numAlumnos}
+											profesoresLength={profesoresLength}
+											numProfesores={numProfesores}
+											numEvaluaciones={numEvaluaciones}
+											numNotas={numNotas} />
                 </Route>
 
                 <Route path="/gestion-asignatura/:addrEthAsig/evaluaciones">
-					Evaluaciones
+					<AsignaturaEvaluaciones	drizzle={drizzle}
+											drizzleState={drizzleState}
+											contractName={this.state.contractName}
+											miDireccion={miDireccion}
+											owner={owner}
+											coordinador={coordinador}
+											alumnosLength={alumnosLength}
+											numAlumnos={numAlumnos}
+											profesoresLength={profesoresLength}
+											numProfesores={numProfesores}
+											numEvaluaciones={numEvaluaciones}
+											numNotas={numNotas} />
                 </Route>
 
                 <Route path="/gestion-asignatura/:addrEthAsig/notas">
-					Notas
+					<AsignaturaNotas	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contractName={this.state.contractName}
+										miDireccion={miDireccion}
+										owner={owner}
+										coordinador={coordinador}
+										alumnosLength={alumnosLength}
+										numAlumnos={numAlumnos}
+										profesoresLength={profesoresLength}
+										numProfesores={numProfesores}
+										numEvaluaciones={numEvaluaciones}
+										numNotas={numNotas} />
                 </Route>
 
 			</Router>

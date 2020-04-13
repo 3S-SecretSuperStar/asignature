@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {jsonInterface} from '../../utils/varios.js';
+import {jsonInterface} from '../../../utils/varios.js';
 
 import AsignaturaListaAlumnos from './AsignaturaListaAlumnos';
 import AsignaturaAnadirAlumno from './AsignaturaAnadirAlumno';
@@ -39,11 +39,29 @@ class AsignaturaAlumnos extends React.Component {
 
 				<AsignaturaListaAlumnos	drizzle={drizzle}
 										drizzleState={drizzleState}
-										contractName={this.props.contractName} />
+										contractName={this.props.contractName}
+										miDireccion={this.props.miDireccion}
+										owner={this.props.owner}
+										coordinador={this.props.coordinador}
+										alumnosLength={this.props.alumnosLength}
+										numAlumnos={this.props.numAlumnos}
+										profesoresLength={this.props.profesoresLength}
+										numProfesores={this.props.numProfesores}
+										numEvaluaciones={this.props.numEvaluaciones}
+										numNotas={this.props.numNotas} />
 
 				<AsignaturaAnadirAlumno drizzle={drizzle}
 										drizzleState={drizzleState}
-										contractName={this.props.contractName} />
+										contractName={this.props.contractName}
+										miDireccion={this.props.miDireccion}
+										owner={this.props.owner}
+										coordinador={this.props.coordinador}
+										alumnosLength={this.props.alumnosLength}
+										numAlumnos={this.props.numAlumnos}
+										profesoresLength={this.props.profesoresLength}
+										numProfesores={this.props.numProfesores}
+										numEvaluaciones={this.props.numEvaluaciones}
+										numNotas={this.props.numNotas} />
 			</>
 		);
 	}

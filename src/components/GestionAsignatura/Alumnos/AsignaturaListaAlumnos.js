@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {crearObjetoFromFormData} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -10,7 +10,7 @@ class AsignaturaListaAlumnos extends React.Component {
 
 	state = {
 		ready: false,
-		alumnosAddrsKeys: []
+		alumnosAddrsKeys: [],
 	};
 
 	componentDidMount() {
@@ -55,15 +55,16 @@ class AsignaturaListaAlumnos extends React.Component {
 		console.log(objFormData);
 		let {addrEthAlum} = objFormData;
 
-		console.log("Has pulasdo el botón para eliminar el alumno", addrEthAlum);
+		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
 
 		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
 		const instance = drizzle.contracts[this.props.contractName];
 
 		// eliminar alumno
-		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
-			addrEthAlum
+		const txId = instance.methods.eliminarAlumno.cacheSend(
+			addrEthAlum,
+			{from: this.props.miDireccion}
 		);
 	}
 
@@ -109,7 +110,7 @@ class AsignaturaListaAlumnos extends React.Component {
 
 		return (
 			<>
-				<h3>Lista de alumnos creados</h3>
+				<h3>Lista de alumnos añadidos</h3>
 
 				<p>{this.props.alumnosLength} alumnosLength</p>
 				<p>{this.props.numAlumnos} alumnos</p>
