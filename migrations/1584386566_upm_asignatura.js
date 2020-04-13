@@ -10,6 +10,7 @@ module.exports = function(deployer) {
 		"Prueba 1",			// nombre asignatura
 		"2019-2020",		// curso academico
 		"COVID-19",			// codigo asignatura
+		"Teleco",			// titulacion
 		3,					// numero de creditos
 		1,					// semestre
 		3,					// curso de la carrera

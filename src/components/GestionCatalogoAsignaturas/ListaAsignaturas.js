@@ -4,6 +4,12 @@ import {newContextComponents} from "drizzle-react-components";
 
 import {crearObjetoFromFormData} from '../../utils/funciones.js';
 
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from "react-router-dom";
+
 const {ContractData} = newContextComponents;
 
 class ListaAsignaturas extends React.Component {
@@ -90,14 +96,15 @@ class ListaAsignaturas extends React.Component {
 
 		let tbodyListaAsignaturas = [];
 		for (let i in direccionesAsignaturasAnadidas) {
-			let asignaturaAddr = direccionesAsignaturasAnadidas[i];
+			let addrEthAsignatura = direccionesAsignaturasAnadidas[i];
 			tbodyListaAsignaturas[i] = (
-				<tr>
-					<td>{asignaturaAddr}</td>
-					<td>ToDo</td>
+				<tr key={i}>
+					<td>
+						<Link to={"/gestion-asignatura/" + addrEthAsignatura}>{addrEthAsignatura}</Link>
+					</td>
 					<td>
 						<form onSubmit={this.eliminarAsignatura}>
-							<input type="hidden" value={asignaturaAddr} name="addrEthAsignatura" />
+							<input type="hidden" value={addrEthAsignatura} name="addrEthAsignatura" />
 							<button type="submit">Eliminar asignatura</button>
 						</form>
 					</td>
@@ -129,6 +136,8 @@ class ListaAsignaturas extends React.Component {
 			<>
 				<h3>Lista de asignaturas</h3>
 
+				<Link to="/gestion-asignatura/0x132768ab600328B382Dd1Ef7661eC4ae75973Dc9">Asignatura desplegada a mano</Link>
+
 				<p>{this.props.asignaturasLength} asignaturasLength</p>
 				<p>{this.props.numAsignaturas} numAsignaturas</p>
 
@@ -136,8 +145,7 @@ class ListaAsignaturas extends React.Component {
 					<thead>
 						<tr>
 							<th>Dirección</th>
-							<th>Acceder</th>
-							<th>Eliminar</th>
+							<th>Eliminar del catálogo</th>
 						</tr>
 					</thead>
 					<tbody>

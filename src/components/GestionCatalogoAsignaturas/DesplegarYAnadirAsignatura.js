@@ -28,7 +28,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
 		// obtener valores del formulario 
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
-		let {addrEthCoord, nombreAsig, cursoAcad, codigoAsig, numCreditos, semestre, cursoAno, tipoAsig} = objFormData;
+		let {addrEthCoord, nombreAsig, cursoAcad, codigoAsig, titulacion, numCreditos, semestre, cursoAno, tipoAsig} = objFormData;
 		
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
@@ -48,14 +48,14 @@ class DesplegarYAnadirAsignatura extends React.Component {
 		let estimGas = await contrato
 		.deploy({
 			data: bytecode,
-			arguments: [addrEthCoord, nombreAsig, cursoAcad, codigoAsig, numCreditos, semestre, cursoAno, tipoAsig]
+			arguments: [addrEthCoord, nombreAsig, cursoAcad, codigoAsig, titulacion, numCreditos, semestre, cursoAno, tipoAsig]
 		}).estimateGas({from: this.props.miDireccion});
 		console.log('estimGas:', estimGas);
 
 		let contratoInstance = await contrato
 		.deploy({
 			data: bytecode,
-			arguments: [addrEthCoord, nombreAsig, cursoAcad, codigoAsig, numCreditos, semestre, cursoAno, tipoAsig]
+			arguments: [addrEthCoord, nombreAsig, cursoAcad, codigoAsig, titulacion, numCreditos, semestre, cursoAno, tipoAsig]
 		})
 		.send({from: this.props.miDireccion});
 
@@ -103,6 +103,9 @@ class DesplegarYAnadirAsignatura extends React.Component {
 					
 					<label htmlFor="codigoAsig">Código de la asignatura</label>
 					<input type="text" id="codigoAsig" name="codigoAsig" />
+
+					<label htmlFor="titulacion">Titulación</label>
+					<input type="text" id="titulacion" name="titulacion" />
 					
 					<label htmlFor="numCreditos">Número de créditos</label>
 					<input type="text" id="numCreditos" name="numCreditos" />

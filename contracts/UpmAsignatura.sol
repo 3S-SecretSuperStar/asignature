@@ -9,6 +9,7 @@ contract UpmAsignatura {
     string public nombreAsignatura;
     string public cursoAcademico;
     string public codigoAsignatura;
+    string public titulacion;
     uint8 public numCreditos;
     uint8 public semestre;
     uint8 public cursoAno;
@@ -58,6 +59,7 @@ contract UpmAsignatura {
         string memory _nombreAsignatura,
         string memory _cursoAcademico,
         string memory _codigoAsignatura,
+        string memory _titulacion,
         uint8 _numCreditos,
         uint8 _semestre,
         uint8 _cursoAno,
@@ -68,6 +70,7 @@ contract UpmAsignatura {
         nombreAsignatura = _nombreAsignatura;
         cursoAcademico = _cursoAcademico;
         codigoAsignatura = _codigoAsignatura;
+        titulacion = _titulacion;
         numCreditos = _numCreditos;
         semestre = _semestre;
         cursoAno = _cursoAno;

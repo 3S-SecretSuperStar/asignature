@@ -75,19 +75,19 @@ class GestionCatalogoAsignaturas extends React.Component {
 
 		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
 		miDireccion = miDireccion ? miDireccion.value :"0x0";
-		console.log('*** miDireccion:', miDireccion);
+		console.log('GestionCatalogoAsignaturas - render - miDireccion:', miDireccion);
 
 		let owner = instanceState.owner[this.state.ownerKey];
 		owner = owner ? owner.value : "0x0";
-		console.log('*** owner:', owner);
+		console.log('GestionCatalogoAsignaturas - render - owner:', owner);
 
 		let asignaturasLength = instanceState.asignaturasLength[this.state.asignaturasLengthKey];
 		asignaturasLength = asignaturasLength ? asignaturasLength.value : -1;
-		console.log('*** asignaturasLength:', asignaturasLength);
+		console.log('GestionCatalogoAsignaturas - render - asignaturasLength:', asignaturasLength);
 
 		let numAsignaturas = instanceState.numAsignaturas[this.state.numAsignaturasKey];
 		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
-		console.log('*** numAsignaturas:', numAsignaturas);
+		console.log('GestionCatalogoAsignaturas - render - numAsignaturas:', numAsignaturas);
 
 		return (
 			<>

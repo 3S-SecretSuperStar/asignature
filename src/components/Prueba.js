@@ -67,6 +67,8 @@ const Prueba = (props) => {
 	console.log('drizzle:', props.drizzle);
 	console.log('drizzleState:', props.drizzleState);
 
+	console.log('drizzle.contracts:', props.drizzle.contracts);
+
 	return (
 		<>
 			<h2>Prueba</h2>
