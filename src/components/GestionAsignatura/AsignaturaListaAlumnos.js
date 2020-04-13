@@ -6,7 +6,7 @@ import {crearObjetoFromFormData} from '../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
-class ListaAlumnos extends React.Component {
+class AsignaturaListaAlumnos extends React.Component {
 
 	state = {
 		ready: false,
@@ -22,10 +22,10 @@ class ListaAlumnos extends React.Component {
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmAlumnos;
+		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!instanceState || !instanceState.initialized) return;
 
-		const instance = drizzle.contracts.UpmAlumnos;
+		const instance = drizzle.contracts[this.props.contractName];
 
 		let changed = false;
 
@@ -59,7 +59,7 @@ class ListaAlumnos extends React.Component {
 
 		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts.UpmAlumnos;
+		const instance = drizzle.contracts[this.props.contractName];
 
 		// eliminar alumno
 		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
@@ -70,7 +70,7 @@ class ListaAlumnos extends React.Component {
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmAlumnos;
+		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
@@ -134,4 +134,4 @@ class ListaAlumnos extends React.Component {
 
 }
 
-export default ListaAlumnos;
+export default AsignaturaListaAlumnos;

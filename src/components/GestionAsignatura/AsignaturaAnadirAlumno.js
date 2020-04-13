@@ -2,7 +2,7 @@ import React from 'react';
 
 import {crearObjetoFromFormData} from '../../utils/funciones.js';
 
-class CrearAlumno extends React.Component {
+class AsignaturaAnadirAlumno extends React.Component {
 
 	state = {
 		ready: false,
@@ -98,4 +98,4 @@ class CrearAlumno extends React.Component {
 
 }
 
-export default CrearAlumno;
+export default AsignaturaAnadirAlumno;

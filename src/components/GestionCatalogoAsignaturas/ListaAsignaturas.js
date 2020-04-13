@@ -66,11 +66,7 @@ class ListaAsignaturas extends React.Component {
 		const instanceState = drizzleState.contracts.UpmCatalogo;
 
 		// eliminar asignatura del catálogo
-		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
-
-		// eliminar contrato dinámicamente
-		//const contractName = "UpmAsignatura-" + addrEthAsignatura;
-		//drizzle.deleteContract(contractName);
+		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);;
 	}
 
 	render() {
@@ -100,7 +96,7 @@ class ListaAsignaturas extends React.Component {
 			tbodyListaAsignaturas[i] = (
 				<tr key={i}>
 					<td>
-						<Link to={"/gestion-asignatura/" + addrEthAsignatura}>{addrEthAsignatura}</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
 					</td>
 					<td>
 						<form onSubmit={this.eliminarAsignatura}>
@@ -112,31 +108,11 @@ class ListaAsignaturas extends React.Component {
 			);
 		}
 
-		/*for (let i = 0; i < this.props.asignaturasLength; i++) {
-			let asignaturaAddr = instanceState.listaAsignaturas[this.state.asignaturasAddrsKeys[i]];
-			asignaturaAddr = asignaturaAddr ? asignaturaAddr.value : "";
-
-			if (asignaturaAddr != "" && asignaturaAddr != "0x0000000000000000000000000000000000000000") {
-				tbodyListaAsignaturas[i] = (
-					<tr>
-						<td>{asignaturaAddr}</td>
-						<td>ToDo</td>
-						<td>
-							<form onSubmit={this.eliminarAsignatura}>
-								<input type="hidden" value={asignaturaAddr} name="addrEthAsignatura" />
-								<button type="submit">Eliminar asignatura</button>
-							</form>
-						</td>
-					</tr>
-				);
-			}
-		}*/
-
 		return (
 			<>
 				<h3>Lista de asignaturas</h3>
 
-				<Link to="/gestion-asignatura/0x132768ab600328B382Dd1Ef7661eC4ae75973Dc9">Asignatura desplegada a mano</Link>
+				<Link to="/gestion-asignatura/0x0eA9CE88927AC7CF566Db71f94AcF019A124af29/datos-asignatura">Asignatura desplegada a mano</Link>
 
 				<p>{this.props.asignaturasLength} asignaturasLength</p>
 				<p>{this.props.numAsignaturas} numAsignaturas</p>

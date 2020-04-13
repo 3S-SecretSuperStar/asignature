@@ -1,8 +1,29 @@
 import React from 'react';
 
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from "react-router-dom";
+
 import {newContextComponents} from "drizzle-react-components";
 
+import AsignaturaDatos from './AsignaturaDatos';
+import AsignaturaAlumnos from './AsignaturaAlumnos';
+
+import {jsonInterface} from '../../utils/varios.js';
+
 const {ContractData} = newContextComponents;
+
+const NavBar = (props) => (
+    <nav>
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>Datos de la asignatura</Link>&nbsp;&nbsp;&nbsp;
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/alumnos`}>Alumnos</Link>&nbsp;&nbsp;&nbsp;
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/profesores`}>Profesores</Link>&nbsp;&nbsp;&nbsp;
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/evaluaciones`}>Evaluaciones</Link>&nbsp;&nbsp;&nbsp;
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas</Link>&nbsp;&nbsp;&nbsp;
+	</nav>
+);
 
 class MainGestionAsignatura extends React.Component {
 
@@ -11,10 +32,16 @@ class MainGestionAsignatura extends React.Component {
 		contractName: "UpmAsignatura-" + this.props.addrEthAsig,
 		miDireccionKey: null,
 		ownerKey: null,
+		coordinadorKey: null,
+		alumnosLengthKey: null,
+		numAlumnosKey: null,
+		profesoresLengthKey: null,
+		numProfesoresKey: null,
+		numEvaluacionesKey: null,
+		numNotasKey: null,
 	};
 
 	anadirContratoDinamicamente() {
-		const jsonInterface = [{"inputs":[{"internalType":"address","name":"_coordinador","type":"address"},{"internalType":"string","name":"_nombreAsignatura","type":"string"},{"internalType":"string","name":"_cursoAcademico","type":"string"},{"internalType":"string","name":"_codigoAsignatura","type":"string"},{"internalType":"uint8","name":"_numCreditos","type":"uint8"},{"internalType":"uint8","name":"_semestre","type":"uint8"},{"internalType":"uint8","name":"_cursoAno","type":"uint8"},{"internalType":"enumUpmAsignatura.TipoAsignatura","name":"_tipoAsignatura","type":"uint8"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrCoordinador","type":"address"}],"name":"actualizarCoordinador","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint8","name":"_indexEval","type":"uint8"},{"internalType":"string","name":"_nombre","type":"string"},{"internalType":"uint256","name":"_fecha","type":"uint256"},{"internalType":"bool","name":"_obligatoria","type":"bool"},{"internalType":"uint256","name":"_notaMinima","type":"uint256"},{"internalType":"uint256","name":"_porcAportacion","type":"uint256"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"}],"name":"actualizarEvaluacion","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"},{"internalType":"uint8","name":"_indexEval","type":"uint8"},{"internalType":"enumUpmAsignatura.TipoNota","name":"_tipoNota","type":"uint8"},{"internalType":"uint256","name":"_calificacion","type":"uint256"}],"name":"actualizarNota","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_newOwner","type":"address"}],"name":"actualizarOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"alumnosLength","outputs":[{"internalType":"uint256","name":"_alumnosLength","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"}],"name":"anadirAlumno","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthProf","type":"address"}],"name":"anadirProfesor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"},{"internalType":"uint8","name":"_indexEval","type":"uint8"}],"name":"borrarNota","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"codigoAsignatura","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"coordinador","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_nombre","type":"string"},{"internalType":"uint256","name":"_fecha","type":"uint256"},{"internalType":"bool","name":"_obligatoria","type":"bool"},{"internalType":"uint256","name":"_notaMinima","type":"uint256"},{"internalType":"uint256","name":"_porcAportacion","type":"uint256"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"}],"name":"crearEvaluacion","outputs":[{"internalType":"uint8","name":"_indexEval","type":"uint8"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"},{"internalType":"uint8","name":"_indexEval","type":"uint8"},{"internalType":"enumUpmAsignatura.TipoNota","name":"_tipoNota","type":"uint8"},{"internalType":"uint256","name":"_calificacion","type":"uint256"}],"name":"crearNota","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"cursoAcademico","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"cursoAno","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"}],"name":"eliminarAlumno","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_addrEthProf","type":"address"}],"name":"eliminarProfesor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint8","name":"_indexEval","type":"uint8"}],"name":"leerEvaluacion","outputs":[{"internalType":"string","name":"_nombre","type":"string"},{"internalType":"uint256","name":"_fecha","type":"uint256"},{"internalType":"bool","name":"_obligatoria","type":"bool"},{"internalType":"uint256","name":"_notaMinima","type":"uint256"},{"internalType":"uint256","name":"_porcAportacion","type":"uint256"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"},{"internalType":"uint8","name":"_indexEval","type":"uint8"}],"name":"leerMiNota","outputs":[{"internalType":"enumUpmAsignatura.TipoNota","name":"_tipoNota","type":"uint8"},{"internalType":"uint256","name":"_calificacion","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"_addrEthAlum","type":"address"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"_tipoConvocatoria","type":"uint8"},{"internalType":"uint8","name":"_indexEval","type":"uint8"}],"name":"leerNota","outputs":[{"internalType":"enumUpmAsignatura.TipoNota","name":"_tipoNota","type":"uint8"},{"internalType":"uint256","name":"_calificacion","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"listaAlumnos","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"listaEvaluaciones","outputs":[{"internalType":"uint8","name":"indexEvaluacion","type":"uint8"},{"internalType":"string","name":"nombre","type":"string"},{"internalType":"uint256","name":"fecha","type":"uint256"},{"internalType":"bool","name":"obligatoria","type":"bool"},{"internalType":"uint256","name":"notaMinima","type":"uint256"},{"internalType":"uint256","name":"porcAportacion","type":"uint256"},{"internalType":"enumUpmAsignatura.TipoConvocatoria","name":"tipoConvocatoria","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"listaProfesores","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"mapAlumnos","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint8","name":"","type":"uint8"},{"internalType":"uint8","name":"","type":"uint8"}],"name":"mapNotas","outputs":[{"internalType":"enumUpmAsignatura.TipoNota","name":"tipoNota","type":"uint8"},{"internalType":"uint256","name":"calificacion","type":"uint256"},{"internalType":"bool","name":"existsNota","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"mapProfesores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"miDireccion","outputs":[{"internalType":"address","name":"_miDireccion","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"nombreAsignatura","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"numAlumnos","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"numCreditos","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"numEvaluaciones","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"numNotas","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"numProfesores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"profesoresLength","outputs":[{"internalType":"uint256","name":"_profesoresLength","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"semestre","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"tipoAsignatura","outputs":[{"internalType":"enumUpmAsignatura.TipoAsignatura","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"}];
 		const contractConfig = {
 			contractName: this.state.contractName,
 			web3Contract: new this.props.drizzle.web3.eth.Contract(
@@ -38,6 +65,7 @@ class MainGestionAsignatura extends React.Component {
 
 		// añadir dinámicamente contrato a vigilar
 		this.anadirContratoDinamicamente();
+
 		console.log('MainGestionAsignatura - componentDidMount - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 	}
 
@@ -52,7 +80,8 @@ class MainGestionAsignatura extends React.Component {
 		let changed = false;
 
 		let {
-			miDireccionKey, ownerKey,
+			miDireccionKey, ownerKey, coordinadorKey, alumnosLengthKey, numAlumnosKey, profesoresLengthKey,
+			numProfesoresKey, numEvaluacionesKey, numNotasKey
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
@@ -65,23 +94,65 @@ class MainGestionAsignatura extends React.Component {
 			changed = true;
 		}
 
+		if (!coordinadorKey) {
+			coordinadorKey = instance.methods.coordinador.cacheCall();
+			changed = true;
+		}
+
+		if (!alumnosLengthKey) {
+			alumnosLengthKey = instance.methods.alumnosLength.cacheCall();
+			changed = true;
+		}
+
+		if (!numAlumnosKey) {
+			numAlumnosKey = instance.methods.numAlumnos.cacheCall();
+			changed = true;
+		}
+
+		if (!profesoresLengthKey) {
+			profesoresLengthKey = instance.methods.profesoresLength.cacheCall();
+			changed = true;
+		}
+
+		if (!numProfesoresKey) {
+			numProfesoresKey = instance.methods.numProfesores.cacheCall();
+			changed = true;
+		}
+
+		if (!numEvaluacionesKey) {
+			numEvaluacionesKey = instance.methods.numEvaluaciones.cacheCall();
+			changed = true;
+		}
+
+		if (!numNotasKey) {
+			numNotasKey = instance.methods.numNotas.cacheCall();
+			changed = true;
+		}
+
 		if (changed) {
 			this.setState({
 				miDireccionKey,
 				ownerKey,
+				coordinadorKey,
+				alumnosLengthKey,
+				numAlumnosKey,
+				profesoresLengthKey,
+				numProfesoresKey,
+				numEvaluacionesKey,
+				numNotasKey,
 			});
 		}
 		
 	}
 
 	componentWillUnmount() {
-		// eliminar dinámicamente contrato a vigilar
 		this.eliminarContratoDinamicamente();
+
 		console.log('MainGestionAsignatura - componentWillUnmount - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle, drizzleState, addrEthAsig} = this.props;
 
 		const instanceState = drizzleState.contracts[this.state.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -96,51 +167,87 @@ class MainGestionAsignatura extends React.Component {
 		owner = owner ? owner.value : "0x0";
 		console.log('MainGestionAsignatura - render - owner:', owner);
 
+		let coordinador = instanceState.coordinador[this.state.coordinadorKey];
+		coordinador = coordinador ? coordinador.value : "0x0";
+		console.log('MainGestionAsignatura - render - coordinador:', coordinador);
+
+		let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
+		alumnosLength = alumnosLength ? alumnosLength.value : "0";
+		console.log('MainGestionAsignatura - render - alumnosLength:', alumnosLength);
+
+		let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
+		numAlumnos = numAlumnos ? numAlumnos.value : "0";
+		console.log('MainGestionAsignatura - render - numAlumnos:', numAlumnos);
+
+		let profesoresLength = instanceState.profesoresLength[this.state.profesoresLengthKey];
+		profesoresLength = profesoresLength ? profesoresLength.value : "0";
+		console.log('MainGestionAsignatura - render - profesoresLength:', profesoresLength);
+
+		let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
+		numProfesores = numProfesores ? numProfesores.value : "0";
+		console.log('MainGestionAsignatura - render - numProfesores:', numProfesores);
+
+		let numEvaluaciones = instanceState.numEvaluaciones[this.state.numEvaluacionesKey];
+		numEvaluaciones = numEvaluaciones ? numEvaluaciones.value : "0";
+		console.log('MainGestionAsignatura - render - numEvaluaciones:', numEvaluaciones);
+
+		let numNotas = instanceState.numNotas[this.state.numNotasKey];
+		numNotas = numNotas ? numNotas.value : "0";
+		console.log('MainGestionAsignatura - render - numNotas:', numNotas);
+
 		console.log('MainGestionAsignatura - render - props:', this.props);
-		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
+		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
 		return (
-			<>
-				<h2>Gestión de la asignatura {this.props.addrEthAsig}</h2>
+			<Router>
+				<h2>Gestión de la asignatura {addrEthAsig}</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
+				
+				<NavBar addrEthAsig={addrEthAsig} />
 
-				{this.state.contractName}
+				<Route path="/gestion-asignatura/:addrEthAsig/datos-asignatura">
+					<AsignaturaDatos	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contractName={this.state.contractName}
+										miDireccion={miDireccion}
+										owner={owner}
+										coordinador={coordinador}
+										alumnosLength={alumnosLength}
+										numAlumnos={numAlumnos}
+										profesoresLength={profesoresLength}
+										numProfesores={numProfesores}
+										numEvaluaciones={numEvaluaciones}
+										numNotas={numNotas} />
+                </Route>
 
-				<p>Coordinador: 
-					<ContractData 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.state.contractName}
-									method={"coordinador"} />
-				</p>
+                <Route path="/gestion-asignatura/:addrEthAsig/alumnos">
+					<AsignaturaAlumnos	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contractName={this.state.contractName}
+										miDireccion={miDireccion}
+										owner={owner}
+										coordinador={coordinador}
+										alumnosLength={alumnosLength}
+										numAlumnos={numAlumnos}
+										profesoresLength={profesoresLength}
+										numProfesores={numProfesores}
+										numEvaluaciones={numEvaluaciones}
+										numNotas={numNotas} />
+                </Route>
 
-				<p>Owner: 
-					<ContractData 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.state.contractName}
-									method={"owner"} />
-				</p>
+                <Route path="/gestion-asignatura/:addrEthAsig/profesores">
+					Profesores
+                </Route>
 
-				<p>Nombre asignatura: 
-					<ContractData 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.state.contractName}
-									method={"nombreAsignatura"} />
-				</p>
+                <Route path="/gestion-asignatura/:addrEthAsig/evaluaciones">
+					Evaluaciones
+                </Route>
 
-				<p>Curso académico: 
-					<ContractData 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.state.contractName}
-									method={"cursoAcademico"} />
-				</p>
+                <Route path="/gestion-asignatura/:addrEthAsig/notas">
+					Notas
+                </Route>
 
-				<p>Código asignatura: 
-					<ContractData 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.state.contractName}
-									method={"codigoAsignatura"} />
-				</p>
-			</>
+			</Router>
 		);
 	}
 }
