@@ -8,7 +8,7 @@ import {
 
 import {newContextComponents} from "drizzle-react-components";
 
-import AsignaturaDatos from './AsignaturaDatos';
+import AsignaturaDatos from './Datos/AsignaturaDatos';
 import AsignaturaAlumnos from './Alumnos/AsignaturaAlumnos';
 import AsignaturaProfesores from './Profesores/AsignaturaProfesores';
 import AsignaturaEvaluaciones from './Evaluaciones/AsignaturaEvaluaciones';
@@ -40,6 +40,7 @@ class MainGestionAsignatura extends React.Component {
 		numAlumnosKey: null,
 		profesoresLengthKey: null,
 		numProfesoresKey: null,
+		evaluacionesLengthKey: null,
 		numEvaluacionesKey: null,
 		numNotasKey: null,
 	};
@@ -84,7 +85,7 @@ class MainGestionAsignatura extends React.Component {
 
 		let {
 			miDireccionKey, ownerKey, coordinadorKey, alumnosLengthKey, numAlumnosKey, profesoresLengthKey,
-			numProfesoresKey, numEvaluacionesKey, numNotasKey
+			numProfesoresKey, evaluacionesLengthKey, numEvaluacionesKey, numNotasKey
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
@@ -122,6 +123,11 @@ class MainGestionAsignatura extends React.Component {
 			changed = true;
 		}
 
+		if (!evaluacionesLengthKey) {
+			evaluacionesLengthKey = instance.methods.evaluacionesLength.cacheCall();
+			changed = true;
+		}
+
 		if (!numEvaluacionesKey) {
 			numEvaluacionesKey = instance.methods.numEvaluaciones.cacheCall();
 			changed = true;
@@ -141,6 +147,7 @@ class MainGestionAsignatura extends React.Component {
 				numAlumnosKey,
 				profesoresLengthKey,
 				numProfesoresKey,
+				evaluacionesLengthKey,
 				numEvaluacionesKey,
 				numNotasKey,
 			});
@@ -190,6 +197,10 @@ class MainGestionAsignatura extends React.Component {
 		numProfesores = numProfesores ? numProfesores.value : "0";
 		console.log('MainGestionAsignatura - render - numProfesores:', numProfesores);
 
+		let evaluacionesLength = instanceState.evaluacionesLength[this.state.evaluacionesLengthKey];
+		evaluacionesLength = evaluacionesLength ? evaluacionesLength.value : "0";
+		console.log('MainGestionAsignatura - render - evaluacionesLength:', evaluacionesLength);
+
 		let numEvaluaciones = instanceState.numEvaluaciones[this.state.numEvaluacionesKey];
 		numEvaluaciones = numEvaluaciones ? numEvaluaciones.value : "0";
 		console.log('MainGestionAsignatura - render - numEvaluaciones:', numEvaluaciones);
@@ -219,6 +230,7 @@ class MainGestionAsignatura extends React.Component {
 										numAlumnos={numAlumnos}
 										profesoresLength={profesoresLength}
 										numProfesores={numProfesores}
+										evaluacionesLength={evaluacionesLength}
 										numEvaluaciones={numEvaluaciones}
 										numNotas={numNotas} />
                 </Route>
@@ -234,6 +246,7 @@ class MainGestionAsignatura extends React.Component {
 										numAlumnos={numAlumnos}
 										profesoresLength={profesoresLength}
 										numProfesores={numProfesores}
+										evaluacionesLength={evaluacionesLength}
 										numEvaluaciones={numEvaluaciones}
 										numNotas={numNotas} />
                 </Route>
@@ -249,6 +262,7 @@ class MainGestionAsignatura extends React.Component {
 											numAlumnos={numAlumnos}
 											profesoresLength={profesoresLength}
 											numProfesores={numProfesores}
+											evaluacionesLength={evaluacionesLength}
 											numEvaluaciones={numEvaluaciones}
 											numNotas={numNotas} />
                 </Route>
@@ -264,6 +278,7 @@ class MainGestionAsignatura extends React.Component {
 											numAlumnos={numAlumnos}
 											profesoresLength={profesoresLength}
 											numProfesores={numProfesores}
+											evaluacionesLength={evaluacionesLength}
 											numEvaluaciones={numEvaluaciones}
 											numNotas={numNotas} />
                 </Route>
@@ -279,6 +294,7 @@ class MainGestionAsignatura extends React.Component {
 										numAlumnos={numAlumnos}
 										profesoresLength={profesoresLength}
 										numProfesores={numProfesores}
+										evaluacionesLength={evaluacionesLength}
 										numEvaluaciones={numEvaluaciones}
 										numNotas={numNotas} />
                 </Route>

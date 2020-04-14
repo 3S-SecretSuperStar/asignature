@@ -59,10 +59,9 @@ class DesplegarYAnadirAsignatura extends React.Component {
 
 		let addrAsignaturaDesplegada = contratoInstance.options.address;
 		console.log(codigoAsig, 'desplegada en:', addrAsignaturaDesplegada);
-		alert(codigoAsig + ' desplegada en:\n' + addrAsignaturaDesplegada);
 
 		// añadir asignatura al ćatálogo
-		const txId = instance.methods.anadirAsignatura.cacheSend(addrAsignaturaDesplegada);
+		const txId = instance.methods.anadirAsignatura.cacheSend(addrAsignaturaDesplegada, titulacion + " - " + nombreAsig);
 
 	}
 

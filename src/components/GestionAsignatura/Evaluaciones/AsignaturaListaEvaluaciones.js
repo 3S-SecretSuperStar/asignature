@@ -37,7 +37,7 @@ class AsignaturaListaEvaluaciones extends React.Component {
 		}
 
 		let tbodyListaEvaluaciones = [];
-		for (let i = 0; i < this.props.numEvaluaciones; i++) {
+		for (let i = 0; i < this.props.evaluacionesLength; i++) {
 			tbodyListaEvaluaciones[i] = (
 				<ContractData	key={i}
 								drizzle={drizzle}
@@ -48,12 +48,19 @@ class AsignaturaListaEvaluaciones extends React.Component {
 								render={(evaluacion) => (
 									<tr>
 										<td>{evaluacion.indexEvaluacion}</td>
-										<td>{evaluacion.tipoConvocatoria}</td>
-										<td>{evaluacion.obligatoria}</td>
+										<td>
+											{evaluacion.tipoConvocatoria === "0" ? "Ord. continua" : ""}
+											{evaluacion.tipoConvocatoria === "1" ? "Ord. final" : ""}
+											{evaluacion.tipoConvocatoria === "2" ? "Extraordinaria" : ""}
+										</td>
+										<td>
+											{evaluacion.obligatoria === "0" ? "Sí" : ""}
+											{evaluacion.obligatoria === "1" ? "No" : ""}
+										</td>
 										<td>{evaluacion.nombre}</td>
-										<td>{evaluacion.fecha}</td>
-										<td>{evaluacion.porcAportacion}</td>
-										<td>{evaluacion.notaMinima}</td>
+										<td>{evaluacion.fecha ? (new Date(1000 * evaluacion.fecha)).toLocaleString() : ""}</td>
+										<td>{evaluacion.porcAportacion}%</td>
+										<td>{evaluacion.notaMinima ? (evaluacion.notaMinima / 10).toFixed(1) : ""}</td>
 									</tr>
 								)} />
 			);
@@ -63,6 +70,7 @@ class AsignaturaListaEvaluaciones extends React.Component {
 			<>
 				<h3>Lista de evaluaciones creadas</h3>
 
+				<p>{this.props.evaluacionesLength} evaluacionesLength</p>
 				<p>{this.props.numEvaluaciones} evaluaciones</p>
 
 				<table>

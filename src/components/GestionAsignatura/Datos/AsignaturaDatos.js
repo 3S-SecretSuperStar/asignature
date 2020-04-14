@@ -2,7 +2,8 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {jsonInterface} from '../../utils/varios.js';
+import {jsonInterface} from '../../../utils/varios.js';
+import {crearObjetoFromFormData} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -18,6 +19,31 @@ class AsignaturaDatos extends React.Component {
 
 	componentDidUpdate() {
 		
+	}
+
+	actualizarCoordinador = (event) => {
+		event.preventDefault();
+
+		// obtener valores del formulario
+		const formData = new FormData(event.target);
+		let objFormData = crearObjetoFromFormData(formData);
+		let {addrEthCoord} = objFormData;
+
+		// limpiar formulario
+		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
+		document.getElementById('actualizar-coordinador-form').reset();
+
+		// mandar transacción
+		const {drizzle, drizzleState} = this.props;
+
+		const instance = drizzle.contracts[this.props.contractName];
+
+		// TODO: comprobar que está el coordinador (profesor) creado
+
+		const txId = instance.methods.actualizarCoordinador.cacheSend(
+			addrEthCoord,
+			{from: this.props.miDireccion}
+		);
 	}
 
 	render() {
@@ -36,16 +62,6 @@ class AsignaturaDatos extends React.Component {
 				<table>
 					<tbody>
 						<tr>
-							<td>Coordinador</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"coordinador"} />
-							</td>
-						</tr>
-
-						<tr>
 							<td>Owner</td>
 							<td>
 								<ContractData 	drizzle={drizzle}
@@ -55,7 +71,15 @@ class AsignaturaDatos extends React.Component {
 							</td>
 						</tr>
 
-						
+						<tr>
+							<td>Coordinador</td>
+							<td>
+								<ContractData 	drizzle={drizzle}
+												drizzleState={drizzleState}
+												contract={contractName}
+												method={"coordinador"} />
+							</td>
+						</tr>						
 
 						<tr>
 							<td>Nombre asignatura</td>
@@ -174,6 +198,16 @@ class AsignaturaDatos extends React.Component {
 						</tr>
 					</tbody>
 				</table>
+
+				<h3>Gestión de la asignatura</h3>
+
+				<h4>Actualizar coordinador</h4>
+				<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
+					<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
+					<input type="text" id="addrEthCoord" name="addrEthCoord" />
+
+					<button type="submit">Actualizar coordinador</button>
+				</form>
 			</>
 		);
 	}

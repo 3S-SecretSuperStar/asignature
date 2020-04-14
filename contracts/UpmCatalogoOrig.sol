@@ -1,18 +1,12 @@
 pragma solidity >=0.5.12 <0.6.0;
 
-contract UpmCatalogo {
+contract UpmCatalogoOrig {
     
     address public owner;
     
     uint public numAsignaturas;
     address[] public listaAsignaturas;
-    //mapping(address => uint) public mapAsignaturas; // el índice del array
-    mapping(address => AsignaturaConNombre) public mapAsignaturas;
-
-    struct AsignaturaConNombre {
-        uint indexArray;
-        string nombreAMostrar;
-    }
+    mapping(address => uint) public mapAsignaturas; // el índice del array
     
     constructor() public {
         owner = msg.sender;
@@ -33,16 +27,15 @@ contract UpmCatalogo {
 
 
     function anadirAsignatura(
-        address _addrContractAsignatura,
-        string memory _nombreAMostrar
+        address _addrContractAsignatura
     ) public soloOwner() {
         // comprobar que no esta ya añadida
         if (listaAsignaturas.length != 0) {
-            uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura].indexArray;
+            uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura];
             require(_addrContractAsignatura != listaAsignaturas[indexArrayAsig], "anadirAsignatura - Asignatura ya creada.");
         }
         
-        mapAsignaturas[_addrContractAsignatura] = AsignaturaConNombre(listaAsignaturas.length, _nombreAMostrar);
+        mapAsignaturas[_addrContractAsignatura] = listaAsignaturas.length;
         listaAsignaturas.push(_addrContractAsignatura);
         
         numAsignaturas++;
@@ -53,7 +46,7 @@ contract UpmCatalogo {
     ) public soloOwner() {
         // comprobar que esta creada la Asignatura
         require(numAsignaturas != 0, "eliminarAsignatura - No hay Asignaturas creadas.");
-        uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura].indexArray;
+        uint indexArrayAsig = mapAsignaturas[_addrContractAsignatura];
         require(_addrContractAsignatura == listaAsignaturas[indexArrayAsig], "eliminarAsignatura - Asignatura no creada.");
         
         delete mapAsignaturas[_addrContractAsignatura];

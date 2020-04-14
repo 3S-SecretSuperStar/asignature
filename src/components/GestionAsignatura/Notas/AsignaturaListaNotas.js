@@ -63,7 +63,16 @@ class AsignaturaListaNotas extends React.Component {
 		for (let i = 0; i < this.props.numEvaluaciones; i++) {
 			theadtr.push(
 				<th>
-					E<sub>{i}</sub>
+					E<sub>{i}</sub> (
+					<ContractData	drizzle={drizzle}
+									drizzleState={drizzleState}
+									contract={this.props.contractName}
+									method={"listaEvaluaciones"}
+									methodArgs={[i]}
+									render={(evaluacion) => (
+										<span>{evaluacion.nombre}</span>
+									)} />
+					)
 				</th>
 			);
 		}
@@ -75,20 +84,18 @@ class AsignaturaListaNotas extends React.Component {
 
 			if (addrEthAlum != "" && addrEthAlum != "0x0000000000000000000000000000000000000000") {
 				let notasUnAlumno = [];
-				//notasUnAlumno.push();
-
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
 					notasUnAlumno.push(
 						<ContractData	drizzle={drizzle}
 										drizzleState={drizzleState}
 										contract={this.props.contractName}
 										method={"mapNotas"}
-										methodArgs={[addrEthAlum, 0, j]}
+										methodArgs={[addrEthAlum, j]}
 										render={(nota) => (
 											<td>
 												{nota.tipoNota === "0" ? "NP" : ""}
 					                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
-					                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + "(MH)" : ""}
+					                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
 											</td>
 										)} />
 					);
@@ -96,7 +103,7 @@ class AsignaturaListaNotas extends React.Component {
 
 				tbodyListaNotas[i] = (
 					<tr>
-						<td>{addrEthAlum} (A<sub>{i}</sub>)</td>
+						<td>A<sub>{i}</sub> ({addrEthAlum})</td>
 						{notasUnAlumno}
 					</tr>
 				);

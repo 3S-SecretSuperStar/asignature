@@ -30,7 +30,7 @@ contract("UpmCatalogo", accounts => {
 		assert.equal(0, numAsignaturas, "Todavía no debe haber ninguna asignatura registrada.");
 
         try {
-            await upmCatalogo.eliminarAsignatura(addrContractAsignatura);
+            await upmCatalogo.eliminarAsignatura(addrContractAsignaturaNoCreada);
         } catch(err) {
             error = err.toString().includes(errorMsg);
         } finally {
@@ -39,6 +39,7 @@ contract("UpmCatalogo", accounts => {
     });
 
     it("No se permite añadir una asignatura a quien no es owner", async () => {
+        let nombreAMostrar = "Nombre a mostrar";
         let notOwner = accounts[1];
         let errorMsg = "Sólo el owner puede hacer esta operación.";
         let error = false;
@@ -49,7 +50,7 @@ contract("UpmCatalogo", accounts => {
 
         // intentar añadir una asignatura
         try {
-            await upmCatalogo.anadirAsignatura(addrContractAsignatura, {from: notOwner});
+            await upmCatalogo.anadirAsignatura(addrContractAsignatura, nombreAMostrar, {from: notOwner});
         } catch(err) {
             error = err.toString().includes(errorMsg);
         } finally {
@@ -62,12 +63,14 @@ contract("UpmCatalogo", accounts => {
     });
 
 	it("Se añade correctamente una asignatura", async () => {
+		let nombreAMostrar = "Nombre a mostrar";
+
 		// comprobar que hay 0 asignaturas
 		let numAsignaturas = await upmCatalogo.numAsignaturas();
 		assert.equal(0, numAsignaturas, "Todavía no debe haber ninguna asignatura registrada.");
 
 		// añadir asignatura
-		await upmCatalogo.anadirAsignatura(addrContractAsignatura);
+		await upmCatalogo.anadirAsignatura(addrContractAsignatura, nombreAMostrar);
 
 		// comprobar que hay 1 asignatura
 		numAsignaturas = await upmCatalogo.numAsignaturas();
@@ -75,6 +78,7 @@ contract("UpmCatalogo", accounts => {
 	});
 
 	it("No se permite volver a añadir una asignatura que ya está creada", async () => {
+		let nombreAMostrar = "Nombre a mostrar";
 		let errorMsg = "anadirAsignatura - Asignatura ya creada.";
         let error = false;
 
@@ -85,7 +89,7 @@ contract("UpmCatalogo", accounts => {
 
 		// intentar añadir asignatura ya creada
         try {
-            await upmCatalogo.anadirAsignatura(addrContractAsignatura);
+            await upmCatalogo.anadirAsignatura(addrContractAsignatura, nombreAMostrar);
         } catch(err) {
             error = err.toString().includes(errorMsg);
         } finally {
@@ -99,7 +103,7 @@ contract("UpmCatalogo", accounts => {
 
 	it("Se lee correctamente una asignatura", async () => {
 		let asignaturaIndex = await upmCatalogo.mapAsignaturas(addrContractAsignatura);
-		let resultadoArray = await upmCatalogo.listaAsignaturas(asignaturaIndex);
+		let resultadoArray = await upmCatalogo.listaAsignaturas(asignaturaIndex.indexArray.toNumber());
 
 		assert.equal(addrContractAsignatura, resultadoArray);
 	});
@@ -108,7 +112,7 @@ contract("UpmCatalogo", accounts => {
         let errorMsg = "eliminarAsignatura - Asignatura no creada.";
         let error = false;
 
-        // comprobar que hay 1 asignaturas
+        // comprobar que hay 1 asignatura
 		let numAsignaturas = await upmCatalogo.numAsignaturas();
 		assert.equal(1, numAsignaturas, "Debe haber una asignatura registrada.");
 

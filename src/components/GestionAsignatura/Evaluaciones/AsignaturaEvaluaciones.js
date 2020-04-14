@@ -47,6 +47,7 @@ class AsignaturaEvaluaciones extends React.Component {
 												numAlumnos={this.props.numAlumnos}
 												profesoresLength={this.props.profesoresLength}
 												numProfesores={this.props.numProfesores}
+												evaluacionesLength={this.props.evaluacionesLength}
 												numEvaluaciones={this.props.numEvaluaciones}
 												numNotas={this.props.numNotas} />
 
@@ -60,6 +61,7 @@ class AsignaturaEvaluaciones extends React.Component {
 											numAlumnos={this.props.numAlumnos}
 											profesoresLength={this.props.profesoresLength}
 											numProfesores={this.props.numProfesores}
+											evaluacionesLength={this.props.evaluacionesLength}
 											numEvaluaciones={this.props.numEvaluaciones}
 											numNotas={this.props.numNotas} />
 			</>

@@ -6,6 +6,7 @@ import {jsonInterface} from '../../../utils/varios.js';
 
 import AsignaturaListaNotas from './AsignaturaListaNotas';
 import AsignaturaAnadirNota from './AsignaturaAnadirNota';
+import AsignaturaEliminarNota from './AsignaturaEliminarNota';
 
 const {ContractData} = newContextComponents;
 
@@ -62,6 +63,19 @@ class AsignaturaNotas extends React.Component {
 										numProfesores={this.props.numProfesores}
 										numEvaluaciones={this.props.numEvaluaciones}
 										numNotas={this.props.numNotas} />
+
+				<AsignaturaEliminarNota 	drizzle={drizzle}
+											drizzleState={drizzleState}
+											contractName={this.props.contractName}
+											miDireccion={this.props.miDireccion}
+											owner={this.props.owner}
+											coordinador={this.props.coordinador}
+											alumnosLength={this.props.alumnosLength}
+											numAlumnos={this.props.numAlumnos}
+											profesoresLength={this.props.profesoresLength}
+											numProfesores={this.props.numProfesores}
+											numEvaluaciones={this.props.numEvaluaciones}
+											numNotas={this.props.numNotas} />
 			</>
 		);
 	}

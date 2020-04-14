@@ -1,6 +1,6 @@
 pragma solidity >=0.5.12 <0.6.0;
 
-contract UpmAsignatura {
+contract UpmAsignaturaOrig {
     
     address public owner;
     
@@ -27,22 +27,21 @@ contract UpmAsignatura {
     Evaluacion[] public listaEvaluaciones;
     
     uint public numNotas;
-    mapping(address => mapping(uint8 => Nota)) public mapNotas;         // address: dirección Alumno
-                                                                        // uint8: key Evaluacion
+    mapping(address => mapping(uint8 => mapping(uint8 => Nota))) public mapNotas; // address: dirección Alumno
+                                                                                        // uint8:    key convocatoria
+                                                                                        // uint8:    key Evaluacion
     
     enum TipoNota { NoPresentado, Normal, MatriculaHonor }
     
     enum TipoConvocatoria { OrdinariaContinua, OrdinariaFinal, Extraordinaria }
     
     enum TipoAsignatura { Obligatoria, Optativa }
-
-    enum EvaluacionObligatoria { Optativa, Obligatoria }
     
     struct Evaluacion {
         uint8 indexEvaluacion;
         string nombre;
         uint fecha;
-        EvaluacionObligatoria obligatoria;
+        bool obligatoria;
         uint notaMinima;
         uint porcAportacion;
         TipoConvocatoria tipoConvocatoria;
@@ -101,10 +100,6 @@ contract UpmAsignatura {
     function profesoresLength() public view returns(uint _profesoresLength) {
         _profesoresLength = listaProfesores.length;
     }
-
-    function evaluacionesLength() public view returns(uint _evaluacionesLength) {
-        _evaluacionesLength = listaEvaluaciones.length;
-    }
     
 
     // EVALUACIONES
@@ -112,7 +107,7 @@ contract UpmAsignatura {
     function crearEvaluacion(
         string memory _nombre,
         uint _fecha,
-        EvaluacionObligatoria _obligatoria,
+        bool _obligatoria,
         uint _notaMinima,
         uint _porcAportacion,
         TipoConvocatoria _tipoConvocatoria
@@ -127,7 +122,7 @@ contract UpmAsignatura {
     ) public soloOwnerOCoordinadorOProfesorOAlumno() view returns(
         string memory _nombre,
         uint _fecha,
-        EvaluacionObligatoria _obligatoria,
+        bool _obligatoria,
         uint _notaMinima,
         uint _porcAportacion,
         TipoConvocatoria _tipoConvocatoria
@@ -147,7 +142,7 @@ contract UpmAsignatura {
         uint8 _indexEval,
         string memory _nombre,
         uint _fecha,
-        EvaluacionObligatoria _obligatoria,
+        bool _obligatoria,
         uint _notaMinima,
         uint _porcAportacion,
         TipoConvocatoria _tipoConvocatoria
@@ -235,6 +230,7 @@ contract UpmAsignatura {
     
     function crearNota(
         address _addrEthAlum,
+        TipoConvocatoria _tipoConvocatoria,
         uint8 _indexEval,
         TipoNota _tipoNota,
         uint _calificacion
@@ -247,16 +243,17 @@ contract UpmAsignatura {
         require(_indexEval >= 0, "crearNota - No existen los índices de evaluacion negativos.");
         require(_indexEval <= uint8(listaEvaluaciones.length) - 1, "crearNota - Evaluacion no creada.");
         // comprobar que no esta la Nota creada
-        require(!mapNotas[_addrEthAlum][_indexEval].existsNota, "crearNota - Nota ya creada.");
+        require(!mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].existsNota, "crearNota - Nota ya creada.");
         // TODO: comprobar entrada calificacion bien
         
-        mapNotas[_addrEthAlum][_indexEval] = Nota(_tipoNota, _calificacion, true);
+        mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval] = Nota(_tipoNota, _calificacion, true);
         
         numNotas++;
     }
     
     function leerNota(
         address _addrEthAlum,
+        TipoConvocatoria _tipoConvocatoria,
         uint8 _indexEval
     ) public soloOwnerOCoordinadorOProfesor() view returns(
         TipoNota _tipoNota,
@@ -270,13 +267,14 @@ contract UpmAsignatura {
         require(_indexEval >= 0, "leerNota - No existen los índices de evaluacion negativos.");
         require(_indexEval <= uint8(listaEvaluaciones.length) - 1, "leerNota - Evaluacion no creada.");
         // comprobar que esta la Nota creada
-        require(mapNotas[_addrEthAlum][_indexEval].existsNota, "leerNota - La nota no esta creada.");
+        require(mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].existsNota, "leerNota - La nota no esta creada.");
         
-        _tipoNota = mapNotas[_addrEthAlum][_indexEval].tipoNota;
-        _calificacion = mapNotas[_addrEthAlum][_indexEval].calificacion;
+        _tipoNota = mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].tipoNota;
+        _calificacion = mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].calificacion;
     }
     
     function leerMiNota(
+        TipoConvocatoria _tipoConvocatoria,
         uint8 _indexEval
     ) public soloAlumno() view returns(
         TipoNota _tipoNota,
@@ -290,14 +288,15 @@ contract UpmAsignatura {
         require(_indexEval >= 0, "leerMiNota - No existen los índices de evaluacion negativos.");
         require(_indexEval <= uint8(listaEvaluaciones.length) - 1, "leerMiNota - Evaluacion no creada.");
         // comprobar que esta la Nota creada
-        require(mapNotas[msg.sender][_indexEval].existsNota, "leerMiNota - La nota no existe.");
+        require(mapNotas[msg.sender][uint8(_tipoConvocatoria)][_indexEval].existsNota, "leerMiNota - La nota no existe.");
         
-        _tipoNota = mapNotas[msg.sender][_indexEval].tipoNota;
-        _calificacion = mapNotas[msg.sender][_indexEval].calificacion;
+        _tipoNota = mapNotas[msg.sender][uint8(_tipoConvocatoria)][_indexEval].tipoNota;
+        _calificacion = mapNotas[msg.sender][uint8(_tipoConvocatoria)][_indexEval].calificacion;
     }
     
     function actualizarNota(
         address _addrEthAlum,
+        TipoConvocatoria _tipoConvocatoria,
         uint8 _indexEval,
         TipoNota _tipoNota,
         uint _calificacion
@@ -310,14 +309,15 @@ contract UpmAsignatura {
         require(_indexEval >= 0, "actualizarNota - No existen los índices de evaluacion negativos.");
         require(_indexEval <= uint8(listaEvaluaciones.length) - 1, "actualizarNota - Evaluacion no creada.");
         // comprobar que esta la Nota creada
-        require(mapNotas[_addrEthAlum][_indexEval].existsNota, "actualizarNota - La nota no existe.");
+        require(mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].existsNota, "actualizarNota - La nota no existe.");
         // TODO: comprobar entrada calificacion bien
         
-        mapNotas[_addrEthAlum][_indexEval] = Nota(_tipoNota, _calificacion, true);
+        mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval] = Nota(_tipoNota, _calificacion, true);
     }
     
     function borrarNota(
         address _addrEthAlum,
+        TipoConvocatoria _tipoConvocatoria,
         uint8 _indexEval
     ) public soloOwnerOCoordinadorOProfesor() {
         // comprobar que esta el Alumno creado
@@ -328,56 +328,53 @@ contract UpmAsignatura {
         require(_indexEval >= 0, "borrarNota - No existen los índices de evaluacion negativos.");
         require(_indexEval <= uint8(listaEvaluaciones.length) - 1, "borrarNota - Evaluacion no creada.");
         // comprobar que esta la Nota creada
-        require(mapNotas[_addrEthAlum][_indexEval].existsNota, "borrarNota - La nota no existe.");
+        require(mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval].existsNota, "borrarNota - La nota no existe.");
         
-        delete mapNotas[_addrEthAlum][_indexEval];
+        delete mapNotas[_addrEthAlum][uint8(_tipoConvocatoria)][_indexEval];
         
         numNotas--;
     }
     
     
     
-    function isOwner() public view returns(bool _isOwner) {
-        _isOwner = msg.sender == owner;
-    }
-
-    function isCoordinador() public view returns(bool _isCoordinador) {
-        _isCoordinador = msg.sender == coordinador;
-    }
-
-    function isProfesor() public view returns(bool _isProfesor) {
-        uint indexArrayProf = mapProfesores[msg.sender];
-        _isProfesor = (numProfesores > 0) && (msg.sender == listaProfesores[indexArrayProf]);
-    }
-
-    function isAlumno() public view returns(bool _isAlumno) {
-        uint indexArrayAlum = mapAlumnos[msg.sender];
-        _isAlumno = (numAlumnos > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
-    }
-
     
     modifier soloOwner() {
-        require(isOwner(), "Sólo el owner puede hacer esta operación.");
+        bool isOwner = msg.sender == owner;
+        require(isOwner, "Sólo el owner puede hacer esta operación.");
         _;
     }
 
     modifier soloOwnerOCoordinador() {
-        require(isOwner() || isCoordinador(), "Sólo el owner o el coordinador pueden hacer esta operación.");
+        bool isOwner = msg.sender == owner;
+        bool isCoordinador = msg.sender == coordinador;
+        require(isOwner || isCoordinador, "Sólo el owner o el coordinador pueden hacer esta operación.");
         _;
     }
 
     modifier soloOwnerOCoordinadorOProfesor() {
-        require(isOwner() || isCoordinador() || isProfesor(), "Sólo el owner, el coordinador o un profesor pueden hacer esta operación.");
+        bool isOwner = msg.sender == owner;
+        bool isCoordinador = msg.sender == coordinador;
+        uint indexArrayProf = mapProfesores[msg.sender];
+        bool isProfesor = (numProfesores > 0) && (msg.sender == listaProfesores[indexArrayProf]);
+        require(isOwner || isCoordinador || isProfesor, "Sólo el owner, el coordinador o un profesor pueden hacer esta operación.");
         _;
     }
 
     modifier soloOwnerOCoordinadorOProfesorOAlumno() {
-        require(isOwner() || isCoordinador() || isProfesor() || isAlumno(), "Sólo el owner, el coordinador, un profesor o un alumno pueden hacer esta operación.");
+        bool isOwner = msg.sender == owner;
+        bool isCoordinador = msg.sender == coordinador;
+        uint indexArrayProf = mapProfesores[msg.sender];
+        bool isProfesor = (numProfesores > 0) && (msg.sender == listaProfesores[indexArrayProf]);
+        uint indexArrayAlum = mapAlumnos[msg.sender];
+        bool isAlumno = (numAlumnos > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
+        require(isOwner || isCoordinador || isProfesor || isAlumno, "Sólo el owner, el coordinador, un profesor o un alumno pueden hacer esta operación.");
         _;
     }
 
     modifier soloAlumno() {
-        require(isAlumno(), "Sólo un alumno puede hacer esta operación.");
+        uint indexArrayAlum = mapAlumnos[msg.sender];
+        bool isAlumno = (numAlumnos > 0) && (msg.sender == listaAlumnos[indexArrayAlum]);
+        require(isAlumno, "Sólo un alumno puede hacer esta operación.");
         _;
     }
 

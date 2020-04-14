@@ -58,7 +58,7 @@ class ListaAsignaturas extends React.Component {
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthAsignatura} = objFormData;
 
-		console.log("Has pulsado el botón para mandar eliminar la asignatura", addrEthAsignatura);
+		console.log("Has pulsado el botón para eliminar la asignatura", addrEthAsignatura);
 
 		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
@@ -87,7 +87,6 @@ class ListaAsignaturas extends React.Component {
 			}
 		}
 		console.log('ListaAsignaturas - render - direccionesAsignaturasAnadidas', direccionesAsignaturasAnadidas);
-
 		console.log('ListaAsignaturas - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
 		let tbodyListaAsignaturas = [];
@@ -99,10 +98,32 @@ class ListaAsignaturas extends React.Component {
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
 					</td>
 					<td>
+						<ContractData 	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contract={"UpmCatalogo"}
+										method={"mapAsignaturas"}
+										methodArgs={[addrEthAsignatura]}
+										render={(asignaturaConNombre) => (
+											<span>{asignaturaConNombre.nombreAMostrar}</span>
+										)} />
+					</td>
+					<td>
 						<form onSubmit={this.eliminarAsignatura}>
 							<input type="hidden" value={addrEthAsignatura} name="addrEthAsignatura" />
 							<button type="submit">Eliminar asignatura</button>
 						</form>
+					</td>
+					<td>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>Ir</Link>
+					</td>
+					<td>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/profesores`}>Ir</Link>
+					</td>
+					<td>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/evaluaciones`}>Ir</Link>
+					</td>
+					<td>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/notas`}>Ir</Link>
 					</td>
 				</tr>
 			);
@@ -121,7 +142,12 @@ class ListaAsignaturas extends React.Component {
 					<thead>
 						<tr>
 							<th>Dirección</th>
+							<th>Nombre a mostrar</th>
 							<th>Eliminar del catálogo</th>
+							<th>Alumnos</th>
+							<th>Profesores</th>
+							<th>Evaluaciones</th>
+							<th>Notas</th>
 						</tr>
 					</thead>
 					<tbody>

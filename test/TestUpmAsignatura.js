@@ -124,12 +124,11 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(addrEthAlum, alumno, "La dirección del alumno creado por el owner debe coincidir.")
 	});
 
-	// crear evaluacion
 	it("El owner crea correctamente una evaluación", async () => {
 		let nombre = "Prueba";
 		let index = 0;
 		let fecha = 86146456;
-		let obligatoria = true;
+		let obligatoria = 1;
 		let notaMinima = 40;
 		let porcAportacion = 25;
 		let tipoConvocatoria = 0; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
@@ -141,11 +140,11 @@ contract("UpmAsignatura", accounts => {
 		// crear evaluacion
 		let tx = await upmAsignatura.crearEvaluacion(nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria, {from: desplegador});
 
-		// comprobar que hay 1 evaluacion
+		// comprobar que hay 1 evaluación
 		numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(1, numEvaluaciones, "Debe haber una evaluación creada.");
 
-		// obtener evaluacion creada
+		// obtener evaluación creada
 		let evaluacion = await upmAsignatura.listaEvaluaciones(0);
 
 		// comprobar campos
@@ -162,12 +161,12 @@ contract("UpmAsignatura", accounts => {
 		let nombre = "Prueba";
 		let index = 0;
 		let fecha = 86146456;
-		let obligatoria = true;
+		let obligatoria = 1;
 		let notaMinima = 40;
 		let porcAportacion = 25;
 		let tipoConvocatoria = 0; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 
-		// comprobar que hay 1 evaluacion
+		// comprobar que hay 1 evaluación
 		let numEvaluaciones = await upmAsignatura.numEvaluaciones();
 		assert.equal(1, numEvaluaciones, "Debe haber una evaluación creada.");
 
@@ -183,12 +182,12 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(tipoConvocatoria, evaluacion._tipoConvocatoria, "El tipo de convocatoria de la evaluación debe coincidir.");
 	});
 
-	it("El owner actualiza correctamente una evaluacion", async () => {
+	it("El owner actualiza correctamente una evaluación", async () => {
 		// datos
 		let newNombre = "NewPrueba";
 		let index = 0;
 		let newFecha = 77146456;
-		let newObligatoria = false;
+		let newObligatoria = 0;
 		let newNotaMinima = 30;
 		let newPorcAportacion = 50;
 		let newTipoConvocatoria = 1; // 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
@@ -213,20 +212,18 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(newTipoConvocatoria, evaluacion.tipoConvocatoria, "El tipo de convocatoria de la evaluación debe coincidir.");
 	});
 
-	// crear nota
 	it("El owner crea correctamente una nota", async() => {
 		// datos
-		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
 
 		// comprobar que hay 0 notas
 		let numNotas = await upmAsignatura.numNotas();
-		assert.equal(0, numNotas, "No debe haber ningúna nota creada.");
+		assert.equal(0, numNotas, "No debe haber ninguna nota creada.");
 
 		// crear nota
-		let tx = await upmAsignatura.crearNota(addrEthAlum, tipoConvocatoria, indexEval, tipoNota, calificacion, {from: desplegador});
+		let tx = await upmAsignatura.crearNota(addrEthAlum, indexEval, tipoNota, calificacion, {from: desplegador});
 		//console.log(tx);
 
 		// comprobar que hay 1 nota
@@ -234,18 +231,16 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// obtener nota creada
-		let nota = await upmAsignatura.mapNotas(addrEthAlum, tipoConvocatoria, indexEval);
+		let nota = await upmAsignatura.mapNotas(addrEthAlum, indexEval);
 
 		// comprobar campos
 		assert.equal(tipoNota, nota.tipoNota, "El tipo de nota debe coincidir.");
-		assert.equal(calificacion, nota.calificacion, "La calificacion debe coincidir.");
+		assert.equal(calificacion, nota.calificacion, "La calificación debe coincidir.");
 		assert.equal(true, nota.existsNota, "La nota debe existir.");
 	});
 
-	// leer nota
 	it("El owner lee correctamente una nota", async () => {
 		// datos
-		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
@@ -255,16 +250,15 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// leer nota
-		let nota = await upmAsignatura.leerNota(addrEthAlum, tipoConvocatoria, indexEval, {from: desplegador});
+		let nota = await upmAsignatura.leerNota(addrEthAlum, indexEval, {from: desplegador});
 
 		// comprobar campos
 		assert.equal(tipoNota, nota._tipoNota, "El tipo de nota debe coincidir.");
 		assert.equal(calificacion, nota._calificacion, "La calificación debe coincidir.");
 	});
 
-	it("Se lee correctamente mi nota", async () => {
+	it("Un alumno lee correctamente su nota", async () => {
 		// datos
-		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let tipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let calificacion = 80;
@@ -274,17 +268,16 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// leer nota
-		let nota = await upmAsignatura.leerMiNota(tipoConvocatoria, indexEval, {from: addrEthAlum});
+		let nota = await upmAsignatura.leerMiNota(indexEval, {from: addrEthAlum});
 
 		// comprobar campos
 		assert.equal(tipoNota, nota._tipoNota, "El tipo de nota debe coincidir.");
-		assert.equal(calificacion, nota._calificacion, "La calificacion debe coincidir.");
+		assert.equal(calificacion, nota._calificacion, "La calificación debe coincidir.");
 	});
 	
 
 	it("El owner actualiza correctamente una nota", async () => {
 		// datos
-		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 		let newTipoNota = 1;			// 0=NoPresentado, 1=Normal, 2=MatriculaHonor
 		let newCalificacion = 70;
@@ -294,10 +287,10 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// actualizar nota
-		await upmAsignatura.actualizarNota(addrEthAlum, tipoConvocatoria, indexEval, newTipoNota, newCalificacion, {from: desplegador});
+		await upmAsignatura.actualizarNota(addrEthAlum, indexEval, newTipoNota, newCalificacion, {from: desplegador});
 
 		// obtener nota actualizada
-		let nota = await upmAsignatura.mapNotas(addrEthAlum, tipoConvocatoria, indexEval);
+		let nota = await upmAsignatura.mapNotas(addrEthAlum, indexEval);
 
 		// comprobar campos
 		assert.equal(newTipoNota, nota.tipoNota, "El tipo de nota debe coincidir.");
@@ -307,7 +300,6 @@ contract("UpmAsignatura", accounts => {
 
 	// borrar nota
 	it("El owner elimina correctamente una nota", async () => {
-		let tipoConvocatoria = 1;	// 0=OrdinariaContinua, 1=OrdinariaFinal, 2=Extraordinaria
 		let indexEval = 0;
 
 		// comprobar que hay 1 nota
@@ -315,7 +307,7 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(1, numNotas, "Debe haber una nota creada.");
 
 		// eliminar nota
-		let tx = await upmAsignatura.borrarNota(addrEthAlum, tipoConvocatoria, indexEval, {from: desplegador});
+		let tx = await upmAsignatura.borrarNota(addrEthAlum, indexEval, {from: desplegador});
 
 		// comprobar que hay 0 alumnos
 		numNotas = await upmAsignatura.numNotas();

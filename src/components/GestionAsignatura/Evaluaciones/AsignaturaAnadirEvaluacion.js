@@ -24,14 +24,6 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 		let objFormData = crearObjetoFromFormData(formData);
 		let {nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria} = objFormData;
 
-		console.log('AsignaturaAnadirEvaluacion - crearEvaluacion - obligatoria', obligatoria);
-		console.log('AsignaturaAnadirEvaluacion - crearEvaluacion - typeof obligatoria', typeof obligatoria);
-
-		//obligatoria = obligatoria === "1" ? true : false;
-
-		console.log('AsignaturaAnadirEvaluacion - crearEvaluacion - obligatoria', obligatoria);
-		console.log('AsignaturaAnadirEvaluacion - crearEvaluacion - typeof obligatoria', typeof obligatoria);
-
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('crear-evaluacion-form').reset();
