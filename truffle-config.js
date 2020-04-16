@@ -64,7 +64,7 @@ module.exports = {
 
     ropsten: {
       provider: function() {
-         return new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/v3/" + process.env.PROJECT_ID)
+         return new HDWalletProvider(process.env.REACT_APP_MNEMONIC, "https://ropsten.infura.io/v3/" + process.env.REACT_APP_PROJECT_ID)
       },
       network_id: 3,
     }

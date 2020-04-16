@@ -12,7 +12,7 @@ const options = {
     web3: {
     	fallback: {
     		type: "ws",
-    		url: "wss://ropsten.infura.io/ws/v3/" + process.env.PROJECT_ID
+    		url: "wss://ropsten.infura.io/ws/v3/" + process.env.REACT_APP_PROJECT_ID
     	}
     }
 };

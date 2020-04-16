@@ -17,6 +17,8 @@ import AsignaturaMisNotas from './Notas/AsignaturaMisNotas';
 
 import {jsonInterface} from '../../utils/varios.js';
 
+require('dotenv').config();
+
 const NavBar = (props) => (
     <nav>
 		<Link to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>Datos de la asignatura</Link>&nbsp;&nbsp;&nbsp;

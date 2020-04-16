@@ -2,7 +2,7 @@ require('dotenv').config();
 
 let UpmAsignatura = artifacts.require("UpmAsignatura");
 
-let addrCoordinador = process.env.ADDR_COORD_DEPLOYER_ASIGNATURA;
+let addrCoordinador = process.env.REACT_APP_ADDR_COORD_DEPLOYER_ASIGNATURA;
 
 module.exports = function(deployer) {
 	deployer.deploy(UpmAsignatura,
