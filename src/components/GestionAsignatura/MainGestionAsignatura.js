@@ -17,20 +17,38 @@ import AsignaturaMisNotas from './Notas/AsignaturaMisNotas';
 
 import {jsonInterface} from '../../utils/varios.js';
 
-require('dotenv').config();
+const {ContractData, AccountData} = newContextComponents;
 
 const NavBar = (props) => (
     <nav>
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>Datos de la asignatura</Link>&nbsp;&nbsp;&nbsp;
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/alumnos`}>Alumnos</Link>&nbsp;&nbsp;&nbsp;
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/profesores`}>Profesores</Link>&nbsp;&nbsp;&nbsp;
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/evaluaciones`}>Evaluaciones</Link>&nbsp;&nbsp;&nbsp;
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas</Link>&nbsp;&nbsp;&nbsp;
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>Datos de la asignatura</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/alumnos`}>Alumnos</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/profesores`}>Profesores</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		
+		<Link to={`/gestion-asignatura/${props.addrEthAsig}/evaluaciones`}>Evaluaciones</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		
+		{(props.isOwner || props.isCoordinador || props.isProfesor)
+			?
+		<>
+			<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		</>
+			:
+		<>
+			<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas (no owner/coord/profe)</Link><span>&nbsp;&nbsp;&nbsp;</span>
+		</>
+		}
+		
 		{props.isAlumno
 			?
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas</Link>
+		<>
+			<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas</Link>
+		</>
 			: 
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas (no es alumno)</Link>
+		<>
+			<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas (no alumno)</Link>
+		</>
 		}
 	</nav>
 );
@@ -57,21 +75,21 @@ class MainGestionAsignatura extends React.Component {
 	};
 
 	anadirContratoDinamicamente() {
+		const {drizzle} = this.props;
 		const contractConfig = {
 			contractName: this.state.contractName,
-			web3Contract: new this.props.drizzle.web3.eth.Contract(
+			web3Contract: new drizzle.web3.eth.Contract(
 				jsonInterface,				// abi
 				this.props.addrEthAsig		// address del contrato UpmAsignatura desplegado
 			)
 		};
 		const events = [];
-		if (!this.props.drizzle.contracts[this.state.contractName]) {
-			this.props.drizzle.addContract(contractConfig, events);
+		if (!drizzle.contracts[this.state.contractName]) {
+			drizzle.addContract(contractConfig, events);
 		}
 	}
 
 	eliminarContratoDinamicamente() {
-		const contractName = "UpmAsignatura-" + this.props.addrEthAsig;
 		this.props.drizzle.deleteContract(this.state.contractName);
 	}
 
@@ -100,72 +118,72 @@ class MainGestionAsignatura extends React.Component {
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
-			miDireccionKey = instance.methods.miDireccion.cacheCall();
+			miDireccionKey = instance.methods.miDireccion.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!ownerKey) {
-			ownerKey = instance.methods.owner.cacheCall();
+			ownerKey = instance.methods.owner.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!coordinadorKey) {
-			coordinadorKey = instance.methods.coordinador.cacheCall();
+			coordinadorKey = instance.methods.coordinador.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!alumnosLengthKey) {
-			alumnosLengthKey = instance.methods.alumnosLength.cacheCall();
+			alumnosLengthKey = instance.methods.alumnosLength.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!numAlumnosKey) {
-			numAlumnosKey = instance.methods.numAlumnos.cacheCall();
+			numAlumnosKey = instance.methods.numAlumnos.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!profesoresLengthKey) {
-			profesoresLengthKey = instance.methods.profesoresLength.cacheCall();
+			profesoresLengthKey = instance.methods.profesoresLength.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!numProfesoresKey) {
-			numProfesoresKey = instance.methods.numProfesores.cacheCall();
+			numProfesoresKey = instance.methods.numProfesores.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!evaluacionesLengthKey) {
-			evaluacionesLengthKey = instance.methods.evaluacionesLength.cacheCall();
+			evaluacionesLengthKey = instance.methods.evaluacionesLength.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!numEvaluacionesKey) {
-			numEvaluacionesKey = instance.methods.numEvaluaciones.cacheCall();
+			numEvaluacionesKey = instance.methods.numEvaluaciones.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!numNotasKey) {
-			numNotasKey = instance.methods.numNotas.cacheCall();
+			numNotasKey = instance.methods.numNotas.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!isOwnerKey) {
-			isOwnerKey = instance.methods.isOwner.cacheCall();
+			isOwnerKey = instance.methods.isOwner.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!isCoordinadorKey) {
-			isCoordinadorKey = instance.methods.isCoordinador.cacheCall();
+			isCoordinadorKey = instance.methods.isCoordinador.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!isProfesorKey) {
-		isProfesorKey = instance.methods.isProfesor.cacheCall();
+		isProfesorKey = instance.methods.isProfesor.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
 		if (!isAlumnoKey) {
-			isAlumnoKey = instance.methods.isAlumno.cacheCall();
+			isAlumnoKey = instance.methods.isAlumno.cacheCall({from: this.props.miDireccion});
 			changed = true;
 		}
 
@@ -199,6 +217,8 @@ class MainGestionAsignatura extends React.Component {
 	render() {
 		const {drizzle, drizzleState, addrEthAsig} = this.props;
 
+		console.log('\n\n\n\n\n\n\n\n\n\n\n\n', this.props);
+
 		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 
 		const instanceState = drizzleState.contracts[this.state.contractName];
@@ -206,8 +226,19 @@ class MainGestionAsignatura extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
-		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
-		miDireccion = miDireccion ? miDireccion.value :"0x0";
+		// por alguna extraña razón, este método que suele funcionar devuelve siempre la dirección 0 de Ganache
+		// ContractData llamando a miDireccion() también devuelve la dirección 0 de Ganache
+		// AccountData, en cambio, sí que da la dirección buena con la que se está usando la dApp
+		let miDireccion2 = instanceState.miDireccion[this.state.miDireccionKey];
+		miDireccion2 = miDireccion2 ? miDireccion2.value : "0x0";
+		console.log('MainGestionAsignatura - render - miDireccion2:', miDireccion2);
+
+		/*let miDireccion = "0x0";
+		if (drizzleState && drizzleState.accounts && Object.keys(drizzleState.accounts).length > 0) {
+			miDireccion = drizzleState.accounts[0];
+		}*/
+		//let miDireccion = Object.keys(drizzleState.accounts).length > 0 ? drizzleState.accounts[0] : "0x0";
+		let miDireccion = drizzleState.accounts[0];
 		console.log('MainGestionAsignatura - render - miDireccion:', miDireccion);
 
 		let owner = instanceState.owner[this.state.ownerKey];
@@ -246,30 +277,65 @@ class MainGestionAsignatura extends React.Component {
 		numNotas = numNotas ? numNotas.value : "0";
 		//console.log('MainGestionAsignatura - render - numNotas:', numNotas);
 
-		let isOwner = instanceState.isOwner[this.state.isOwnerKey];
-		isOwner = isOwner ? isOwner.value : "0";
-		//console.log('MainGestionAsignatura - render - isOwner:', isOwner);
+		let isOwner = miDireccion === owner;
+		console.log('MainGestionAsignatura - render - isOwner:', isOwner);
 
-		let isCoordinador = instanceState.isCoordinador[this.state.isCoordinadorKey];
-		isCoordinador = isCoordinador ? isCoordinador.value : "0";
-		//console.log('MainGestionAsignatura - render - isCoordinador:', isCoordinador);
+		let isOwner2 = instanceState.isOwner[this.state.isOwnerKey];
+		isOwner2 = isOwner2 ? isOwner2.value : "0";
+		console.log('MainGestionAsignatura - render - isOwner2:', isOwner2);
+
+		let isCoordinador = miDireccion === coordinador;
+		console.log('MainGestionAsignatura - render - isCoordinador:', isCoordinador);
+
+		let isCoordinador2 = instanceState.isCoordinador[this.state.isCoordinadorKey];
+		isCoordinador2 = isCoordinador2 ? isCoordinador2.value : "0";
+		console.log('MainGestionAsignatura - render - isCoordinador2:', isCoordinador2);
 
 		let isProfesor = instanceState.isProfesor[this.state.isProfesorKey];
 		isProfesor = isProfesor ? isProfesor.value : "0";
-		//console.log('MainGestionAsignatura - render - isProfesor:', isProfesor);
+		console.log('MainGestionAsignatura - render - isProfesor:', isProfesor);
 
 		let isAlumno = instanceState.isAlumno[this.state.isAlumnoKey];
 		isAlumno = isAlumno ? isAlumno.value : "0";
-		//console.log('MainGestionAsignatura - render - isAlumno:', isAlumno);
+		console.log('MainGestionAsignatura - render - isAlumno:', isAlumno);
 
-		//console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(drizzle.contracts));
+		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(drizzle.contracts));
+
+		/*
+		<p>
+			Dirección ContractData:
+			<ContractData	drizzle={drizzle}
+							drizzleState={drizzleState}
+							contract={this.state.contractName}
+							method={"miDireccion"} />
+		</p>
+
+		<p>
+			AccountData:
+			<AccountData	drizzle={drizzle}
+							drizzleState={drizzleState}
+							accountIndex="0"
+							units="ether"
+							precision="9" />
+		</p>
+		*/
 
 		return (
-			<Router>
+			<>
 				<h2>Gestión de la asignatura {addrEthAsig}</h2>
-				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
+				<p>
+					Mi dirección: {miDireccion}
+					{isOwner ? " (owner)" : " (no owner)"}
+					{isCoordinador ? " (coordinador)" : " (no coordinador)"}
+					{isProfesor ? " (profesor)" : " (no profesor)"}
+					{isAlumno ? " (alumno)" : " (no alumno)"}
+				</p>
 				
-				<NavBar addrEthAsig={addrEthAsig} isAlumno={isAlumno} />
+				<NavBar	addrEthAsig={addrEthAsig}
+						isOwner={isOwner}
+						isCoordinador={isCoordinador}
+						isProfesor={isProfesor}
+						isAlumno={isAlumno} />
 
 				<Route path="/gestion-asignatura/:addrEthAsig/datos-asignatura">
 					<AsignaturaDatos	drizzle={drizzle}
@@ -391,7 +457,7 @@ class MainGestionAsignatura extends React.Component {
 										isAlumno={isAlumno} />
                 </Route>
 
-			</Router>
+			</>
 		);
 	}
 }

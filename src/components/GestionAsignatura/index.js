@@ -10,6 +10,7 @@ const GestionAsignatura = (props) => {
 		<>
 			<MainGestionAsignatura 	drizzle={props.drizzle}
 									drizzleState={props.drizzleState}
+									miDireccion={props.drizzleState.accounts[0]}
 									addrEthAsig={useParams().addrEthAsig} />
 		</>	
 	);

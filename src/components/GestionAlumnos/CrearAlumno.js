@@ -22,7 +22,7 @@ class CrearAlumno extends React.Component {
 
 	}
 
-	crearAlumno = (event) => {
+	crearAlumno = async (event) => {
 		event.preventDefault();
 
 		// obtener valores del formulario
@@ -53,6 +53,51 @@ class CrearAlumno extends React.Component {
 			idUpm,
 			{from: this.props.miDireccion}
 		);
+
+		/*const promise = new Promise((resolve, rej) => {
+			const txId = instance.methods.crearAlumno.cacheSend(
+				addrEthAlum,
+				nombre,
+				apellidos,
+				dni,
+				correoUpm,
+				telefMovil,
+				fechaNac,
+				idUpm,
+				{from: this.props.miDireccion}
+			);
+
+			let t = 0;
+			while (!drizzleState.transactionStack[txId]) {
+				setInterval(() => console.log(t++), 1000);
+			}
+
+			resolve(148);
+		});
+
+		let result = await promise();*/
+
+		//console.log('~~crear~~~0~ txId:', txId);
+
+		//console.log('~~crear~~~0~ drizzleState:', drizzleState);
+		//console.log('~~crear~~~0~ drizzleState.transactionStack:', drizzleState.transactionStack);
+		//console.log('~~crear~~~0~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
+
+		//console.log('~~crear~~~0~ drizzleState.transactions:', drizzleState.transactions);
+
+		//let h = 1;
+		//while (!drizzleState.transactionStack[txId]) {
+		//	console.log(h++);
+		//}
+
+
+		//console.log('~~crear~~~1~ txId:', txId);
+
+		//console.log('~~crear~~~1~ drizzleState:', drizzleState);
+		//console.log('~~crear~~~1~ drizzleState.transactionStack:', drizzleState.transactionStack);
+		//console.log('~~crear~~~1~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
+
+		//console.log('~~crear~~~1~ drizzleState.transactions:', drizzleState.transactions);
 	}
 
 	render() {
@@ -63,11 +108,9 @@ class CrearAlumno extends React.Component {
             return <span>Initializing...</span>;
         }
 
-        if (this.props.miDireccion !== this.props.owner) {
-			return (
-				<h3>Sección oculta. Sólo el owner puede crear alumnos</h3>
-			);
-		}
+		//console.log('~~renderCre~ drizzleState.transactionStack:', drizzleState.transactionStack);
+
+		//console.log('~~renderCre~ drizzleState.transactions:', drizzleState.transactions);
 
 		return (
 			<>
@@ -91,7 +134,7 @@ class CrearAlumno extends React.Component {
 					<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
 					<input type="text" id="telefMovil" name="telefMovil" />
 
-					<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
+					<label htmlFor="fechaNac">Fecha de nacimiento del alumno (ToDo)</label>
 					<input type="text" id="fechaNac" name="fechaNac" />
 
 					<label htmlFor="idUpm">ID de la UPM del alumno</label>

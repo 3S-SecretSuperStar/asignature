@@ -1,10 +1,17 @@
 import React from 'react';
 
+import {
+	Switch,
+	Route,
+} from 'react-router-dom';
+
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaProfesores from './ListaProfesores';
 import CrearProfesor from './CrearProfesor';
 import ActualizarOwner from './ActualizarOwner';
+
+import HookMostrarProfesor from './HookMostrarProfesor';
 
 const {ContractData} = newContextComponents;
 
@@ -86,27 +93,46 @@ class GestionProfesores extends React.Component {
         let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
         numProfesores = numProfesores ? numProfesores.value : -1;
 
+        let crearProfesor = [];
+        let actualizarOwner = [];
+        if (miDireccion === owner) {
+        	crearProfesor = <CrearProfesor 	drizzle={drizzle}
+											drizzleState={drizzleState}
+											miDireccion={miDireccion}
+											owner={owner} />;
+        	actualizarOwner = <ActualizarOwner 	drizzle={drizzle}
+												drizzleState={drizzleState}
+												miDireccion={miDireccion}
+												owner={owner} />;
+        }
+
 		return (
 			<>
 				<h2>Gestión de profesores</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
 
-				<ListaProfesores	drizzle={drizzle}
-									drizzleState={drizzleState}
-									profesoresLength={profesoresLength}
-									numProfesores={numProfesores}
-									miDireccion={miDireccion}
-									owner={owner} />
+				<Switch>
+					<Route exact path="/gestion-profesores">
+						<ListaProfesores	drizzle={drizzle}
+											drizzleState={drizzleState}
+											profesoresLength={profesoresLength}
+											numProfesores={numProfesores}
+											miDireccion={miDireccion}
+											owner={owner} />
 
-				<CrearProfesor 	drizzle={drizzle}
-								drizzleState={drizzleState}
-								miDireccion={miDireccion}
-								owner={owner} />
+						{crearProfesor}
 
-				<ActualizarOwner 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									miDireccion={miDireccion}
-									owner={owner} />
+						{actualizarOwner}
+					</Route>
+
+					<Route path="/gestion-profesores/profesor/:addrEthProf">
+						<HookMostrarProfesor	drizzle={drizzle}
+												drizzleState={drizzleState}
+												miDireccion={miDireccion}
+												owner={owner} />
+					</Route>
+				</Switch>
+
 
 			</>
 		);

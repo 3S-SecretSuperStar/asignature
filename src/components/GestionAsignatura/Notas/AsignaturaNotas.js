@@ -25,7 +25,7 @@ class AsignaturaNotas extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState, contractName} = this.props;
+		const {drizzle, drizzleState, contractName, isOwner, isCoordinador, isProfesor, isAlumno} = this.props;
 		console.log('AsignaturaNotas - render - this.props:', this.props);
 
 		const instanceState = drizzleState.contracts[contractName];
@@ -33,8 +33,27 @@ class AsignaturaNotas extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		const hayAlgunaEvaluacion = this.props.numEvaluaciones > 0;
+		const hayAlgunaNota = this.props.numNotas > 0;
+		console.log('hayAlgunaEvaluacion', hayAlgunaEvaluacion);
+		console.log('hayAlgunaNota', hayAlgunaNota);
+
+		let listaNotas = [];
+		listaNotas = <AsignaturaListaNotas	drizzle={drizzle}
+											drizzleState={drizzleState}
+											contractName={this.props.contractName}
+											miDireccion={this.props.miDireccion}
+											owner={this.props.owner}
+											coordinador={this.props.coordinador}
+											alumnosLength={this.props.alumnosLength}
+											numAlumnos={this.props.numAlumnos}
+											profesoresLength={this.props.profesoresLength}
+											numProfesores={this.props.numProfesores}
+											numEvaluaciones={this.props.numEvaluaciones}
+											numNotas={this.props.numNotas} />;
+
 		let anadirNota = [];
-		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+		if (hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <AsignaturaAnadirNota	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contractName={this.props.contractName}
@@ -50,7 +69,7 @@ class AsignaturaNotas extends React.Component {
 		}
 
 		let eliminarNota = [];
-		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+		if (hayAlgunaNota && (isOwner || isCoordinador || isProfesor)) {
 			eliminarNota = <AsignaturaEliminarNota 	drizzle={drizzle}
 													drizzleState={drizzleState}
 													contractName={this.props.contractName}
@@ -65,29 +84,23 @@ class AsignaturaNotas extends React.Component {
 													numNotas={this.props.numNotas} />
 		}
 
-		return (
-			<>
-				<h3>Notas creadas</h3>
-				<p>Nombre del contrato: {contractName}</p>
+		if (isOwner || isCoordinador || isProfesor) {
+			return (
+				<>
+					<h3>Notas</h3>
+					<p>Nombre del contrato: {contractName}</p>
 
-				<AsignaturaListaNotas	drizzle={drizzle}
-										drizzleState={drizzleState}
-										contractName={this.props.contractName}
-										miDireccion={this.props.miDireccion}
-										owner={this.props.owner}
-										coordinador={this.props.coordinador}
-										alumnosLength={this.props.alumnosLength}
-										numAlumnos={this.props.numAlumnos}
-										profesoresLength={this.props.profesoresLength}
-										numProfesores={this.props.numProfesores}
-										numEvaluaciones={this.props.numEvaluaciones}
-										numNotas={this.props.numNotas} />
+					{listaNotas}
 
-				{anadirNota}
+					{anadirNota}
 
-				{eliminarNota}
-			</>
-		);
+					{eliminarNota}
+				</>
+			);
+		} else {
+			return (<></>);
+		}
+
 	}
 }
 

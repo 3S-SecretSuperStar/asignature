@@ -54,7 +54,7 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<label htmlFor="nombre">Nombre de la evaluación</label>
 					<input type="text" id="nombre" name="nombre" />
 
-					<label htmlFor="fecha">Fecha</label>
+					<label htmlFor="fecha">Fecha (ToDo)</label>
 					<input type="text" id="fecha" name="fecha" />
 
 					<label htmlFor="obligatoria">¿Es obligatoria? (0=No, 1=Sí)</label>

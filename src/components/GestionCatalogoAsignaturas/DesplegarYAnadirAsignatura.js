@@ -62,7 +62,6 @@ class DesplegarYAnadirAsignatura extends React.Component {
 
 		// añadir asignatura al ćatálogo
 		const txId = instance.methods.anadirAsignatura.cacheSend(addrAsignaturaDesplegada, titulacion + " - " + nombreAsig);
-
 	}
 
 	render() {
@@ -71,12 +70,6 @@ class DesplegarYAnadirAsignatura extends React.Component {
 		const instanceState = drizzleState.contracts.UpmCatalogo;
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
-		}
-
-		if (this.props.miDireccion !== this.props.owner) {
-			return (
-				<h3>Sección oculta. Sólo el owner puede desplegar y añadir una asignatura al catálogo</h3>
-			);
 		}
 
 		return (
@@ -107,7 +100,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
 					<label htmlFor="cursoAno">Curso (1º, 2º...)</label>
 					<input type="text" id="cursoAno" name="cursoAno" />
 					
-					<label htmlFor="tipoAsig">Tipo de asignatura (0=Obligatoria, 1=Optativa)</label>
+					<label htmlFor="tipoAsig">Tipo de asignatura (0=Obligatoria, 1=Optativa) (ToDo)</label>
 					<input type="text" id="tipoAsig" name="tipoAsig" />
 					
 					<button type="submit">Desplegar asignatura</button>

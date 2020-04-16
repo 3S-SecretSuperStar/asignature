@@ -24,7 +24,7 @@ class AsignaturaEvaluaciones extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState, contractName} = this.props;
+		const {drizzle, drizzleState, contractName, isOwner, isCoordinador, isProfesor, isAlumno} = this.props;
 		console.log('AsignaturaEvaluaciones - render - this.props:', this.props);
 
 		const instanceState = drizzleState.contracts[contractName];
@@ -33,7 +33,7 @@ class AsignaturaEvaluaciones extends React.Component {
 		}
 
 		let anadirEvaluacion = [];
-		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+		if (isOwner || isCoordinador || isProfesor) {
 			anadirEvaluacion = <AsignaturaAnadirEvaluacion 	drizzle={drizzle}
 															drizzleState={drizzleState}
 															contractName={this.props.contractName}
@@ -46,12 +46,17 @@ class AsignaturaEvaluaciones extends React.Component {
 															numProfesores={this.props.numProfesores}
 															evaluacionesLength={this.props.evaluacionesLength}
 															numEvaluaciones={this.props.numEvaluaciones}
-															numNotas={this.props.numNotas} />;
+															numNotas={this.props.numNotas}
+															isOwner={this.props.isOwner}
+															isCoordinador={this.props.isCoordinador}
+															isProfesor={this.props.isProfesor}
+															isAlumno={this.props.isAlumno} />;
+
 		}
 
 		return (
 			<>
-				<h3>Evaluaciones creadas</h3>
+				<h3>Evaluaciones</h3>
 				<p>Nombre del contrato: {contractName}</p>
 
 				<AsignaturaListaEvaluaciones	drizzle={drizzle}
@@ -66,7 +71,11 @@ class AsignaturaEvaluaciones extends React.Component {
 												numProfesores={this.props.numProfesores}
 												evaluacionesLength={this.props.evaluacionesLength}
 												numEvaluaciones={this.props.numEvaluaciones}
-												numNotas={this.props.numNotas} />
+												numNotas={this.props.numNotas}
+												isOwner={this.props.isOwner}
+												isCoordinador={this.props.isCoordinador}
+												isProfesor={this.props.isProfesor}
+												isAlumno={this.props.isAlumno} />
 
 				{anadirEvaluacion}
 			</>

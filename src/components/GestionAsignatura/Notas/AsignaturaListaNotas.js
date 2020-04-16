@@ -45,11 +45,6 @@ class AsignaturaListaNotas extends React.Component {
 		}
 	}
 
-	eliminarNota = (event) => {
-		event.preventDefault();
-
-	}
-
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
@@ -58,12 +53,13 @@ class AsignaturaListaNotas extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+
 		let theadtr = [];
-		//theadtr.push(A\E);
 		for (let i = 0; i < this.props.numEvaluaciones; i++) {
 			theadtr.push(
 				<th>
-					E<sub>{i}</sub> (
+					E<sub>{i}</sub>
+					(
 					<ContractData	drizzle={drizzle}
 									drizzleState={drizzleState}
 									contract={this.props.contractName}
@@ -110,25 +106,34 @@ class AsignaturaListaNotas extends React.Component {
 			}
 		}
 
-		return (
-			<>
-				<h3>Lista de notas creadas</h3>
+		const hayAlgunaNota = this.props.numNotas > 0;
 
-				<p>{this.props.numNotas} notas</p>
+		if (hayAlgunaNota) {
+			return (
+				<>
+					<h3>Lista de notas creadas</h3>
 
-				<table>
-					<thead>
-						<tr>
-							<th>A\E</th>
-							{theadtr}
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaNotas}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.numNotas} notas</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>A\E</th>
+								{theadtr}
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaNotas}
+						</tbody>
+					</table>
+				</>
+			);
+		} else {
+			return (
+				<h3>No hay ninguna nota creada</h3>
+			);
+		}
+
 	}
 
 }

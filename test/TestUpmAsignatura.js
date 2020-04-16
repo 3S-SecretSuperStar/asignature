@@ -23,6 +23,64 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(owner, desplegador, "El owner debe ser quien ha desplegado el contrato.");
 	});
 
+	it("Comprobar si las cuentas son owner", async () => {
+		let isOwner1 = await upmAsignatura.isOwner({from: desplegador});
+		assert.equal(true, isOwner1, "El que ha desplegado el contrato debería ser owner.");
+
+		let isOwner2 = await upmAsignatura.isOwner({from: addrEthProf});
+		assert.equal(false, isOwner2, "addrEthProf no debería ser owner.");
+
+		let isOwner3 = await upmAsignatura.isOwner({from: addrEthProf2});
+		assert.equal(false, isOwner3, "addrEthProf2 no debería ser owner.");
+
+		let isOwner4 = await upmAsignatura.isOwner({from: addrEthAlum});
+		assert.equal(false, isOwner4, "addrEthAlum no debería ser owner.");
+
+		let isOwner5 = await upmAsignatura.isOwner({from: addrEthAlum2});
+		assert.equal(false, isOwner5, "addrEthAlum2 no debería ser owner.");
+
+		let isOwner6 = await upmAsignatura.isOwner({from: addrEthAlum3});
+		assert.equal(false, isOwner6, "addrEthAlum3 no debería ser owner.");
+
+		let isOwner7 = await upmAsignatura.isOwner({from: newOwner});
+		assert.equal(false, isOwner7, "newOwner no debería ser owner.");
+
+		let isOwner8 = await upmAsignatura.isOwner({from: newCoordinador});
+		assert.equal(false, isOwner8, "newCoordinador no debería ser owner.");
+
+		let isOwner9 = await upmAsignatura.isOwner({from: coordinador});
+		assert.equal(false, isOwner9, "coordinador no debería ser owner.");
+	});
+
+	it("Comprobar si las cuentas son coordinador", async () => {
+		let isCoordinador1 = await upmAsignatura.isCoordinador({from: desplegador});
+		assert.equal(false, isCoordinador1, "El que ha desplegado el contrato no debería ser coordinador.");
+
+		let isCoordinador2 = await upmAsignatura.isCoordinador({from: addrEthProf});
+		assert.equal(false, isCoordinador2, "addrEthProf no debería ser coordinador.");
+
+		let isCoordinador3 = await upmAsignatura.isCoordinador({from: addrEthProf2});
+		assert.equal(false, isCoordinador3, "addrEthProf2 no debería ser coordinador.");
+
+		let isCoordinador4 = await upmAsignatura.isCoordinador({from: addrEthAlum});
+		assert.equal(false, isCoordinador4, "addrEthAlum no debería ser coordinador.");
+
+		let isCoordinador5 = await upmAsignatura.isCoordinador({from: addrEthAlum2});
+		assert.equal(false, isCoordinador5, "addrEthAlum2 no debería ser coordinador.");
+
+		let isCoordinador6 = await upmAsignatura.isCoordinador({from: addrEthAlum3});
+		assert.equal(false, isCoordinador6, "addrEthAlum3 no debería ser coordinador.");
+
+		let isCoordinador7 = await upmAsignatura.isCoordinador({from: newOwner});
+		assert.equal(false, isCoordinador7, "newOwner no debería ser coordinador.");
+
+		let isCoordinador8 = await upmAsignatura.isCoordinador({from: newCoordinador});
+		assert.equal(false, isCoordinador8, "newCoordinador no debería ser coordinador.");
+
+		let isCoordinador9 = await upmAsignatura.isCoordinador({from: coordinador});
+		assert.equal(true, isCoordinador9, "coordinador debería ser coordinador.");
+	});
+
 	it("Los valores iniciales son los correctos.", async () => {
 		let nombreAsignatura = "Prueba 1";
 		let cursoAcademico = "2019-2020";
@@ -62,6 +120,35 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(0, numEvaluaciones, "No debe haber ninguna evaluación creada.");
 	});
 
+	it("Comprobar inicialmente si las cuentas son profesor", async () => {
+		let isProfesor1 = await upmAsignatura.isProfesor({from: desplegador});
+		assert.equal(false, isProfesor1, "El que ha desplegado el contrato no debería ser profesor.");
+
+		let isProfesor2 = await upmAsignatura.isProfesor({from: addrEthProf});
+		assert.equal(false, isProfesor2, "addrEthProf no debería ser profesor.");
+
+		let isProfesor3 = await upmAsignatura.isProfesor({from: addrEthProf2});
+		assert.equal(false, isProfesor3, "addrEthProf2 no debería ser profesor.");
+
+		let isProfesor4 = await upmAsignatura.isProfesor({from: addrEthAlum});
+		assert.equal(false, isProfesor4, "addrEthAlum no debería ser profesor.");
+
+		let isProfesor5 = await upmAsignatura.isProfesor({from: addrEthAlum2});
+		assert.equal(false, isProfesor5, "addrEthAlum2 no debería ser profesor.");
+
+		let isProfesor6 = await upmAsignatura.isProfesor({from: addrEthAlum3});
+		assert.equal(false, isProfesor6, "addrEthAlum3 no debería ser profesor.");
+
+		let isProfesor7 = await upmAsignatura.isProfesor({from: newOwner});
+		assert.equal(false, isProfesor7, "newOwner no debería ser profesor.");
+
+		let isProfesor8 = await upmAsignatura.isProfesor({from: newCoordinador});
+		assert.equal(false, isProfesor8, "newCoordinador no debería ser profesor.");
+
+		let isProfesor9 = await upmAsignatura.isProfesor({from: coordinador});
+		assert.equal(false, isProfesor9, "coordinador no debería ser profesor.");
+	});
+
 	it("El owner crea correctamente un profesor", async() => {
 		// comprobar que hay 0 profesores
 		let numProfesores = await upmAsignatura.numProfesores();
@@ -80,6 +167,35 @@ contract("UpmAsignatura", accounts => {
 
 		// comprobar campos
 		assert.equal(addrEthProf, profesor, "La dirección del profesor creado por el owner debe coincidir.")
+	});
+
+	it("Tras crear un profesor, comprobar si las cuentas son profesor", async () => {
+		let isProfesor1 = await upmAsignatura.isProfesor({from: desplegador});
+		assert.equal(false, isProfesor1, "El que ha desplegado el contrato no debería ser profesor.");
+
+		let isProfesor2 = await upmAsignatura.isProfesor({from: addrEthProf});
+		assert.equal(true, isProfesor2, "Ahora addrEthProf sí debería ser profesor.");
+
+		let isProfesor3 = await upmAsignatura.isProfesor({from: addrEthProf2});
+		assert.equal(false, isProfesor3, "addrEthProf2 no debería ser profesor.");
+
+		let isProfesor4 = await upmAsignatura.isProfesor({from: addrEthAlum});
+		assert.equal(false, isProfesor4, "addrEthAlum no debería ser profesor.");
+
+		let isProfesor5 = await upmAsignatura.isProfesor({from: addrEthAlum2});
+		assert.equal(false, isProfesor5, "addrEthAlum2 no debería ser profesor.");
+
+		let isProfesor6 = await upmAsignatura.isProfesor({from: addrEthAlum3});
+		assert.equal(false, isProfesor6, "addrEthAlum3 no debería ser profesor.");
+
+		let isProfesor7 = await upmAsignatura.isProfesor({from: newOwner});
+		assert.equal(false, isProfesor7, "newOwner no debería ser profesor.");
+
+		let isProfesor8 = await upmAsignatura.isProfesor({from: newCoordinador});
+		assert.equal(false, isProfesor8, "newCoordinador no debería ser profesor.");
+
+		let isProfesor9 = await upmAsignatura.isProfesor({from: coordinador});
+		assert.equal(false, isProfesor9, "coordinador no debería ser profesor.");
 	});
 
 	it("El coordinador crea correctamente un profesor", async() => {
@@ -102,7 +218,64 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(addrEthProf2, profesor, "La dirección del profesor creado por el coordinador debe coincidir.")
 	});
 
-	// añadir alumno
+	it("Tras crear otro profesor, comprobar si las cuentas son profesor", async () => {
+		let isProfesor1 = await upmAsignatura.isProfesor({from: desplegador});
+		assert.equal(false, isProfesor1, "El que ha desplegado el contrato no debería ser profesor.");
+
+		let isProfesor2 = await upmAsignatura.isProfesor({from: addrEthProf});
+		assert.equal(true, isProfesor2, "Ahora addrEthProf sí debería ser profesor.");
+
+		let isProfesor3 = await upmAsignatura.isProfesor({from: addrEthProf2});
+		assert.equal(true, isProfesor3, "Ahora addrEthProf2 sí debería ser profesor.");
+
+		let isProfesor4 = await upmAsignatura.isProfesor({from: addrEthAlum});
+		assert.equal(false, isProfesor4, "addrEthAlum no debería ser profesor.");
+
+		let isProfesor5 = await upmAsignatura.isProfesor({from: addrEthAlum2});
+		assert.equal(false, isProfesor5, "addrEthAlum2 no debería ser profesor.");
+
+		let isProfesor6 = await upmAsignatura.isProfesor({from: addrEthAlum3});
+		assert.equal(false, isProfesor6, "addrEthAlum3 no debería ser profesor.");
+
+		let isProfesor7 = await upmAsignatura.isProfesor({from: newOwner});
+		assert.equal(false, isProfesor7, "newOwner no debería ser profesor.");
+
+		let isProfesor8 = await upmAsignatura.isProfesor({from: newCoordinador});
+		assert.equal(false, isProfesor8, "newCoordinador no debería ser profesor.");
+
+		let isProfesor9 = await upmAsignatura.isProfesor({from: coordinador});
+		assert.equal(false, isProfesor9, "coordinador no debería ser profesor.");
+	});
+
+	it("Comprobar inicialmente si las cuentas son alumno", async () => {
+		let isAlumno1 = await upmAsignatura.isAlumno({from: desplegador});
+		assert.equal(false, isAlumno1, "El que ha desplegado el contrato no debería ser alumno.");
+
+		let isAlumno2 = await upmAsignatura.isAlumno({from: addrEthProf});
+		assert.equal(false, isAlumno2, "addrEthProf no debería ser alumno.");
+
+		let isAlumno3 = await upmAsignatura.isAlumno({from: addrEthProf2});
+		assert.equal(false, isAlumno3, "addrEthProf2 no debería ser alumno.");
+
+		let isAlumno4 = await upmAsignatura.isAlumno({from: addrEthAlum});
+		assert.equal(false, isAlumno4, "addrEthAlum no debería ser alumno.");
+
+		let isAlumno5 = await upmAsignatura.isAlumno({from: addrEthAlum2});
+		assert.equal(false, isAlumno5, "addrEthAlum2 no debería ser alumno.");
+
+		let isAlumno6 = await upmAsignatura.isAlumno({from: addrEthAlum3});
+		assert.equal(false, isAlumno6, "addrEthAlum3 no debería ser alumno.");
+
+		let isAlumno7 = await upmAsignatura.isAlumno({from: newOwner});
+		assert.equal(false, isAlumno7, "newOwner no debería ser alumno.");
+
+		let isAlumno8 = await upmAsignatura.isAlumno({from: newCoordinador});
+		assert.equal(false, isAlumno8, "newCoordinador no debería ser alumno.");
+
+		let isAlumno9 = await upmAsignatura.isAlumno({from: coordinador});
+		assert.equal(false, isAlumno9, "coordinador no debería ser alumno.");
+	});
+
 	it("El owner crea correctamente un alumno", async() => {
 		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAsignatura.numAlumnos();
@@ -122,6 +295,35 @@ contract("UpmAsignatura", accounts => {
 
 		// comprobar campos
 		assert.equal(addrEthAlum, alumno, "La dirección del alumno creado por el owner debe coincidir.")
+	});
+
+	it("Tras crear un alumno, comprobar de nuevo si las cuentas son alumno", async () => {
+		let isAlumno1 = await upmAsignatura.isAlumno({from: desplegador});
+		assert.equal(false, isAlumno1, "El que ha desplegado el contrato no debería ser alumno.");
+
+		let isAlumno2 = await upmAsignatura.isAlumno({from: addrEthProf});
+		assert.equal(false, isAlumno2, "addrEthProf no debería ser alumno.");
+
+		let isAlumno3 = await upmAsignatura.isAlumno({from: addrEthProf2});
+		assert.equal(false, isAlumno3, "addrEthProf2 no debería ser alumno.");
+
+		let isAlumno4 = await upmAsignatura.isAlumno({from: addrEthAlum});
+		assert.equal(true, isAlumno4, "Ahora addrEthAlum sí debería ser alumno.");
+
+		let isAlumno5 = await upmAsignatura.isAlumno({from: addrEthAlum2});
+		assert.equal(false, isAlumno5, "addrEthAlum2 no debería ser alumno.");
+
+		let isAlumno6 = await upmAsignatura.isAlumno({from: addrEthAlum3});
+		assert.equal(false, isAlumno6, "addrEthAlum3 no debería ser alumno.");
+
+		let isAlumno7 = await upmAsignatura.isAlumno({from: newOwner});
+		assert.equal(false, isAlumno7, "newOwner no debería ser alumno.");
+
+		let isAlumno8 = await upmAsignatura.isAlumno({from: newCoordinador});
+		assert.equal(false, isAlumno8, "newCoordinador no debería ser alumno.");
+
+		let isAlumno9 = await upmAsignatura.isAlumno({from: coordinador});
+		assert.equal(false, isAlumno9, "coordinador no debería ser alumno.");
 	});
 
 	it("El owner crea correctamente una evaluación", async () => {
@@ -298,7 +500,6 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(true, nota.existsNota, "La nota debe existir.");
 	});
 
-	// borrar nota
 	it("El owner elimina correctamente una nota", async () => {
 		let indexEval = 0;
 
@@ -353,6 +554,35 @@ contract("UpmAsignatura", accounts => {
 		assert.equal(newCoordinador, coordActualizado, "El coordinador actualizado no coincide.");
 	});
 
+	it("Tras actualizar el coordinador, comprobar de nuevo si las cuentas son coordinador", async () => {
+		let isCoordinador1 = await upmAsignatura.isCoordinador({from: desplegador});
+		assert.equal(false, isCoordinador1, "El que ha desplegado el contrato no debería ser coordinador (II).");
+
+		let isCoordinador2 = await upmAsignatura.isCoordinador({from: addrEthProf});
+		assert.equal(false, isCoordinador2, "addrEthProf no debería ser coordinador (II).");
+
+		let isCoordinador3 = await upmAsignatura.isCoordinador({from: addrEthProf2});
+		assert.equal(false, isCoordinador3, "addrEthProf2 no debería ser coordinador (II).");
+
+		let isCoordinador4 = await upmAsignatura.isCoordinador({from: addrEthAlum});
+		assert.equal(false, isCoordinador4, "addrEthAlum no debería ser coordinador (II).");
+
+		let isCoordinador5 = await upmAsignatura.isCoordinador({from: addrEthAlum2});
+		assert.equal(false, isCoordinador5, "addrEthAlum2 no debería ser coordinador (II).");
+
+		let isCoordinador6 = await upmAsignatura.isCoordinador({from: addrEthAlum3});
+		assert.equal(false, isCoordinador6, "addrEthAlum3 no debería ser coordinador (II).");
+
+		let isCoordinador7 = await upmAsignatura.isCoordinador({from: newOwner});
+		assert.equal(false, isCoordinador7, "newOwner no debería ser coordinador (II).");
+
+		let isCoordinador8 = await upmAsignatura.isCoordinador({from: newCoordinador});
+		assert.equal(true, isCoordinador8, "Ahora newCoordinador sí debería ser coordinador (II).");
+
+		let isCoordinador9 = await upmAsignatura.isCoordinador({from: coordinador});
+		assert.equal(false, isCoordinador9, "El que ha sido designado coordinador en el despliegue ya no debería ser coordinador (II).");
+	});
+
 	it("Se elimina correctamente un alumno", async () => {
 		// comprobar que hay 1 alumno
 		let numAlumnos = await upmAsignatura.numAlumnos();
@@ -364,6 +594,35 @@ contract("UpmAsignatura", accounts => {
 		// comprobar que hay 0 alumnos
 		numAlumnos = await upmAsignatura.numAlumnos();
 		assert.equal(0, numAlumnos, "No debe haber ningún alumno registrado.");
+	});
+
+	it("Tras eliminar un alumno, comprobar de nuevo si las cuentas son alumno", async () => {
+		let isAlumno1 = await upmAsignatura.isAlumno({from: desplegador});
+		assert.equal(false, isAlumno1, "El que ha desplegado el contrato no debería ser alumno.");
+
+		let isAlumno2 = await upmAsignatura.isAlumno({from: addrEthProf});
+		assert.equal(false, isAlumno2, "addrEthProf no debería ser alumno.");
+
+		let isAlumno3 = await upmAsignatura.isAlumno({from: addrEthProf2});
+		assert.equal(false, isAlumno3, "addrEthProf2 no debería ser alumno.");
+
+		let isAlumno4 = await upmAsignatura.isAlumno({from: addrEthAlum});
+		assert.equal(false, isAlumno4, "addrEthAlum ya no debería ser alumno.");
+
+		let isAlumno5 = await upmAsignatura.isAlumno({from: addrEthAlum2});
+		assert.equal(false, isAlumno5, "addrEthAlum2 no debería ser alumno.");
+
+		let isAlumno6 = await upmAsignatura.isAlumno({from: addrEthAlum3});
+		assert.equal(false, isAlumno6, "addrEthAlum3 no debería ser alumno.");
+
+		let isAlumno7 = await upmAsignatura.isAlumno({from: newOwner});
+		assert.equal(false, isAlumno7, "newOwner no debería ser alumno.");
+
+		let isAlumno8 = await upmAsignatura.isAlumno({from: newCoordinador});
+		assert.equal(false, isAlumno8, "newCoordinador no debería ser alumno.");
+
+		let isAlumno9 = await upmAsignatura.isAlumno({from: coordinador});
+		assert.equal(false, isAlumno9, "coordinador no debería ser alumno.");
 	});
 
 	// eliminar profesor
@@ -378,6 +637,35 @@ contract("UpmAsignatura", accounts => {
 		// comprobar que todavía hay 1 profesor
 		numProfesores = await upmAsignatura.numProfesores();
 		assert.equal(1, numProfesores, "Todavía debe haber un profesor registrado.");
+	});
+
+	it("Tras eliminar uno de los profesores, comprobar si las cuentas son profesor", async () => {
+		let isProfesor1 = await upmAsignatura.isProfesor({from: desplegador});
+		assert.equal(false, isProfesor1, "El que ha desplegado el contrato no debería ser profesor.");
+
+		let isProfesor2 = await upmAsignatura.isProfesor({from: addrEthProf});
+		assert.equal(false, isProfesor2, "addrEthProf ya no debería ser profesor.");
+
+		let isProfesor3 = await upmAsignatura.isProfesor({from: addrEthProf2});
+		assert.equal(true, isProfesor3, "addrEthProf2 sí debería seguir siendo profesor.");
+
+		let isProfesor4 = await upmAsignatura.isProfesor({from: addrEthAlum});
+		assert.equal(false, isProfesor4, "addrEthAlum no debería ser profesor.");
+
+		let isProfesor5 = await upmAsignatura.isProfesor({from: addrEthAlum2});
+		assert.equal(false, isProfesor5, "addrEthAlum2 no debería ser profesor.");
+
+		let isProfesor6 = await upmAsignatura.isProfesor({from: addrEthAlum3});
+		assert.equal(false, isProfesor6, "addrEthAlum3 no debería ser profesor.");
+
+		let isProfesor7 = await upmAsignatura.isProfesor({from: newOwner});
+		assert.equal(false, isProfesor7, "newOwner no debería ser profesor.");
+
+		let isProfesor8 = await upmAsignatura.isProfesor({from: newCoordinador});
+		assert.equal(false, isProfesor8, "newCoordinador no debería ser profesor.");
+
+		let isProfesor9 = await upmAsignatura.isProfesor({from: coordinador});
+		assert.equal(false, isProfesor9, "coordinador no debería ser profesor.");
 	});
 
 	it("No se permite actualizar el owner a quien no es owner", async () => {
@@ -414,6 +702,35 @@ contract("UpmAsignatura", accounts => {
         let newOwnerAct = await upmAsignatura.owner();
         assert.equal(newOwner, newOwnerAct, "El owner no se ha actualizado correctamente.");
     });
+
+    it("Comprobar de nuevo si las cuentas son owner", async () => {
+		let isOwner1 = await upmAsignatura.isOwner({from: desplegador});
+		assert.equal(false, isOwner1, "El que ha desplegado el contrato ya no debería ser owner (II).");
+
+		let isOwner2 = await upmAsignatura.isOwner({from: addrEthProf});
+		assert.equal(false, isOwner2, "addrEthProf no debería ser owner (II).");
+
+		let isOwner3 = await upmAsignatura.isOwner({from: addrEthProf2});
+		assert.equal(false, isOwner3, "addrEthProf2 no debería ser owner (II).");
+
+		let isOwner4 = await upmAsignatura.isOwner({from: addrEthAlum});
+		assert.equal(false, isOwner4, "addrEthAlum no debería ser owner (II).");
+
+		let isOwner5 = await upmAsignatura.isOwner({from: addrEthAlum2});
+		assert.equal(false, isOwner5, "addrEthAlum2 no debería ser owner (II).");
+
+		let isOwner6 = await upmAsignatura.isOwner({from: addrEthAlum3});
+		assert.equal(false, isOwner6, "addrEthAlum3 no debería ser owner (II).");
+
+		let isOwner7 = await upmAsignatura.isOwner({from: newOwner});
+		assert.equal(true, isOwner7, "Ahora newOwner sí debería ser owner (II).");
+
+		let isOwner8 = await upmAsignatura.isOwner({from: newCoordinador});
+		assert.equal(false, isOwner8, "newCoordinador no debería ser owner (II).");
+
+		let isOwner9 = await upmAsignatura.isOwner({from: coordinador});
+		assert.equal(false, isOwner9, "coordinador no debería ser owner (II).");
+	});
 
 	/*it("", async () => {
 		assert.equal(expected, actual, msg);

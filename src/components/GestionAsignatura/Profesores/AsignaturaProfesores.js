@@ -25,7 +25,6 @@ class AsignaturaProfesores extends React.Component {
 
 	render() {
 		const {drizzle, drizzleState, contractName} = this.props;
-		console.log('AsignaturaProfesores - render - this.props:', this.props);
 
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -45,7 +44,11 @@ class AsignaturaProfesores extends React.Component {
 														profesoresLength={this.props.profesoresLength}
 														numProfesores={this.props.numProfesores}
 														numEvaluaciones={this.props.numEvaluaciones}
-														numNotas={this.props.numNotas} />;
+														numNotas={this.props.numNotas}
+														isOwner={this.props.isOwner}
+														isCoordinador={this.props.isCoordinador}
+														isProfesor={this.props.isProfesor}
+														isAlumno={this.props.isAlumno} />;
 		}
 
 		return (
@@ -64,7 +67,11 @@ class AsignaturaProfesores extends React.Component {
 											profesoresLength={this.props.profesoresLength}
 											numProfesores={this.props.numProfesores}
 											numEvaluaciones={this.props.numEvaluaciones}
-											numNotas={this.props.numNotas} />
+											numNotas={this.props.numNotas}
+											isOwner={this.props.isOwner}
+											isCoordinador={this.props.isCoordinador}
+											isProfesor={this.props.isProfesor}
+											isAlumno={this.props.isAlumno} />
 
 				{anadirProfesor}
 			</>

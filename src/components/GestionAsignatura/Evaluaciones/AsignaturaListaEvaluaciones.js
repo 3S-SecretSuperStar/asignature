@@ -66,31 +66,40 @@ class AsignaturaListaEvaluaciones extends React.Component {
 			);
 		}
 
-		return (
-			<>
-				<h3>Lista de evaluaciones creadas</h3>
+		const hayAlgunaEvaluacion = this.props.evaluacionesLength > 0;
 
-				<p>{this.props.evaluacionesLength} evaluacionesLength</p>
-				<p>{this.props.numEvaluaciones} evaluaciones</p>
+		let listaEvaluaciones = [];
+		if (hayAlgunaEvaluacion) {
+			return (
+				<>
+					<h3>Lista de evaluaciones creadas</h3>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Índice</th>
-							<th>Tipo de convocatoria</th>
-							<th>Obligatoria</th>
-							<th>Nombre</th>
-							<th>Fecha</th>
-							<th>% aportación</th>
-							<th>Nota mínima</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaEvaluaciones}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.evaluacionesLength} evaluacionesLength</p>
+					<p>{this.props.numEvaluaciones} evaluaciones</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Índice</th>
+								<th>Tipo de convocatoria</th>
+								<th>Obligatoria</th>
+								<th>Nombre</th>
+								<th>Fecha (ToDo)</th>
+								<th>% aportación</th>
+								<th>Nota mínima</th>
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaEvaluaciones}
+						</tbody>
+					</table>
+				</>
+			);
+		} else {
+			return (
+				<h3>No hay ninguna evaluación creada</h3>
+			);
+		}
 	}
 
 }

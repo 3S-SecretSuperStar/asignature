@@ -68,6 +68,14 @@ class ListaAlumnos extends React.Component {
 			addrEthAlum,
 			{from: this.props.miDireccion}
 		);
+
+		//console.log('~~eliminar~~ txId:', txId);
+
+		//console.log('~~eliminar~~ drizzleState:', drizzleState);
+		//console.log('~~eliminar~~ drizzleState.transactionStack:', drizzleState.transactionStack);
+		//console.log('~~eliminar~~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
+
+		//console.log('~~eliminar~~ drizzleState.transactions:', drizzleState.transactions);
 	}
 
 	render() {
@@ -77,6 +85,10 @@ class ListaAlumnos extends React.Component {
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
+
+		//console.log('~~renderEli~ drizzleState.transactionStack:', drizzleState.transactionStack);
+
+		//console.log('~~renderEli~ drizzleState.transactions:', drizzleState.transactions);
 
 		let tbodyListaAlumnos = [];
 		for (let i = 0; i < this.props.alumnosLength; i++) {
@@ -94,15 +106,25 @@ class ListaAlumnos extends React.Component {
 									render={(alumno) => (
 										<tr>
 											<td><Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link></td>
+											
 											<td>{alumno.nombre}</td>
+											
 											<td>{alumno.apellidos}</td>
+											
 											<td>{alumno.correoUpm}</td>
-											<td>
-												<form onSubmit={this.eliminarAlumno}>
-													<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
-													<button type="submit">Eliminar alumno</button>
-												</form>
-											</td>
+											
+											{
+												this.props.owner === this.props.miDireccion
+												?
+													<td>
+														<form onSubmit={this.eliminarAlumno}>
+															<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
+															<button type="submit">Eliminar alumno</button>
+														</form>
+													</td>
+												:
+													""
+											}
 										</tr>
 									)}
 					/>
@@ -121,10 +143,20 @@ class ListaAlumnos extends React.Component {
 					<thead>
 						<tr>
 							<th>Dirección</th>
+
 							<th>Nombre</th>
+
 							<th>Apellidos</th>
+
 							<th>Correo</th>
-							<th>Eliminar</th>
+
+							{
+								this.props.owner === this.props.miDireccion
+								?
+									<th>Eliminar</th>
+								:
+								""
+							}
 						</tr>
 					</thead>
 					<tbody>

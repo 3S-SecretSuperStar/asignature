@@ -29,6 +29,7 @@ class CrearProfesor extends React.Component {
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthProf, nombre, apellidos, dni, correoUpm, telefMovil, fechaNac, idUpm} = objFormData;
+		console.log(objFormData);
 
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
@@ -61,13 +62,7 @@ class CrearProfesor extends React.Component {
         const instanceState = drizzleState.contracts.UpmProfesores;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }
-
-        if (this.props.miDireccion !== this.props.owner) {
-			return (
-				<h3>Sección oculta. Sólo el owner puede crear profesores</h3>
-			);
-		}   
+        }  
 
 		return (
 			<>
@@ -91,7 +86,7 @@ class CrearProfesor extends React.Component {
 					<label htmlFor="telefMovil">Teléfono móvil del profesor</label>
 					<input type="text" id="telefMovil" name="telefMovil" />
 					
-					<label htmlFor="fechaNac">Fecha de nacimiento del profesor</label>
+					<label htmlFor="fechaNac">Fecha de nacimiento del profesor (ToDo)</label>
 					<input type="text" id="fechaNac" name="fechaNac" />
 					
 					<label htmlFor="idUpm">ID de la UPM del profesor</label>

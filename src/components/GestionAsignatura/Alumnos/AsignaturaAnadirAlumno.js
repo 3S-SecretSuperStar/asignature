@@ -42,25 +42,30 @@ class AsignaturaAnadirAlumno extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
-		console.log('@@@', this.props);
+		const {drizzle, drizzleState, isOwner, isCoordinador, isProfesor} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
 
-		return (
-			<>
-				<h3>Añadir alumno</h3>
-				<form onSubmit={this.anadirAlumno} id="anadir-alumno-form">
-					<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
-					<input type="text" id="addrEthAlum" name="addrEthAlum" />
+        if (isOwner || isCoordinador || isProfesor) {
+        	return (
+				<>
+					<h3>Añadir alumno</h3>
+					<form onSubmit={this.anadirAlumno} id="anadir-alumno-form">
+						<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
+						<input type="text" id="addrEthAlum" name="addrEthAlum" />
 
-					<button type="submit">Añadir alumno</button>
-				</form>
-			</>
-		);
+						<button type="submit">Añadir alumno</button>
+					</form>
+				</>
+        	);
+        } else {
+        	return (
+        		<h3>Sección oculta. Sólo el owner, el coordinador o el profesor pueden añadir alumnos a la asignatura.</h3>
+        	);
+        }
 	}
 
 }

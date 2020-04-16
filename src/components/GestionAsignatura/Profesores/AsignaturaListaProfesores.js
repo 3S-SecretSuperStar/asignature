@@ -92,15 +92,27 @@ class AsignaturaListaProfesores extends React.Component {
 									render={(profesor) => (
 										<tr>
 											<td>{profesor.addrEthProf}</td>
+
 											<td>{profesor.nombre}</td>
+
 											<td>{profesor.apellidos}</td>
+
 											<td>{profesor.correoUpm}</td>
-											<td>
-												<form onSubmit={this.eliminarProfesor}>
-													<input type="hidden" value={addrEthProf} name="addrEthProf" />
-													<button type="submit">Eliminar profesor</button>
-												</form>
-											</td>
+
+											{
+												this.props.owner === this.props.miDireccion
+												?
+													<td>
+														<form onSubmit={this.eliminarProfesor}>
+															<input type="hidden" value={addrEthProf} name="addrEthProf" />
+															<button type="submit">Eliminar profesor</button>
+														</form>
+													</td>
+												:
+													""
+											}
+
+											
 										</tr>
 									)}
 					/>
@@ -108,29 +120,48 @@ class AsignaturaListaProfesores extends React.Component {
 			}
 		}
 
-		return (
-			<>
-				<h3>Lista de profesores añadidos</h3>
+		const hayAlgunProfesor = this.props.numProfesores > 0;
 
-				<p>{this.props.profesoresLength} profesoresLength</p>
-				<p>{this.props.numProfesores} profesores</p>
+		let listaProfesores = [];
+		if (hayAlgunProfesor) {
+			return (
+				<>
+					<h3>Lista de profesores añadidos</h3>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Dirección</th>
-							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Correo</th>
-							<th>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaProfesores}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.profesoresLength} profesoresLength</p>
+					<p>{this.props.numProfesores} profesores</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Dirección</th>
+								
+								<th>Nombre</th>
+								
+								<th>Apellidos</th>
+								
+								<th>Correo</th>
+								
+								{
+									this.props.owner === this.props.miDireccion
+									?
+										<th>Eliminar</th>
+									:
+										""
+								}
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaProfesores}
+						</tbody>
+					</table>
+				</>
+			);
+		} else {
+			return (
+				<h3>No hay ningún profesor añadido</h3>
+			);
+		}
 	}
 
 }

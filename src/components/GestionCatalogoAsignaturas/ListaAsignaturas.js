@@ -97,6 +97,7 @@ class ListaAsignaturas extends React.Component {
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
 					</td>
+
 					<td>
 						<ContractData 	drizzle={drizzle}
 										drizzleState={drizzleState}
@@ -107,6 +108,7 @@ class ListaAsignaturas extends React.Component {
 											<span>{asignaturaConNombre.nombreAMostrar}</span>
 										)} />
 					</td>
+
 					{
 						this.props.owner === this.props.miDireccion
 						?
@@ -119,15 +121,19 @@ class ListaAsignaturas extends React.Component {
 						:
 							""
 					}
+
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>Ir</Link>
 					</td>
+
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/profesores`}>Ir</Link>
 					</td>
+
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/evaluaciones`}>Ir</Link>
 					</td>
+
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/notas`}>Ir</Link>
 					</td>
@@ -148,7 +154,9 @@ class ListaAsignaturas extends React.Component {
 					<thead>
 						<tr>
 							<th>Dirección</th>
+							
 							<th>Nombre a mostrar</th>
+							
 							{
 								this.props.owner === this.props.miDireccion
 								?
@@ -156,9 +164,13 @@ class ListaAsignaturas extends React.Component {
 								:
 								""
 							}
+							
 							<th>Alumnos</th>
+							
 							<th>Profesores</th>
+							
 							<th>Evaluaciones</th>
+							
 							<th>Notas</th>
 						</tr>
 					</thead>

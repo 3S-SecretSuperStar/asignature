@@ -92,15 +92,25 @@ class AsignaturaListaAlumnos extends React.Component {
 									render={(alumno) => (
 										<tr>
 											<td>{alumno.addrEthAlum}</td>
+
 											<td>{alumno.nombre}</td>
+
 											<td>{alumno.apellidos}</td>
+
 											<td>{alumno.correoUpm}</td>
-											<td>
-												<form onSubmit={this.eliminarAlumno}>
-													<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
-													<button type="submit">Eliminar alumno</button>
-												</form>
-											</td>
+
+											{
+												this.props.owner === this.props.miDireccion
+												?
+													<td>
+														<form onSubmit={this.eliminarAlumno}>
+															<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
+															<button type="submit">Eliminar alumno</button>
+														</form>
+													</td>
+												:
+													""
+											}
 										</tr>
 									)}
 					/>
@@ -108,29 +118,47 @@ class AsignaturaListaAlumnos extends React.Component {
 			}
 		}
 
-		return (
-			<>
-				<h3>Lista de alumnos añadidos</h3>
+		const hayAlgunAlumno = this.props.numAlumnos > 0;
 
-				<p>{this.props.alumnosLength} alumnosLength</p>
-				<p>{this.props.numAlumnos} alumnos</p>
+		if (hayAlgunAlumno) {
+			return (
+				<>
+					<h3>Lista de alumnos añadidos</h3>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Dirección</th>
-							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Correo</th>
-							<th>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaAlumnos}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.alumnosLength} alumnosLength</p>
+					<p>{this.props.numAlumnos} alumnos</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Dirección</th>
+
+								<th>Nombre</th>
+
+								<th>Apellidos</th>
+
+								<th>Correo</th>
+
+								{
+									this.props.owner === this.props.miDireccion
+									?
+										<th>Eliminar</th>
+									:
+										""
+								}
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaAlumnos}
+						</tbody>
+					</table>
+				</>
+			);
+		} else {
+			return (
+				<h3>No hay ningún alumno añadido</h3>
+			);
+		}
 	}
 
 }

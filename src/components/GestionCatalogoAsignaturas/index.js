@@ -89,6 +89,15 @@ class GestionCatalogoAsignaturas extends React.Component {
 		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
 		console.log('GestionCatalogoAsignaturas - render - numAsignaturas:', numAsignaturas);
 
+		const isOwner = owner === miDireccion;
+
+		let desplegarYAnadirAsignatura = [];
+		if (isOwner) {
+			desplegarYAnadirAsignatura = <DesplegarYAnadirAsignatura	drizzle={drizzle}
+																		drizzleState={drizzleState}
+																		miDireccion={miDireccion} />
+		}
+
 		return (
 			<>
 				<h2>Gestión del catálogo de asignaturas</h2>
@@ -101,10 +110,7 @@ class GestionCatalogoAsignaturas extends React.Component {
 									miDireccion={miDireccion}
 									owner={owner} />
 
-				<DesplegarYAnadirAsignatura	drizzle={drizzle}
-											drizzleState={drizzleState}
-											miDireccion={miDireccion}
-											owner={owner} />
+				{desplegarYAnadirAsignatura}
 			</>
 		);
 	}

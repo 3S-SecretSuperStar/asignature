@@ -46,6 +46,29 @@ class AsignaturaDatos extends React.Component {
 		);
 	}
 
+	actualizarOwner = (event) => {
+		event.preventDefault();
+
+		// obtener valores del formulario
+		const formData = new FormData(event.target);
+		let objFormData = crearObjetoFromFormData(formData);
+		let {addrEthOwner} = objFormData;
+
+		// limpiar formulario
+		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
+		document.getElementById('actualizar-owner-form').reset();
+
+		// mandar transacción
+		const {drizzle, drizzleState} = this.props;
+
+		const instance = drizzle.contracts[this.props.contractName];
+
+		const txId = instance.methods.actualizarOwner.cacheSend(
+			addrEthOwner,
+			{from: this.props.miDireccion}
+		);
+	}
+
 	render() {
 		const {drizzle, drizzleState, contractName} = this.props;
 
@@ -67,7 +90,20 @@ class AsignaturaDatos extends React.Component {
 					<button type="submit">Actualizar coordinador</button>
 				</form>
 			</section>;
-		} 
+		}
+
+		let actualizarOwner = [];
+		if (this.props.isOwner) {
+			actualizarOwner = <section>
+				<h3>Actualizar owner</h3>
+				<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
+					<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>
+					<input type="text" id="addrEthOwner" name="addrEthOwner" />
+
+					<button type="submit">Actualizar owner</button>
+				</form>
+			</section>;
+		}
 
 		return (
 			<>
@@ -221,6 +257,8 @@ class AsignaturaDatos extends React.Component {
 				</table>
 
 				{actualizarCoordinador}
+
+				{actualizarOwner}
 				
 			</>
 		);

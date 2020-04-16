@@ -94,15 +94,25 @@ class ListaProfesores extends React.Component {
 									render={(profesor) => (
 										<tr>
 											<td><Link to={`/gestion-profesores/profesor/${profesor.addrEthProf}`}>{profesor.addrEthProf}</Link></td>
+											
 											<td>{profesor.nombre}</td>
+											
 											<td>{profesor.apellidos}</td>
+											
 											<td>{profesor.correoUpm}</td>
-											<td>
-												<form onSubmit={this.eliminarProfesor}>
-													<input type="hidden" value={addrEthProf} name="addrEthProf" />
-													<button type="submit">Eliminar profesor</button>
-												</form>
-											</td>
+											
+											{
+												this.props.owner === this.props.miDireccion
+												?
+													<td>
+														<form onSubmit={this.eliminarProfesor}>
+															<input type="hidden" value={addrEthProf} name="addrEthProf" />
+															<button type="submit">Eliminar profesor</button>
+														</form>
+													</td>
+												:
+													""
+											}
 										</tr>
 									)}
 					/>
@@ -121,10 +131,20 @@ class ListaProfesores extends React.Component {
 					<thead>
 						<tr>
 							<th>Dirección</th>
+							
 							<th>Nombre</th>
+							
 							<th>Apellidos</th>
+							
 							<th>Correo</th>
-							<th>Eliminar</th>
+							
+							{
+								this.props.owner === this.props.miDireccion
+								?
+									<th>Eliminar</th>
+								:
+								""
+							}
 						</tr>
 					</thead>
 					<tbody>

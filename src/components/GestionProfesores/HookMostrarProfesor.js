@@ -6,12 +6,16 @@ import MostrarProfesor from './MostrarProfesor';
 
 const HookMostrarProfesor = (props) => {
 
-	console.log(useParams());
+	console.log('HookMostrarProfesor - useParams();', useParams());
+
+	console.log('HookMostrarProfesor - props;', props);
 
 	return (
 		<>
 			<MostrarProfesor 	drizzle={props.drizzle}
 								drizzleState={props.drizzleState}
+								miDireccion={props.miDireccion}
+								owner={props.owner}
 								addrEthProf={useParams().addrEthProf} />
 		</>	
 	);

@@ -6,12 +6,16 @@ import MostrarAlumno from './MostrarAlumno';
 
 const HookMostrarAlumno = (props) => {
 
-	console.log(useParams());
+	console.log('HookMostrarAlumno - useParams();', useParams());
+
+	console.log('HookMostrarAlumno - props;', props);
 
 	return (
 		<>
 			<MostrarAlumno 	drizzle={props.drizzle}
 							drizzleState={props.drizzleState}
+							miDireccion={props.miDireccion}
+							owner={props.owner}
 							addrEthAlum={useParams().addrEthAlum} />
 		</>	
 	);

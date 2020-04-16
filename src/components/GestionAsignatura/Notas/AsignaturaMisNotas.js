@@ -45,79 +45,84 @@ class AsignaturaMisNotas extends React.Component {
 		}
 	}
 
-	eliminarNota = (event) => {
-		event.preventDefault();
-
-	}
-
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle, drizzleState, isAlumno} = this.props;
 
 		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
 
-		let theadtr = [];
-		for (let i = 0; i < this.props.numEvaluaciones; i++) {
-			theadtr.push(
-				<th>
-					E<sub>{i}</sub> (
+		const hayAlgunaNota = this.props.numNotas > 0;
+
+		let listaNotas = [];
+		if (hayAlgunaNota) {
+			let theadtr = [];
+			for (let i = 0; i < this.props.numEvaluaciones; i++) {
+				theadtr.push(
+					<th>
+						E<sub>{i}</sub> (
+						<ContractData	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contract={this.props.contractName}
+										method={"listaEvaluaciones"}
+										methodArgs={[i]}
+										render={(evaluacion) => (
+											<span>{evaluacion.nombre}</span>
+										)} />
+						)
+					</th>
+				);
+			}
+
+			let notasUnAlumno = [];
+			for (let j = 0; j < this.props.numEvaluaciones; j++) {
+				notasUnAlumno.push(
 					<ContractData	drizzle={drizzle}
 									drizzleState={drizzleState}
 									contract={this.props.contractName}
-									method={"listaEvaluaciones"}
-									methodArgs={[i]}
-									render={(evaluacion) => (
-										<span>{evaluacion.nombre}</span>
+									method={"mapNotas"}
+									methodArgs={[this.props.miDireccion, j]}
+									render={(nota) => (
+										<td>
+											{nota.tipoNota === "0" ? "NP" : ""}
+				                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
+				                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
+										</td>
 									)} />
-					)
-				</th>
+				);
+			}
+
+			let tbodyListaNotas = [];
+			tbodyListaNotas.push(
+				<tr>
+					<td>Yo ({this.props.miDireccion})</td>
+					{notasUnAlumno}
+				</tr>
 			);
+
+			listaNotas = <table>
+							<thead>
+								<tr>
+									<th>A\E</th>
+									{theadtr}
+								</tr>
+							</thead>
+							<tbody>
+								{tbodyListaNotas}
+							</tbody>
+						</table>;
+		} else {
+			listaNotas = <h3>No hay ninguna nota mía</h3>
 		}
 
-		let notasUnAlumno = [];
-		for (let j = 0; j < this.props.numEvaluaciones; j++) {
-			notasUnAlumno.push(
-				<ContractData	drizzle={drizzle}
-								drizzleState={drizzleState}
-								contract={this.props.contractName}
-								method={"mapNotas"}
-								methodArgs={[this.props.miDireccion, j]}
-								render={(nota) => (
-									<td>
-										{nota.tipoNota === "0" ? "NP" : ""}
-			                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
-			                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
-									</td>
-								)} />
-			);
-		}
-
-		let tbodyListaNotas = [];
-		tbodyListaNotas[0] = (
-			<tr>
-				<td>Yo ({this.props.miDireccion})</td>
-				{notasUnAlumno}
-			</tr>
-		);
-
-		if (this.props.isAlumno) {
+		if (isAlumno) {
 			return (
 				<>
 					<h3>Mis notas</h3>
+					<p>Nombre del contrato: {this.props.contractName}</p>
 
-					<table>
-						<thead>
-							<tr>
-								<th>A\E</th>
-								{theadtr}
-							</tr>
-						</thead>
-						<tbody>
-							{tbodyListaNotas}
-						</tbody>
-					</table>
+					{listaNotas}
 				</>
 			);
 		} else {

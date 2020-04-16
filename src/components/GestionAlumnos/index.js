@@ -1,10 +1,17 @@
 import React from 'react';
 
+import {
+	Switch,
+	Route,
+} from 'react-router-dom';
+
 import {newContextComponents} from "drizzle-react-components";
 
 import ListaAlumnos from './ListaAlumnos';
 import CrearAlumno from './CrearAlumno';
 import ActualizarOwner from './ActualizarOwner';
+
+import HookMostrarAlumno from './HookMostrarAlumno';
 
 const {ContractData} = newContextComponents;
 
@@ -86,27 +93,45 @@ class GestionAlumnos extends React.Component {
         let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
         numAlumnos = numAlumnos ? numAlumnos.value : -1;
 
+        let crearAlumno = [];
+        let actualizarOwner = [];
+        if (miDireccion === owner) {
+        	crearAlumno = <CrearAlumno 	drizzle={drizzle}
+										drizzleState={drizzleState}
+										miDireccion={miDireccion}
+										owner={owner} />;
+			actualizarOwner = <ActualizarOwner 	drizzle={drizzle}
+												drizzleState={drizzleState}
+												miDireccion={miDireccion}
+												owner={owner} />;
+        }
+
 		return (
 			<>
 				<h2>Gestión de alumnos</h2>
 				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
 
-				<ListaAlumnos 	drizzle={drizzle}
-								drizzleState={drizzleState}
-								alumnosLength={alumnosLength}
-								numAlumnos={numAlumnos}
-								miDireccion={miDireccion}
-								owner={owner} />
+				<Switch>
+					<Route exact path="/gestion-alumnos">
+						<ListaAlumnos 	drizzle={drizzle}
+										drizzleState={drizzleState}
+										alumnosLength={alumnosLength}
+										numAlumnos={numAlumnos}
+										miDireccion={miDireccion}
+										owner={owner} />
 
-				<CrearAlumno 	drizzle={drizzle}
-								drizzleState={drizzleState}
-								miDireccion={miDireccion}
-								owner={owner} />
-				
-				<ActualizarOwner 	drizzle={drizzle}
-									drizzleState={drizzleState}
-									miDireccion={miDireccion}
-									owner={owner} />
+						{crearAlumno}
+						
+						{actualizarOwner}
+					</Route>
+
+					<Route path="/gestion-alumnos/alumno/:addrEthAlum">
+						<HookMostrarAlumno 	drizzle={drizzle}
+											drizzleState={drizzleState}
+											miDireccion={miDireccion}
+											owner={owner} />
+					</Route>
+				</Switch>
 
 			</>
 		);

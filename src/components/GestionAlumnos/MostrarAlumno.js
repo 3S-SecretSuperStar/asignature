@@ -96,6 +96,16 @@ class MostrarAlumno extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		console.log('MostrarAlumno - render - props;', this.props);
+
+		let eliminarAlumno = [];
+		if (this.props.miDireccion === this.props.owner) {
+			eliminarAlumno = 	<form onSubmit={this.eliminarAlumno}>
+									<input type="hidden" value={this.props.addrEthAlum} name="addrEthAlum" />
+									<button type="submit">Eliminar alumno</button>
+								</form>;
+		}
+
 		return (
 			<>
 				<h3>Alumno {this.props.addrEthAlum}</h3>
@@ -202,10 +212,7 @@ class MostrarAlumno extends React.Component {
 					</tbody>
 				</table>
 				
-				<form onSubmit={this.eliminarAlumno}>
-					<input type="hidden" value={this.props.addrEthAlum} name="addrEthAlum" />
-					<button type="submit">Eliminar alumno</button>
-				</form>
+				{eliminarAlumno}
 
 				{this.renderRedirect()}
 
