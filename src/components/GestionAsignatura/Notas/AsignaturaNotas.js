@@ -33,6 +33,38 @@ class AsignaturaNotas extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		let anadirNota = [];
+		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+			anadirNota = <AsignaturaAnadirNota	drizzle={drizzle}
+												drizzleState={drizzleState}
+												contractName={this.props.contractName}
+												miDireccion={this.props.miDireccion}
+												owner={this.props.owner}
+												coordinador={this.props.coordinador}
+												alumnosLength={this.props.alumnosLength}
+												numAlumnos={this.props.numAlumnos}
+												profesoresLength={this.props.profesoresLength}
+												numProfesores={this.props.numProfesores}
+												numEvaluaciones={this.props.numEvaluaciones}
+												numNotas={this.props.numNotas} />
+		}
+
+		let eliminarNota = [];
+		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+			eliminarNota = <AsignaturaEliminarNota 	drizzle={drizzle}
+													drizzleState={drizzleState}
+													contractName={this.props.contractName}
+													miDireccion={this.props.miDireccion}
+													owner={this.props.owner}
+													coordinador={this.props.coordinador}
+													alumnosLength={this.props.alumnosLength}
+													numAlumnos={this.props.numAlumnos}
+													profesoresLength={this.props.profesoresLength}
+													numProfesores={this.props.numProfesores}
+													numEvaluaciones={this.props.numEvaluaciones}
+													numNotas={this.props.numNotas} />
+		}
+
 		return (
 			<>
 				<h3>Notas creadas</h3>
@@ -51,31 +83,9 @@ class AsignaturaNotas extends React.Component {
 										numEvaluaciones={this.props.numEvaluaciones}
 										numNotas={this.props.numNotas} />
 
-				<AsignaturaAnadirNota 	drizzle={drizzle}
-										drizzleState={drizzleState}
-										contractName={this.props.contractName}
-										miDireccion={this.props.miDireccion}
-										owner={this.props.owner}
-										coordinador={this.props.coordinador}
-										alumnosLength={this.props.alumnosLength}
-										numAlumnos={this.props.numAlumnos}
-										profesoresLength={this.props.profesoresLength}
-										numProfesores={this.props.numProfesores}
-										numEvaluaciones={this.props.numEvaluaciones}
-										numNotas={this.props.numNotas} />
+				{anadirNota}
 
-				<AsignaturaEliminarNota 	drizzle={drizzle}
-											drizzleState={drizzleState}
-											contractName={this.props.contractName}
-											miDireccion={this.props.miDireccion}
-											owner={this.props.owner}
-											coordinador={this.props.coordinador}
-											alumnosLength={this.props.alumnosLength}
-											numAlumnos={this.props.numAlumnos}
-											profesoresLength={this.props.profesoresLength}
-											numProfesores={this.props.numProfesores}
-											numEvaluaciones={this.props.numEvaluaciones}
-											numNotas={this.props.numNotas} />
+				{eliminarNota}
 			</>
 		);
 	}

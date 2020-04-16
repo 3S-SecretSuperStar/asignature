@@ -103,7 +103,8 @@ class GestionCatalogoAsignaturas extends React.Component {
 
 				<DesplegarYAnadirAsignatura	drizzle={drizzle}
 											drizzleState={drizzleState}
-											miDireccion={miDireccion} />
+											miDireccion={miDireccion}
+											owner={owner} />
 			</>
 		);
 	}

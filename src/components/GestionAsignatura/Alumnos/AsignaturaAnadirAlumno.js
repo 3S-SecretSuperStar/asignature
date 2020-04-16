@@ -43,6 +43,7 @@ class AsignaturaAnadirAlumno extends React.Component {
 
 	render() {
 		const {drizzle, drizzleState} = this.props;
+		console.log('@@@', this.props);
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

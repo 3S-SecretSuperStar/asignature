@@ -4,6 +4,7 @@ import {newContextComponents} from "drizzle-react-components";
 
 import ListaAlumnos from './ListaAlumnos';
 import CrearAlumno from './CrearAlumno';
+import ActualizarOwner from './ActualizarOwner';
 
 const {ContractData} = newContextComponents;
 
@@ -12,9 +13,9 @@ class GestionAlumnos extends React.Component {
 	state = {
 		ready: false,
 		miDireccionKey: null,
+		ownerKey: null,
 		alumnosLengthKey: null,
 		numAlumnosKey: null,
-		ownerKey: null,
 	};
 
 	componentDidMount() {
@@ -32,13 +33,18 @@ class GestionAlumnos extends React.Component {
 		let changed = false;
 
 		let {
-			miDireccionKey, alumnosLengthKey, numAlumnosKey, ownerKey
+			miDireccionKey, alumnosLengthKey, numAlumnosKey, ownerKey,
 		} = JSON.parse(JSON.stringify(this.state));
 
 		if (!miDireccionKey) {
             miDireccionKey = instance.methods.miDireccion.cacheCall();
             changed = true;
         }
+
+		if (!ownerKey) {
+			ownerKey = instance.methods.owner.cacheCall();
+			changed = true;
+		}
 
         if (!alumnosLengthKey) {
 			alumnosLengthKey = instance.methods.alumnosLength.cacheCall();
@@ -50,17 +56,12 @@ class GestionAlumnos extends React.Component {
 			changed = true;
 		}
 
-		if (!ownerKey) {
-			ownerKey = instance.methods.owner.cacheCall();
-			changed = true;
-		}
-
 		if (changed) {
 			this.setState({
 				miDireccionKey,
+				ownerKey,
 				alumnosLengthKey,
 				numAlumnosKey,
-				ownerKey,
 			});
 		}
 	}
@@ -76,14 +77,14 @@ class GestionAlumnos extends React.Component {
         let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
         miDireccion = miDireccion ? miDireccion.value :"0x0";
 
+        let owner = instanceState.owner[this.state.ownerKey];
+        owner = owner ? owner.value : "0x0";
+
         let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
         alumnosLength = alumnosLength ? alumnosLength.value : -1;
 
         let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
         numAlumnos = numAlumnos ? numAlumnos.value : -1;
-
-        let owner = instanceState.owner[this.state.ownerKey];
-        owner = owner ? owner.value : "0x0";
 
 		return (
 			<>
@@ -93,13 +94,20 @@ class GestionAlumnos extends React.Component {
 				<ListaAlumnos 	drizzle={drizzle}
 								drizzleState={drizzleState}
 								alumnosLength={alumnosLength}
-								numAlumnos={numAlumnos} />
+								numAlumnos={numAlumnos}
+								miDireccion={miDireccion}
+								owner={owner} />
 
 				<CrearAlumno 	drizzle={drizzle}
-								drizzleState={drizzleState} />
+								drizzleState={drizzleState}
+								miDireccion={miDireccion}
+								owner={owner} />
+				
+				<ActualizarOwner 	drizzle={drizzle}
+									drizzleState={drizzleState}
+									miDireccion={miDireccion}
+									owner={owner} />
 
-				<h3>(ToDo) Actualizar alumno</h3>
-				<p>ToDo</p>
 			</>
 		);
 	}

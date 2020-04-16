@@ -32,6 +32,23 @@ class AsignaturaEvaluaciones extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		let anadirEvaluacion = [];
+		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+			anadirEvaluacion = <AsignaturaAnadirEvaluacion 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contractName={this.props.contractName}
+															miDireccion={this.props.miDireccion}
+															owner={this.props.owner}
+															coordinador={this.props.coordinador}
+															alumnosLength={this.props.alumnosLength}
+															numAlumnos={this.props.numAlumnos}
+															profesoresLength={this.props.profesoresLength}
+															numProfesores={this.props.numProfesores}
+															evaluacionesLength={this.props.evaluacionesLength}
+															numEvaluaciones={this.props.numEvaluaciones}
+															numNotas={this.props.numNotas} />;
+		}
+
 		return (
 			<>
 				<h3>Evaluaciones creadas</h3>
@@ -51,19 +68,7 @@ class AsignaturaEvaluaciones extends React.Component {
 												numEvaluaciones={this.props.numEvaluaciones}
 												numNotas={this.props.numNotas} />
 
-				<AsignaturaAnadirEvaluacion drizzle={drizzle}
-											drizzleState={drizzleState}
-											contractName={this.props.contractName}
-											miDireccion={this.props.miDireccion}
-											owner={this.props.owner}
-											coordinador={this.props.coordinador}
-											alumnosLength={this.props.alumnosLength}
-											numAlumnos={this.props.numAlumnos}
-											profesoresLength={this.props.profesoresLength}
-											numProfesores={this.props.numProfesores}
-											evaluacionesLength={this.props.evaluacionesLength}
-											numEvaluaciones={this.props.numEvaluaciones}
-											numNotas={this.props.numNotas} />
+				{anadirEvaluacion}
 			</>
 		);
 	}

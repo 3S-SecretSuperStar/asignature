@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from "react-router-dom";
+
 import {newContextComponents} from "drizzle-react-components";
 
 import {crearObjetoFromFormData} from '../../utils/funciones.js';
@@ -55,7 +57,7 @@ class ListaAlumnos extends React.Component {
 		console.log(objFormData);
 		let {addrEthAlum} = objFormData;
 
-		console.log("Has pulasdo el botón para eliminar el alumno", addrEthAlum);
+		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
 
 		// coger drizzle y drizzleState
 		const {drizzle, drizzleState} = this.props;
@@ -63,7 +65,8 @@ class ListaAlumnos extends React.Component {
 
 		// eliminar alumno
 		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
-			addrEthAlum
+			addrEthAlum,
+			{from: this.props.miDireccion}
 		);
 	}
 
@@ -90,7 +93,7 @@ class ListaAlumnos extends React.Component {
 									methodArgs={[addrEthAlum]}
 									render={(alumno) => (
 										<tr>
-											<td>{alumno.addrEthAlum}</td>
+											<td><Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link></td>
 											<td>{alumno.nombre}</td>
 											<td>{alumno.apellidos}</td>
 											<td>{alumno.correoUpm}</td>

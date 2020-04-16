@@ -4,6 +4,7 @@ import {newContextComponents} from "drizzle-react-components";
 
 import ListaProfesores from './ListaProfesores';
 import CrearProfesor from './CrearProfesor';
+import ActualizarOwner from './ActualizarOwner';
 
 const {ContractData} = newContextComponents;
 
@@ -76,14 +77,14 @@ class GestionProfesores extends React.Component {
         let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
         miDireccion = miDireccion ? miDireccion.value :"0x0";
 
+        let owner = instanceState.owner[this.state.ownerKey];
+        owner = owner ? owner.value : "0x0";
+
         let profesoresLength = instanceState.profesoresLength[this.state.profesoresLengthKey];
         profesoresLength = profesoresLength ? profesoresLength.value : -1;
 
         let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
         numProfesores = numProfesores ? numProfesores.value : -1;
-
-        let owner = instanceState.owner[this.state.ownerKey];
-        owner = owner ? owner.value : "0x0";
 
 		return (
 			<>
@@ -93,13 +94,20 @@ class GestionProfesores extends React.Component {
 				<ListaProfesores	drizzle={drizzle}
 									drizzleState={drizzleState}
 									profesoresLength={profesoresLength}
-									numProfesores={numProfesores} />
+									numProfesores={numProfesores}
+									miDireccion={miDireccion}
+									owner={owner} />
 
 				<CrearProfesor 	drizzle={drizzle}
-								drizzleState={drizzleState} />
+								drizzleState={drizzleState}
+								miDireccion={miDireccion}
+								owner={owner} />
 
-				<h3>(ToDo) Actualizar profesor</h3>
-				<p>ToDo</p>
+				<ActualizarOwner 	drizzle={drizzle}
+									drizzleState={drizzleState}
+									miDireccion={miDireccion}
+									owner={owner} />
+
 			</>
 		);
 	}

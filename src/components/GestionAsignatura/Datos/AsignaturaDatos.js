@@ -49,10 +49,25 @@ class AsignaturaDatos extends React.Component {
 	render() {
 		const {drizzle, drizzleState, contractName} = this.props;
 
+		console.log('AsignaturaDatos-', this.props.miDireccion);
+
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
+
+		let actualizarCoordinador = [];
+		if (this.props.isOwner || this.props.isCoordinador) {
+			actualizarCoordinador = <section>
+				<h3>Actualizar coordinador</h3>
+				<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
+					<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
+					<input type="text" id="addrEthCoord" name="addrEthCoord" />
+
+					<button type="submit">Actualizar coordinador</button>
+				</form>
+			</section>;
+		} 
 
 		return (
 			<>
@@ -67,7 +82,10 @@ class AsignaturaDatos extends React.Component {
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"owner"} />
+												method={"owner"}
+												render={(owner) => (
+													<>{owner} {owner === this.props.miDireccion ? "(yo)" : ""}</>
+												)} />
 							</td>
 						</tr>
 
@@ -77,7 +95,10 @@ class AsignaturaDatos extends React.Component {
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"coordinador"} />
+												method={"coordinador"}
+												render={(coordinador) => (
+													<>{coordinador} {coordinador === this.props.miDireccion ? "(yo)" : ""}</>
+												)} />
 							</td>
 						</tr>						
 
@@ -199,15 +220,8 @@ class AsignaturaDatos extends React.Component {
 					</tbody>
 				</table>
 
-				<h3>Gestión de la asignatura</h3>
-
-				<h4>Actualizar coordinador</h4>
-				<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
-					<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
-					<input type="text" id="addrEthCoord" name="addrEthCoord" />
-
-					<button type="submit">Actualizar coordinador</button>
-				</form>
+				{actualizarCoordinador}
+				
 			</>
 		);
 	}

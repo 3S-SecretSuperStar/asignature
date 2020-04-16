@@ -73,6 +73,12 @@ class DesplegarYAnadirAsignatura extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		if (this.props.miDireccion !== this.props.owner) {
+			return (
+				<h3>Sección oculta. Sólo el owner puede desplegar y añadir una asignatura al catálogo</h3>
+			);
+		}
+
 		return (
 			<>
 				<h3>Desplegar asignatura y añadirla al catálogo</h3>

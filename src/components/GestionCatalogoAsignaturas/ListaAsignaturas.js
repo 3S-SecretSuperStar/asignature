@@ -107,12 +107,18 @@ class ListaAsignaturas extends React.Component {
 											<span>{asignaturaConNombre.nombreAMostrar}</span>
 										)} />
 					</td>
-					<td>
-						<form onSubmit={this.eliminarAsignatura}>
-							<input type="hidden" value={addrEthAsignatura} name="addrEthAsignatura" />
-							<button type="submit">Eliminar asignatura</button>
-						</form>
-					</td>
+					{
+						this.props.owner === this.props.miDireccion
+						?
+							<td>
+								<form onSubmit={this.eliminarAsignatura}>
+									<input type="hidden" value={addrEthAsignatura} name="addrEthAsignatura" />
+									<button type="submit">Eliminar asignatura</button>
+								</form>
+							</td>
+						:
+							""
+					}
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>Ir</Link>
 					</td>
@@ -143,7 +149,13 @@ class ListaAsignaturas extends React.Component {
 						<tr>
 							<th>Dirección</th>
 							<th>Nombre a mostrar</th>
-							<th>Eliminar del catálogo</th>
+							{
+								this.props.owner === this.props.miDireccion
+								?
+									<th>Eliminar del catálogo</th>
+								:
+								""
+							}
 							<th>Alumnos</th>
 							<th>Profesores</th>
 							<th>Evaluaciones</th>

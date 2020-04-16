@@ -25,11 +25,26 @@ class AsignaturaAlumnos extends React.Component {
 
 	render() {
 		const {drizzle, drizzleState, contractName} = this.props;
-		console.log('AsignaturaAlumnos - render - this.props:', this.props);
 
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
+		}
+
+		let anadirAlumno = [];
+		if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+			anadirAlumno = <AsignaturaAnadirAlumno 	drizzle={drizzle}
+													drizzleState={drizzleState}
+													contractName={this.props.contractName}
+													miDireccion={this.props.miDireccion}
+													owner={this.props.owner}
+													coordinador={this.props.coordinador}
+													alumnosLength={this.props.alumnosLength}
+													numAlumnos={this.props.numAlumnos}
+													profesoresLength={this.props.profesoresLength}
+													numProfesores={this.props.numProfesores}
+													numEvaluaciones={this.props.numEvaluaciones}
+													numNotas={this.props.numNotas} />;
 		}
 
 		return (
@@ -50,18 +65,7 @@ class AsignaturaAlumnos extends React.Component {
 										numEvaluaciones={this.props.numEvaluaciones}
 										numNotas={this.props.numNotas} />
 
-				<AsignaturaAnadirAlumno drizzle={drizzle}
-										drizzleState={drizzleState}
-										contractName={this.props.contractName}
-										miDireccion={this.props.miDireccion}
-										owner={this.props.owner}
-										coordinador={this.props.coordinador}
-										alumnosLength={this.props.alumnosLength}
-										numAlumnos={this.props.numAlumnos}
-										profesoresLength={this.props.profesoresLength}
-										numProfesores={this.props.numProfesores}
-										numEvaluaciones={this.props.numEvaluaciones}
-										numNotas={this.props.numNotas} />
+				{anadirAlumno}
 			</>
 		);
 	}

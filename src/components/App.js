@@ -10,7 +10,9 @@ import {
 
 import Header from './Header';
 import GestionAlumnos from './GestionAlumnos';
+import HookMostrarAlumno from './GestionAlumnos/HookMostrarAlumno';
 import GestionProfesores from './GestionProfesores';
+import HookMostrarProfesor from './GestionProfesores/HookMostrarProfesor';
 import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 import GestionAsignatura from './GestionAsignatura';
 
@@ -42,17 +44,27 @@ export default () => (
 
                     <Header />
 
-                    <Route path="/gestion-alumnos">
+                    <Route exact path="/gestion-alumnos">
                         <GestionAlumnos drizzle={drizzle}
                                         drizzleState={drizzleState} />
                     </Route>
 
-                    <Route path="/gestion-profesores">
+                    <Route path="/gestion-alumnos/alumno/:addrEthAlum">
+                        <HookMostrarAlumno  drizzle={drizzle}
+                                            drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route exact path="/gestion-profesores">
                         <GestionProfesores  drizzle={drizzle}
                                             drizzleState={drizzleState} />
                     </Route>
 
-                    <Route path="/gestion-catalogo-asignaturas">
+                    <Route path="/gestion-profesores/profesor/:addrEthProf">
+                        <HookMostrarProfesor    drizzle={drizzle}
+                                                drizzleState={drizzleState} />
+                    </Route>
+
+                    <Route exact path="/gestion-catalogo-asignaturas">
                         <GestionCatalogoAsignaturas drizzle={drizzle}
                                                     drizzleState={drizzleState} />
                     </Route>

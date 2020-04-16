@@ -50,7 +50,8 @@ class CrearProfesor extends React.Component {
 			correoUpm,
 			telefMovil,
 			fechaNac,
-			idUpm
+			idUpm,
+			{from: this.props.miDireccion}
 		);
 	}
 
@@ -60,7 +61,13 @@ class CrearProfesor extends React.Component {
         const instanceState = drizzleState.contracts.UpmProfesores;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
+
+        if (this.props.miDireccion !== this.props.owner) {
+			return (
+				<h3>Sección oculta. Sólo el owner puede crear profesores</h3>
+			);
+		}   
 
 		return (
 			<>
