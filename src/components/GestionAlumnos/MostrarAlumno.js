@@ -4,8 +4,6 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
-
 const {ContractData} = newContextComponents;
 
 class MostrarAlumno extends React.Component {
@@ -64,22 +62,11 @@ class MostrarAlumno extends React.Component {
 		}
 	}
 
-	eliminarAlumno = (event) => {
-		event.preventDefault();
-
-		// obtener valores del formulario
-		const formData = new FormData(event.target);
-		let objFormData = crearObjetoFromFormData(formData);
-		console.log(objFormData);
-		let {addrEthAlum} = objFormData;
-
+	eliminarAlumno = (addrEthAlum) => {
 		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
 
-		// coger drizzle y drizzleState
-		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts.UpmAlumnos;
+		const instance = this.props.drizzle.contracts.UpmAlumnos;
 
-		// eliminar alumno
 		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
@@ -100,10 +87,7 @@ class MostrarAlumno extends React.Component {
 
 		let eliminarAlumno = [];
 		if (this.props.miDireccion === this.props.owner) {
-			eliminarAlumno = 	<form onSubmit={this.eliminarAlumno}>
-									<input type="hidden" value={this.props.addrEthAlum} name="addrEthAlum" />
-									<button type="submit">Eliminar alumno</button>
-								</form>;
+			eliminarAlumno = <button onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>Eliminar</button>;
 		}
 
 		return (

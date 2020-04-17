@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -48,20 +48,11 @@ class AsignaturaListaAlumnos extends React.Component {
 
 	}
 
-	eliminarAlumno = (event) => {
-		event.preventDefault();
-
-		// obtener valores del formulario
-		const formData = new FormData(event.target);
-		let objFormData = crearObjetoFromFormData(formData);
-		console.log(objFormData);
-		let {addrEthAlum} = objFormData;
-
+	eliminarAlumno = (addrEthAlum) => {
 		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
 
-		// coger drizzle y drizzleState
-		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts[this.props.contractName];
+		// coger drizzle
+		const instance = this.props.drizzle.contracts[this.props.contractName];
 
 		// eliminar alumno
 		const txId = instance.methods.eliminarAlumno.cacheSend(
@@ -93,7 +84,10 @@ class AsignaturaListaAlumnos extends React.Component {
 									methodArgs={[addrEthAlum]}
 									render={(alumno) => (
 										<tr>
-											<td><Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link></td>
+											<td>
+												<Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link>
+												<button onClick={() => copyToClipboard(addrEthAlum)}>Copy</button>
+											</td>
 
 											<td>{alumno.nombre}</td>
 
@@ -105,10 +99,7 @@ class AsignaturaListaAlumnos extends React.Component {
 												this.props.owner === this.props.miDireccion
 												?
 													<td>
-														<form onSubmit={this.eliminarAlumno}>
-															<input type="hidden" value={addrEthAlum} name="addrEthAlum" />
-															<button type="submit">Eliminar alumno</button>
-														</form>
+														<button onClick={() => this.eliminarAlumno(addrEthAlum)}>Eliminar</button>
 													</td>
 												:
 													""

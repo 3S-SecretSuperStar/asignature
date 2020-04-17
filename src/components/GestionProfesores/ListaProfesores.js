@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {copyToClipboard} from '../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -48,20 +48,10 @@ class ListaProfesores extends React.Component {
 
 	}
 
-	eliminarProfesor = (event) => {
-		event.preventDefault();
-
-		// obtener valores del formulario
-		const formData = new FormData(event.target);
-		let objFormData = crearObjetoFromFormData(formData);
-		console.log(objFormData);
-		let {addrEthProf} = objFormData;
-
+	eliminarProfesor = (addrEthProf) => {
 		console.log("Has pulsado el botón para eliminar el profesor", addrEthProf);
 
-		// coger drizzle y drizzleState
-		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts.UpmProfesores;
+		const instance = this.props.drizzle.contracts.UpmProfesores;
 
 		// eliminar profesor
 		const txId = instance.methods.borrarProfesorAddr.cacheSend(
@@ -93,7 +83,10 @@ class ListaProfesores extends React.Component {
 									methodArgs={[addrEthProf]}
 									render={(profesor) => (
 										<tr>
-											<td><Link to={`/gestion-profesores/profesor/${profesor.addrEthProf}`}>{profesor.addrEthProf}</Link></td>
+											<td>
+												<Link to={`/gestion-profesores/profesor/${addrEthProf}`}>{addrEthProf}</Link>
+												<button onClick={() => copyToClipboard(addrEthProf)}>Copy</button>
+											</td>
 											
 											<td>{profesor.nombre}</td>
 											
@@ -105,10 +98,7 @@ class ListaProfesores extends React.Component {
 												this.props.owner === this.props.miDireccion
 												?
 													<td>
-														<form onSubmit={this.eliminarProfesor}>
-															<input type="hidden" value={addrEthProf} name="addrEthProf" />
-															<button type="submit">Eliminar profesor</button>
-														</form>
+														<button onClick={() => this.eliminarProfesor(addrEthProf)}>Eliminar</button>
 													</td>
 												:
 													""

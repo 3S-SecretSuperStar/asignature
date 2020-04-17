@@ -8,3 +8,15 @@ export function crearObjetoFromFormData(formData) {
 	}
 	return objFormData;
 }
+
+// copiar al portapapeles el valor
+// que se pasa como parámetro
+// https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+export function copyToClipboard(textToCopy) {
+	const el = document.createElement('textarea');
+	el.value = textToCopy;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+}

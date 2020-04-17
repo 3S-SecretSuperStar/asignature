@@ -36,9 +36,6 @@ class AsignaturaNotas extends React.Component {
 		const hayAlgunAlumno = this.props.numAlumnos > 0;
 		const hayAlgunaEvaluacion = this.props.numEvaluaciones > 0;
 		const hayAlgunaNota = this.props.numNotas > 0;
-		console.log('hayAlgunAlumno', hayAlgunAlumno);
-		console.log('hayAlgunaEvaluacion', hayAlgunaEvaluacion);
-		console.log('hayAlgunaNota', hayAlgunaNota);
 
 		let listaNotas = [];
 		listaNotas = <AsignaturaListaNotas	drizzle={drizzle}

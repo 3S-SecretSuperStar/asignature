@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -47,22 +47,9 @@ class AsignaturaListaNotas extends React.Component {
 		}
 	}
 
-	eliminarNota = (event) => {
-		event.preventDefault();
-
-		// obtener valores del formulario
-		const formData = new FormData(event.target);
-		let objFormData = crearObjetoFromFormData(formData);
-		let {addrEthAlum, indexEval} = objFormData;
-
-		// limpiar formulario
-		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
-		document.getElementById('eliminar-nota-individual-form').reset();
-
+	eliminarNota = (addrEthAlum, indexEval) => {
 		// mandar transacción
-		const {drizzle, drizzleState} = this.props;
-
-		const instance = drizzle.contracts[this.props.contractName];
+		const instance = this.props.drizzle.contracts[this.props.contractName];
 
 		const txId = instance.methods.borrarNota.cacheSend(
 			addrEthAlum, indexEval,
@@ -110,12 +97,7 @@ class AsignaturaListaNotas extends React.Component {
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
 					let eliminarNota = [];
 					if (isOwner || isCoordinador || isProfesor) {
-						eliminarNota = 	<form onSubmit={this.eliminarNota} id="eliminar-nota-individual-form">
-											<input type="hidden" id="addrEthAlum" name="addrEthAlum" value={addrEthAlum} />
-											<input type="hidden" id="indexEval" name="indexEval" value={j} />
-
-											<button type="submit">Eliminar</button>
-										</form>;
+						eliminarNota = <button onClick={() => this.eliminarNota(addrEthAlum, j)}>Eliminar</button>;
 					}
 					notasUnAlumno.push(
 						<ContractData	drizzle={drizzle}
@@ -128,7 +110,7 @@ class AsignaturaListaNotas extends React.Component {
 												{nota.tipoNota === "0" ? "NP" : ""}
 					                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
 					                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
-					                            {eliminarNota}
+					                            {(nota.tipoNota === "1" || nota.tipoNota === "2")  ? eliminarNota : ""}
 											</td>
 										)} />
 					);
@@ -136,7 +118,10 @@ class AsignaturaListaNotas extends React.Component {
 
 				tbodyListaNotas[i] = (
 					<tr>
-						<td>A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)</td>
+						<td>
+							A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)
+							<button onClick={() => copyToClipboard(addrEthAlum)}>Copy</button>
+						</td>
 						{notasUnAlumno}
 					</tr>
 				);

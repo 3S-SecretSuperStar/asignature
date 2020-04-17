@@ -1,8 +1,10 @@
 import React from 'react';
 
+import {Link} from "react-router-dom";
+
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -96,7 +98,10 @@ class AsignaturaMisNotas extends React.Component {
 			let tbodyListaNotas = [];
 			tbodyListaNotas.push(
 				<tr>
-					<td>Yo ({this.props.miDireccion})</td>
+					<td>
+						<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}>Yo ({this.props.miDireccion})</Link>
+						<button onClick={() => copyToClipboard(this.props.miDireccion)}>Copy</button>
+					</td>
 					{notasUnAlumno}
 				</tr>
 			);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {copyToClipboard} from '../../utils/funciones.js';
 
 import {
     BrowserRouter as Router,
@@ -50,14 +50,7 @@ class ListaAsignaturas extends React.Component {
 
 	}
 
-	eliminarAsignatura = (event) => {
-		event.preventDefault();
-
-		// obtener valores del formulario
-		const formData = new FormData(event.target);
-		let objFormData = crearObjetoFromFormData(formData);
-		let {addrEthAsignatura} = objFormData;
-
+	eliminarAsignatura = (addrEthAsignatura) => {
 		console.log("Has pulsado el botón para eliminar la asignatura", addrEthAsignatura);
 
 		// coger drizzle y drizzleState
@@ -66,7 +59,7 @@ class ListaAsignaturas extends React.Component {
 		const instanceState = drizzleState.contracts.UpmCatalogo;
 
 		// eliminar asignatura del catálogo
-		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);;
+		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
 	}
 
 	render() {
@@ -96,6 +89,7 @@ class ListaAsignaturas extends React.Component {
 				<tr key={i}>
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
+						<button onClick={() => copyToClipboard(addrEthAsignatura)}>Copy</button>
 					</td>
 
 					<td>
@@ -113,10 +107,7 @@ class ListaAsignaturas extends React.Component {
 						this.props.owner === this.props.miDireccion
 						?
 							<td>
-								<form onSubmit={this.eliminarAsignatura}>
-									<input type="hidden" value={addrEthAsignatura} name="addrEthAsignatura" />
-									<button type="submit">Eliminar asignatura</button>
-								</form>
+								<button onClick={() => this.eliminarAsignatura(addrEthAsignatura)}>Eliminar</button>
 							</td>
 						:
 							""
