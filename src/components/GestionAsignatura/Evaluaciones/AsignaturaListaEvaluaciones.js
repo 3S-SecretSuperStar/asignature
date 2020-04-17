@@ -75,7 +75,7 @@ class AsignaturaListaEvaluaciones extends React.Component {
 					<h3>Lista de evaluaciones creadas</h3>
 
 					<p>{this.props.evaluacionesLength} evaluacionesLength</p>
-					<p>{this.props.numEvaluaciones} evaluaciones</p>
+					<p>{this.props.numEvaluaciones} evaluaciones</p>					
 
 					<table>
 						<thead>

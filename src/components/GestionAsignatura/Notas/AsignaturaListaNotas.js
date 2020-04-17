@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from "react-router-dom";
+
 import {newContextComponents} from "drizzle-react-components";
 
 import {crearObjetoFromFormData} from '../../../utils/funciones.js';
@@ -53,22 +55,24 @@ class AsignaturaListaNotas extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		const contractAdress = this.props.contractName.replace("UpmAsignatura-", "");
 
 		let theadtr = [];
 		for (let i = 0; i < this.props.numEvaluaciones; i++) {
 			theadtr.push(
 				<th>
-					E<sub>{i}</sub>
-					(
-					<ContractData	drizzle={drizzle}
-									drizzleState={drizzleState}
-									contract={this.props.contractName}
-									method={"listaEvaluaciones"}
-									methodArgs={[i]}
-									render={(evaluacion) => (
-										<span>{evaluacion.nombre}</span>
-									)} />
-					)
+					<Link to={`/gestion-asignatura/${contractAdress}/evaluaciones`}>
+						E<sub>{i}</sub> (
+						<ContractData	drizzle={drizzle}
+										drizzleState={drizzleState}
+										contract={this.props.contractName}
+										method={"listaEvaluaciones"}
+										methodArgs={[i]}
+										render={(evaluacion) => (
+											<span>{evaluacion.nombre}</span>
+										)} />
+						)
+					</Link>
 				</th>
 			);
 		}
@@ -99,7 +103,7 @@ class AsignaturaListaNotas extends React.Component {
 
 				tbodyListaNotas[i] = (
 					<tr>
-						<td>A<sub>{i}</sub> ({addrEthAlum})</td>
+						<td>A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)</td>
 						{notasUnAlumno}
 					</tr>
 				);

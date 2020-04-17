@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from "react-router-dom";
+
 import {newContextComponents} from "drizzle-react-components";
 
 import {crearObjetoFromFormData} from '../../../utils/funciones.js';
@@ -91,7 +93,7 @@ class AsignaturaListaProfesores extends React.Component {
 									methodArgs={[addrEthProf]}
 									render={(profesor) => (
 										<tr>
-											<td>{profesor.addrEthProf}</td>
+											<td><Link to={`/gestion-profesores/profesor/${profesor.addrEthProf}`}>{profesor.addrEthProf}</Link></td>
 
 											<td>{profesor.nombre}</td>
 
