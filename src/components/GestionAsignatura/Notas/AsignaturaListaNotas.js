@@ -47,8 +47,31 @@ class AsignaturaListaNotas extends React.Component {
 		}
 	}
 
-	render() {
+	eliminarNota = (event) => {
+		event.preventDefault();
+
+		// obtener valores del formulario
+		const formData = new FormData(event.target);
+		let objFormData = crearObjetoFromFormData(formData);
+		let {addrEthAlum, indexEval} = objFormData;
+
+		// limpiar formulario
+		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
+		document.getElementById('eliminar-nota-individual-form').reset();
+
+		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
+
+		const instance = drizzle.contracts[this.props.contractName];
+
+		const txId = instance.methods.borrarNota.cacheSend(
+			addrEthAlum, indexEval,
+			{from: this.props.miDireccion}
+		);
+	}
+
+	render() {
+		const {drizzle, drizzleState, isOwner, isCoordinador, isProfesor} = this.props;
 
 		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -85,6 +108,15 @@ class AsignaturaListaNotas extends React.Component {
 			if (addrEthAlum != "" && addrEthAlum != "0x0000000000000000000000000000000000000000") {
 				let notasUnAlumno = [];
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
+					let eliminarNota = [];
+					if (isOwner || isCoordinador || isProfesor) {
+						eliminarNota = 	<form onSubmit={this.eliminarNota} id="eliminar-nota-individual-form">
+											<input type="hidden" id="addrEthAlum" name="addrEthAlum" value={addrEthAlum} />
+											<input type="hidden" id="indexEval" name="indexEval" value={j} />
+
+											<button type="submit">Eliminar</button>
+										</form>;
+					}
 					notasUnAlumno.push(
 						<ContractData	drizzle={drizzle}
 										drizzleState={drizzleState}
@@ -96,6 +128,7 @@ class AsignaturaListaNotas extends React.Component {
 												{nota.tipoNota === "0" ? "NP" : ""}
 					                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
 					                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
+					                            {eliminarNota}
 											</td>
 										)} />
 					);

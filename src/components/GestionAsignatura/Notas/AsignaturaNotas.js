@@ -52,7 +52,11 @@ class AsignaturaNotas extends React.Component {
 											profesoresLength={this.props.profesoresLength}
 											numProfesores={this.props.numProfesores}
 											numEvaluaciones={this.props.numEvaluaciones}
-											numNotas={this.props.numNotas} />;
+											numNotas={this.props.numNotas}
+											isOwner={isOwner}
+											isCoordinador={isCoordinador}
+											isProfesor={isProfesor}
+											isAlumno={isAlumno} />;
 
 		let anadirNota = [];
 		if (hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
