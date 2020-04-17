@@ -33,8 +33,10 @@ class AsignaturaNotas extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
+		const hayAlgunAlumno = this.props.numAlumnos > 0;
 		const hayAlgunaEvaluacion = this.props.numEvaluaciones > 0;
 		const hayAlgunaNota = this.props.numNotas > 0;
+		console.log('hayAlgunAlumno', hayAlgunAlumno);
 		console.log('hayAlgunaEvaluacion', hayAlgunaEvaluacion);
 		console.log('hayAlgunaNota', hayAlgunaNota);
 
@@ -53,7 +55,7 @@ class AsignaturaNotas extends React.Component {
 											numNotas={this.props.numNotas} />;
 
 		let anadirNota = [];
-		if (hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
+		if (hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <AsignaturaAnadirNota	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contractName={this.props.contractName}

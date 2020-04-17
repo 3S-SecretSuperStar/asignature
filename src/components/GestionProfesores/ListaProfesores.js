@@ -83,7 +83,7 @@ class ListaProfesores extends React.Component {
 			let addrEthProf = instanceState.listaProfesores[this.state.profesoresAddrsKeys[i]];
 			addrEthProf = addrEthProf ? addrEthProf.value : "";
 
-			if (addrEthProf != "" && addrEthProf != "0x0000000000000000000000000000000000000000") {
+			if (addrEthProf !== "" && addrEthProf !== "0x0000000000000000000000000000000000000000") {
 				tbodyListaProfesores[i] = (
 					<ContractData	key={i}
 									drizzle={drizzle}
@@ -120,39 +120,49 @@ class ListaProfesores extends React.Component {
 			}
 		}
 
-		return (
-			<>
-				<h3>Lista de profesores creados</h3>
+		const hayAlgunProfesor = this.props.numProfesores > 0;
 
-				<p>{this.props.profesoresLength} profesoresLength</p>
-				<p>{this.props.numProfesores} profesores</p>
+		if (hayAlgunProfesor) {
+			return (
+				<>
+					<h3>Lista de profesores creados</h3>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Dirección</th>
-							
-							<th>Nombre</th>
-							
-							<th>Apellidos</th>
-							
-							<th>Correo</th>
-							
-							{
-								this.props.owner === this.props.miDireccion
-								?
-									<th>Eliminar</th>
-								:
-								""
-							}
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaProfesores}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.profesoresLength} profesoresLength</p>
+					<p>{this.props.numProfesores} profesores</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Dirección</th>
+								
+								<th>Nombre</th>
+								
+								<th>Apellidos</th>
+								
+								<th>Correo</th>
+								
+								{
+									this.props.owner === this.props.miDireccion
+									?
+										<th>Eliminar</th>
+									:
+									""
+								}
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaProfesores}
+						</tbody>
+					</table>
+				</>
+			);
+
+		} else {
+			return (
+				<h3>No hay ningún profesor creado</h3>
+			)
+		}
+
 	}
 
 }

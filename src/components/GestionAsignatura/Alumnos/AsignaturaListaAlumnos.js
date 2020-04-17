@@ -81,7 +81,7 @@ class AsignaturaListaAlumnos extends React.Component {
 			let addrEthAlum = instanceState.listaAlumnos[this.state.alumnosAddrsKeys[i]];
 			addrEthAlum = addrEthAlum ? addrEthAlum.value : "";
 
-			if (addrEthAlum != "" && addrEthAlum != "0x0000000000000000000000000000000000000000") {
+			if (addrEthAlum !== "" && addrEthAlum !== "0x0000000000000000000000000000000000000000") {
 				tbodyListaAlumnos[i] = (
 					<ContractData	key={i}
 									drizzle={drizzle}

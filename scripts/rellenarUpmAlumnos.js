@@ -4,7 +4,6 @@ module.exports = async callback => {
 
         // usar las cuentas de Ganache
         const accounts = await web3.eth.getAccounts();
-        console.log(accounts);
         if (accounts.length !== 10) throw new Error('No hay 10 cuentas');
 
         let upmAlumnos = await UpmAlumnos.deployed();

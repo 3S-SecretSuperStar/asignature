@@ -82,7 +82,7 @@ class ListaAsignaturas extends React.Component {
 			let asignaturaAddr = instanceState.listaAsignaturas[this.state.asignaturasAddrsKeys[i]];
 			asignaturaAddr = asignaturaAddr ? asignaturaAddr.value : "";
 
-			if (asignaturaAddr != "" && asignaturaAddr != "0x0000000000000000000000000000000000000000") {
+			if (asignaturaAddr !== "" && asignaturaAddr !== "0x0000000000000000000000000000000000000000") {
 				direccionesAsignaturasAnadidas.push(asignaturaAddr);
 			}
 		}
@@ -141,45 +141,54 @@ class ListaAsignaturas extends React.Component {
 			);
 		}
 
-		return (
-			<>
-				<h3>Lista de asignaturas</h3>
+		const hayAlgunaAsignatura = this.props.numAsignaturas > 0;
 
-				<Link to="/gestion-asignatura/0x0eA9CE88927AC7CF566Db71f94AcF019A124af29/datos-asignatura">Asignatura desplegada a mano</Link>
+		if (hayAlgunaAsignatura) {
+			return (
+				<>
+					<h3>Lista de asignaturas</h3>
 
-				<p>{this.props.asignaturasLength} asignaturasLength</p>
-				<p>{this.props.numAsignaturas} numAsignaturas</p>
+					<Link to="/gestion-asignatura/0x0eA9CE88927AC7CF566Db71f94AcF019A124af29/datos-asignatura">Asignatura desplegada a mano</Link>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Dirección</th>
-							
-							<th>Nombre a mostrar</th>
-							
-							{
-								this.props.owner === this.props.miDireccion
-								?
-									<th>Eliminar del catálogo</th>
-								:
-								""
-							}
-							
-							<th>Alumnos</th>
-							
-							<th>Profesores</th>
-							
-							<th>Evaluaciones</th>
-							
-							<th>Notas</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tbodyListaAsignaturas}
-					</tbody>
-				</table>
-			</>
-		);
+					<p>{this.props.asignaturasLength} asignaturasLength</p>
+					<p>{this.props.numAsignaturas} numAsignaturas</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Dirección</th>
+								
+								<th>Nombre a mostrar</th>
+								
+								{
+									this.props.owner === this.props.miDireccion
+									?
+										<th>Eliminar del catálogo</th>
+									:
+									""
+								}
+								
+								<th>Alumnos</th>
+								
+								<th>Profesores</th>
+								
+								<th>Evaluaciones</th>
+								
+								<th>Notas</th>
+							</tr>
+						</thead>
+						<tbody>
+							{tbodyListaAsignaturas}
+						</tbody>
+					</table>
+				</>
+			);
+		} else {
+			return (
+				<h3>No hay ninguna asignatura creada</h3>
+			);
+		}
+
 	}
 
 }

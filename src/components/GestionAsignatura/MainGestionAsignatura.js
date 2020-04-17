@@ -35,9 +35,7 @@ const NavBar = (props) => (
 			<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas</Link><span>&nbsp;&nbsp;&nbsp;</span>
 		</>
 			:
-		<>
-			<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas (no owner/coord/profe)</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		</>
+		<></>
 		}
 		
 		{props.isAlumno
@@ -46,9 +44,7 @@ const NavBar = (props) => (
 			<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas</Link>
 		</>
 			: 
-		<>
-			<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas (no alumno)</Link>
-		</>
+		<></>
 		}
 	</nav>
 );
