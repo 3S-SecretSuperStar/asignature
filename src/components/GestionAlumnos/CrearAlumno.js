@@ -54,41 +54,13 @@ class CrearAlumno extends React.Component {
 			{from: this.props.miDireccion}
 		);
 
-		/*const promise = new Promise((resolve, rej) => {
-			const txId = instance.methods.crearAlumno.cacheSend(
-				addrEthAlum,
-				nombre,
-				apellidos,
-				dni,
-				correoUpm,
-				telefMovil,
-				fechaNac,
-				idUpm,
-				{from: this.props.miDireccion}
-			);
+		console.log('~~crear~~~0~ txId:', txId);
 
-			let t = 0;
-			while (!drizzleState.transactionStack[txId]) {
-				setInterval(() => console.log(t++), 1000);
-			}
+		console.log('~~crear~~~0~ drizzleState:', drizzleState);
+		console.log('~~crear~~~0~ drizzleState.transactionStack:', drizzleState.transactionStack);
+		console.log('~~crear~~~0~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
 
-			resolve(148);
-		});
-
-		let result = await promise();*/
-
-		//console.log('~~crear~~~0~ txId:', txId);
-
-		//console.log('~~crear~~~0~ drizzleState:', drizzleState);
-		//console.log('~~crear~~~0~ drizzleState.transactionStack:', drizzleState.transactionStack);
-		//console.log('~~crear~~~0~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
-
-		//console.log('~~crear~~~0~ drizzleState.transactions:', drizzleState.transactions);
-
-		//let h = 1;
-		//while (!drizzleState.transactionStack[txId]) {
-		//	console.log(h++);
-		//}
+		console.log('~~crear~~~0~ drizzleState.transactions:', drizzleState.transactions);
 
 
 		//console.log('~~crear~~~1~ txId:', txId);
@@ -108,9 +80,14 @@ class CrearAlumno extends React.Component {
             return <span>Initializing...</span>;
         }
 
-		//console.log('~~renderCre~ drizzleState.transactionStack:', drizzleState.transactionStack);
+		console.log('~~renderCre~ drizzleState.transactionStack:', drizzleState.transactionStack);
 
-		//console.log('~~renderCre~ drizzleState.transactions:', drizzleState.transactions);
+		console.log('~~renderCre~ drizzleState.transactions:', drizzleState.transactions);
+
+		if (drizzleState.transactionStack[0]) {
+			const txHash = drizzleState.transactionStack[0];
+			console.log('~~renderCre~ drizzleState.transaction:', drizzleState.transactions[txHash]);
+		}
 
 		return (
 			<>
