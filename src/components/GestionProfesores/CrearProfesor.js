@@ -84,7 +84,7 @@ class CrearProfesor extends React.Component {
 					<input type="text" id="correoUpm" name="correoUpm" />
 					
 					<label htmlFor="telefMovil">Teléfono móvil del profesor</label>
-					<input type="text" id="telefMovil" name="telefMovil" />
+					<input type="number" id="telefMovil" name="telefMovil" />
 					
 					<label htmlFor="fechaNac">Fecha de nacimiento del profesor (ToDo)</label>
 					<input type="date" id="fechaNac" name="fechaNac" />
