@@ -4,6 +4,8 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
+import {timestampToDateString} from '../../utils/funciones.js';
+
 const {ContractData} = newContextComponents;
 
 class MostrarProfesor extends React.Component {
@@ -173,7 +175,7 @@ class MostrarProfesor extends React.Component {
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.fechaNac} (ToDo)</>
+													<>{profesor.fechaNac ? timestampToDateString(profesor.fechaNac) : ""}</>
 												)} />
 							</td>
 						</tr>

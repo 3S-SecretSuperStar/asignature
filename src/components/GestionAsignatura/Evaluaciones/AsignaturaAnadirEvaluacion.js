@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {crearObjetoFromFormData, dateStringToTimestamp} from '../../../utils/funciones.js';
 
 class AsignaturaAnadirEvaluacion extends React.Component {
 
@@ -23,6 +23,7 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria} = objFormData;
+		fecha = dateStringToTimestamp(fecha);
 
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
@@ -54,8 +55,8 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<label htmlFor="nombre">Nombre de la evaluación</label>
 					<input type="text" id="nombre" name="nombre" />
 
-					<label htmlFor="fecha">Fecha (ToDo)</label>
-					<input type="text" id="fecha" name="fecha" />
+					<label htmlFor="fecha">Fecha</label>
+					<input type="date" id="fecha" name="fecha" />
 
 					<label htmlFor="obligatoria">¿Es obligatoria? (0=No, 1=Sí)</label>
 					<input type="text" id="obligatoria" name="obligatoria" />

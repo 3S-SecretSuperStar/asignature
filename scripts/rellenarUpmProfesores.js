@@ -21,7 +21,7 @@ module.exports = async callback => {
             "95103214D",
             "profesor1.apellidoprof1.apellidoprof2@alumnos.upm.es",
             693017210,
-            89652315812058,
+            -315622800,
             "hgujik3tlgk3qkg434"
         );
 
@@ -38,7 +38,7 @@ module.exports = async callback => {
             "97103002V",
             "profesor2.apellidoprof3.apellidoprof4@alumnos.upm.es",
             663147115,
-            7961452,
+            -484880400,
             "mknja9hdfn6a7duf"
         );
 

@@ -4,6 +4,8 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
+import {timestampToDateString} from '../../utils/funciones.js';
+
 const {ContractData} = newContextComponents;
 
 class MostrarAlumno extends React.Component {
@@ -82,8 +84,6 @@ class MostrarAlumno extends React.Component {
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
-
-		console.log('MostrarAlumno - render - props;', this.props);
 
 		let eliminarAlumno = [];
 		if (this.props.miDireccion === this.props.owner) {
@@ -175,7 +175,7 @@ class MostrarAlumno extends React.Component {
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.fechaNac} (ToDo)</>
+													<>{alumno.fechaNac ? timestampToDateString(alumno.fechaNac) : ""}</>
 												)} />
 							</td>
 						</tr>

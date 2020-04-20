@@ -20,7 +20,7 @@ contract UpmProfesores {
         string dni;
         string correoUpm;
         uint32 telefMovil;
-        uint256 fechaNac;
+        int256 fechaNac;
         string idUpm;
     }
 
@@ -45,7 +45,7 @@ contract UpmProfesores {
         string memory _dni,
         string memory _correoUpm,
         uint32 _telefMovil,
-        uint256 _fechaNac,
+        int256 _fechaNac,
         string memory _idUpm
     ) public soloOwner() returns(
         uint8 _indexProf
@@ -69,7 +69,7 @@ contract UpmProfesores {
         string memory _dni, 
         string memory _correoUpm, 
         uint32 _telefMovil, 
-        uint256 _fechaNac, 
+        int256 _fechaNac, 
         string memory _idUpm
     ) {
         require(mapProfesoresAddr[_addrEthProf].addrEthProf != address(0), "leerProfesorAddr - Profesor no creado.");
@@ -91,7 +91,7 @@ contract UpmProfesores {
         string memory _dni,
         string memory _correoUpm,
         uint32 _telefMovil,
-        uint256 _fechaNac,
+        int256 _fechaNac,
         string memory _idUpm
     ) public soloOwner() {
         require(mapProfesoresAddr[_addrEthProf].addrEthProf != address(0), "actualizarProfesorAddr - Profesor no creado.");

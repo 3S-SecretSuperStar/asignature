@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {crearObjetoFromFormData, dateStringToTimestamp} from '../../utils/funciones.js';
 
 class CrearAlumno extends React.Component {
 
@@ -29,6 +29,7 @@ class CrearAlumno extends React.Component {
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthAlum, nombre, apellidos, dni, correoUpm, telefMovil, fechaNac, idUpm} = objFormData;
+		fechaNac = dateStringToTimestamp(fechaNac);
 
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
@@ -111,8 +112,8 @@ class CrearAlumno extends React.Component {
 					<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
 					<input type="text" id="telefMovil" name="telefMovil" />
 
-					<label htmlFor="fechaNac">Fecha de nacimiento del alumno (ToDo)</label>
-					<input type="text" id="fechaNac" name="fechaNac" />
+					<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
+					<input type="date" id="fechaNac" name="fechaNac" />
 
 					<label htmlFor="idUpm">ID de la UPM del alumno</label>
 					<input type="text" id="idUpm" name="idUpm" />

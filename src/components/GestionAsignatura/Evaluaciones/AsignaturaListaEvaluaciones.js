@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {crearObjetoFromFormData, timestampToDateString} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -58,7 +58,7 @@ class AsignaturaListaEvaluaciones extends React.Component {
 											{evaluacion.obligatoria === "1" ? "No" : ""}
 										</td>
 										<td>{evaluacion.nombre}</td>
-										<td>{evaluacion.fecha ? (new Date(1000 * evaluacion.fecha)).toLocaleString() : ""}</td>
+										<td>{evaluacion.fecha ? timestampToDateString(evaluacion.fecha) : ""}</td>
 										<td>{evaluacion.porcAportacion}%</td>
 										<td>{evaluacion.notaMinima ? (evaluacion.notaMinima / 10).toFixed(1) : ""}</td>
 									</tr>

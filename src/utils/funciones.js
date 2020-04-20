@@ -45,3 +45,36 @@ export function copyToClipboard(textToCopy) {
 		document.getSelection().addRange(selected);
 	}
 }
+
+/*
+ * convierte lo que da un input type="date", que es un string aaaa-mm-dd
+ * a un timestamp en segundos, que es lo que necesita Solidity
+*/
+export function dateStringToTimestamp(dateStringToTimestamp) {
+	let timestampMs = Date.parse(dateStringToTimestamp);
+	return timestampMs/1000;
+}
+
+/*
+ * convierte lo que da un input type="date", que es un string aaaa-mm-dd
+ * a un timestamp en segundos, que es lo que necesita Solidity
+*/
+export function timestampToDateString(timestampToDate) {
+	const date = new Date(timestampToDate*1000);
+	const dateYear = date.getFullYear();
+	const dateMonth = padNumbers(date.getMonth() + 1, 2);
+	const dateDay = padNumbers(date.getDate(), 2);
+	const dateString = `${dateDay}/${dateMonth}/${dateYear}`;
+	return dateString;
+}
+
+/*
+ * si number tiene menos de digits dígitos, rellena
+ * con ceros por la izquierda
+*/
+function padNumbers(number, digits) {
+	if (("" + number).length < digits) {
+		number = "0" + number;
+	}
+	return "" + number;
+}
