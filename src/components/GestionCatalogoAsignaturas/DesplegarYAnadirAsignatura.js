@@ -95,13 +95,26 @@ class DesplegarYAnadirAsignatura extends React.Component {
 					<input type="text" id="numCreditos" name="numCreditos" />
 					
 					<label htmlFor="semestre">Semestre (1 o 2)</label>
-					<input type="text" id="semestre" name="semestre" />
+					<select name="semestre" id="semestre">
+						<option value="1">1</option>
+						<option value="2">2</option>
+					</select>
 					
-					<label htmlFor="cursoAno">Curso (1º, 2º...)</label>
-					<input type="text" id="cursoAno" name="cursoAno" />
-					
-					<label htmlFor="tipoAsig">Tipo de asignatura (0=Obligatoria, 1=Optativa) (ToDo)</label>
-					<input type="text" id="tipoAsig" name="tipoAsig" />
+					<label htmlFor="cursoAno">Curso</label>
+					<select name="semestre" id="semestre">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+					</select>
+
+					<label htmlFor="tipoAsig">Tipo de asignatura</label>
+					<select name="tipoAsig" id="tipoAsig">
+						<option value="0">Obligatoria</option>
+						<option value="1">Optativa</option>
+					</select>
 					
 					<button type="submit">Desplegar asignatura</button>
 				</form>

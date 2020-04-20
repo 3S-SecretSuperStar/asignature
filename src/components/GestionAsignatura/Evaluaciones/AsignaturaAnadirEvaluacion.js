@@ -59,7 +59,10 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<input type="date" id="fecha" name="fecha" />
 
 					<label htmlFor="obligatoria">¿Es obligatoria? (0=No, 1=Sí)</label>
-					<input type="text" id="obligatoria" name="obligatoria" />
+					<select name="obligatoria" id="obligatoria">
+						<option value="0">Obligatoria</option>
+						<option value="1">Optativa</option>
+					</select>
 
 					<label htmlFor="notaMinima">Nota mínima (0-100)</label>
 					<input type="text" id="notaMinima" name="notaMinima" />
@@ -68,7 +71,11 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<input type="text" id="porcAportacion" name="porcAportacion" />
 
 					<label htmlFor="tipoConvocatoria">Tipo de convocatoria (0=Ord. Continua, 1=Ord. Final, 2=Extraordinaria)</label>
-					<input type="text" id="tipoConvocatoria" name="tipoConvocatoria" />
+					<select name="tipoConvocatoria" id="tipoConvocatoria">
+						<option value="0">Ordinaria Continua</option>
+						<option value="1">Ordinaria Final</option>
+						<option value="2">Extraordinaria</option>
+					</select>
 
 					<button type="submit">Crear evaluación</button>
 				</form>

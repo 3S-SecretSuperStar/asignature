@@ -56,7 +56,13 @@ class AsignaturaNotas extends React.Component {
 											isAlumno={isAlumno} />;
 
 		let anadirNota = [];
-		if (hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
+		if (!hayAlgunAlumno && !hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
+			anadirNota = <p>No se puede añadir una nota porque no hay alumnos ni evaluaciones</p>
+		} else if (!hayAlgunAlumno && (isOwner || isCoordinador || isProfesor)) {
+			anadirNota = <p>No se puede añadir una nota porque no hay ningún alumno</p>
+		} else if (!hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
+			anadirNota = <p>No se puede añadir una nota porque no hay ninguna evaluación</p>
+		} else if (hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <AsignaturaAnadirNota	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contractName={this.props.contractName}

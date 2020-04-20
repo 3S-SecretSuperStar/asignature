@@ -19,8 +19,6 @@ import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 
 import GestionAsignatura from './GestionAsignatura';
 
-//import PruebaHooks from './PruebaHooks';
-
 const Navegacion = () => (
     <nav>
         <ul>

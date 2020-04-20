@@ -55,13 +55,17 @@ class AsignaturaAnadirNota extends React.Component {
 					<input type="text" id="addrEthAlum" name="addrEthAlum" />
 
 					<label htmlFor="indexEval">Índice de la evaluación</label>
-					<input type="text" id="indexEval" name="indexEval" />
+					<input type="number" id="indexEval" name="indexEval" min="0" step="1" />
 
-					<label htmlFor="tipoNota">Tipo de nota (0=NP, 1=Normal, 2=MH)</label>
-					<input type="text" id="tipoNota" name="tipoNota" />
+					<label htmlFor="tipoNota">Tipo de nota</label>
+					<select name="tipoNota" id="tipoNota">
+						<option value="1">Normal</option>
+						<option value="0">No presentado (NP)</option>
+						<option value="2">Matrícula de honor (MH)</option>
+					</select>
 
 					<label htmlFor="calificacion">Calificación (0-100)</label>
-					<input type="text" id="calificacion" name="calificacion" />
+					<input type="number" id="calificacion" name="calificacion" min="0" max="100" step="1" />
 
 					<button type="submit">Crear nota</button>
 				</form>
