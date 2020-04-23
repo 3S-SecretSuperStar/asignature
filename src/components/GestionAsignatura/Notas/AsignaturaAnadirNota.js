@@ -58,11 +58,15 @@ class AsignaturaAnadirNota extends React.Component {
 					<input type="number" id="indexEval" name="indexEval" min="0" step="1" />
 
 					<label htmlFor="tipoNota">Tipo de nota</label>
-					<select name="tipoNota" id="tipoNota">
-						<option value="1">Normal</option>
-						<option value="0">No presentado (NP)</option>
-						<option value="2">Matrícula de honor (MH)</option>
-					</select>
+					<label>
+						<input type="radio" name="tipoNota" id="tipoNota1" value="1" /> Normal
+					</label>
+					<label>
+						<input type="radio" name="tipoNota" id="tipoNota2" value="2" /> Matrícula de Honor (MH)
+					</label>
+					<label>
+						<input type="radio" name="tipoNota" id="tipoNota0" value="0" /> No presentado (NP) <br />
+					</label>
 
 					<label htmlFor="calificacion">Calificación (0-100)</label>
 					<input type="number" id="calificacion" name="calificacion" min="0" max="100" step="1" />

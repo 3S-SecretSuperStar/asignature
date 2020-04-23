@@ -6,6 +6,10 @@ input, select {
   display: block;
 }
 
+input[type="radio"] {
+  display: inline;
+}
+
 table {
   border-collapse: collapse;
 }

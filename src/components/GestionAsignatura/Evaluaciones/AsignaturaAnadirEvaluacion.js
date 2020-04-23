@@ -58,11 +58,13 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<label htmlFor="fecha">Fecha</label>
 					<input type="date" id="fecha" name="fecha" />
 
-					<label htmlFor="obligatoria">¿Es obligatoria? (0=No, 1=Sí)</label>
-					<select name="obligatoria" id="obligatoria">
-						<option value="0">Obligatoria</option>
-						<option value="1">Optativa</option>
-					</select>
+					<label htmlFor="obligatoria">¿Es obligatoria? (0=Sí, 1=No)</label>
+					<label>
+						<input type="radio" name="obligatoria" id="obligatoria0" value="0" /> Obligatoria
+					</label>
+					<label>
+						<input type="radio" name="obligatoria" id="obligatoria1" value="1" /> No obligatoria <br />
+					</label>
 
 					<label htmlFor="notaMinima">Nota mínima (0-100)</label>
 					<input type="text" id="notaMinima" name="notaMinima" />
@@ -71,11 +73,15 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					<input type="text" id="porcAportacion" name="porcAportacion" />
 
 					<label htmlFor="tipoConvocatoria">Tipo de convocatoria (0=Ord. Continua, 1=Ord. Final, 2=Extraordinaria)</label>
-					<select name="tipoConvocatoria" id="tipoConvocatoria">
-						<option value="0">Ordinaria Continua</option>
-						<option value="1">Ordinaria Final</option>
-						<option value="2">Extraordinaria</option>
-					</select>
+					<label>
+						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" /> Ordinaria Continua
+					</label>
+					<label>
+						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" /> Ordinaria Final
+					</label>
+					<label>
+						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" /> Extraordinaria <br />
+					</label>
 
 					<button type="submit">Crear evaluación</button>
 				</form>

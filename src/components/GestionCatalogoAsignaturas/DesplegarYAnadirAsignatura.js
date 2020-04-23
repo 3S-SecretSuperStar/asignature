@@ -31,7 +31,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
 		let objFormData = crearObjetoFromFormData(formData);
 		console.log('DesplegarYAnadirAsignatura - desplegarYAnadirAsignatura - objFormData:', objFormData);
 		let {addrEthCoord, nombreAsig, cursoAcad, codigoAsig, titulacion, numCreditos, semestre, cursoAno, tipoAsig} = objFormData;
-		
+
 		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('desplegar-y-anadir-asignatura-form').reset();
@@ -94,27 +94,41 @@ class DesplegarYAnadirAsignatura extends React.Component {
 					<label htmlFor="numCreditos">Número de créditos</label>
 					<input type="text" id="numCreditos" name="numCreditos" />
 					
-					<label htmlFor="semestre">Semestre (1 o 2)</label>
-					<select name="semestre" id="semestre">
-						<option value="1">1</option>
-						<option value="2">2</option>
-					</select>
+					<label htmlFor="semestre">Semestre</label>
+					<label>
+						<input type="radio" name="semestre" id="semestre1" value="1" /> 1
+					</label>
+					<label>
+						<input type="radio" name="semestre" id="semestre2" value="2" /> 2 <br />
+					</label>
 					
 					<label htmlFor="cursoAno">Curso</label>
-					<select name="semestre" id="semestre">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-					</select>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno1" value="1" /> 1
+					</label>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno2" value="2" /> 2
+					</label>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno3" value="3" /> 3
+					</label>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno4" value="4" /> 4
+					</label>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno5" value="5" /> 5
+					</label>
+					<label>
+						<input type="radio" name="cursoAno" id="cursoAno6" value="6" /> 6 <br />
+					</label>
 
 					<label htmlFor="tipoAsig">Tipo de asignatura</label>
-					<select name="tipoAsig" id="tipoAsig">
-						<option value="0">Obligatoria</option>
-						<option value="1">Optativa</option>
-					</select>
+					<label>
+						<input type="radio" name="tipoAsig" id="tipoAsig0" value="0" /> Obligatoria
+					</label>
+					<label>
+						<input type="radio" name="tipoAsig" id="tipoAsig1" value="1" /> Optativa <br />
+					</label>
 					
 					<button type="submit">Desplegar asignatura</button>
 				</form>
