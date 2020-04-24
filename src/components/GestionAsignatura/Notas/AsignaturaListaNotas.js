@@ -71,18 +71,16 @@ class AsignaturaListaNotas extends React.Component {
 		for (let i = 0; i < this.props.numEvaluaciones; i++) {
 			theadtr.push(
 				<th>
-					<Link to={`/gestion-asignatura/${contractAdress}/evaluaciones`}>
-						E<sub>{i}</sub> (
-						<ContractData	drizzle={drizzle}
-										drizzleState={drizzleState}
-										contract={this.props.contractName}
-										method={"listaEvaluaciones"}
-										methodArgs={[i]}
-										render={(evaluacion) => (
-											<span>{evaluacion.nombre}</span>
-										)} />
-						)
-					</Link>
+					E<sub>{i}</sub> (
+					<ContractData	drizzle={drizzle}
+									drizzleState={drizzleState}
+									contract={this.props.contractName}
+									method={"listaEvaluaciones"}
+									methodArgs={[i]}
+									render={(evaluacion) => (
+										<span>{evaluacion.nombre}</span>
+									)} />
+					)
 				</th>
 			);
 		}
@@ -97,7 +95,9 @@ class AsignaturaListaNotas extends React.Component {
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
 					let eliminarNota = [];
 					if (isOwner || isCoordinador || isProfesor) {
-						eliminarNota = <button onClick={() => this.eliminarNota(addrEthAlum, j)}>Eliminar</button>;
+						eliminarNota = 	<button type="button" className="btn btn-outline-danger" onClick={() => this.eliminarNota(addrEthAlum, j)}>
+											<i className="fas fa-trash-alt fa-lg" title="Eliminar nota" style={{color: "red"}}></i>
+										</button>;
 					}
 					notasUnAlumno.push(
 						<ContractData	drizzle={drizzle}
@@ -120,7 +120,9 @@ class AsignaturaListaNotas extends React.Component {
 					<tr>
 						<td>
 							A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)
-							<button onClick={() => copyToClipboard(addrEthAlum)}>Copy</button>
+							<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(addrEthAlum)}>
+								<i className="far fa-copy fa-lg"></i>
+							</button>
 						</td>
 						{notasUnAlumno}
 					</tr>
@@ -133,26 +135,29 @@ class AsignaturaListaNotas extends React.Component {
 		if (hayAlgunaNota) {
 			return (
 				<>
-					<h3>Lista de notas creadas</h3>
+					<h5>Lista de notas creadas</h5>
 
 					<p>{this.props.numNotas} notas</p>
 
-					<table>
-						<thead>
-							<tr>
-								<th>A\E</th>
-								{theadtr}
-							</tr>
-						</thead>
-						<tbody>
-							{tbodyListaNotas}
-						</tbody>
-					</table>
+					<div className="table-responsive">
+						<table className="table table-sm table-bordered table-hover">
+							<thead className="thead-dark">
+								<tr>
+									<th>A\E</th>
+									{theadtr}
+								</tr>
+							</thead>
+
+							<tbody>
+								{tbodyListaNotas}
+							</tbody>
+						</table>
+					</div>
 				</>
 			);
 		} else {
 			return (
-				<h3>No hay ninguna nota creada</h3>
+				<h5>No hay ninguna nota creada</h5>
 			);
 		}
 

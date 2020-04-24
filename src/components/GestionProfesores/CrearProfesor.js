@@ -66,33 +66,77 @@ class CrearProfesor extends React.Component {
 
 		return (
 			<>
-				<h3>Crear profesor</h3>
+				<h4>Crear profesor</h4>
 				<form onSubmit={this.crearProfesor} id="crear-profesor-form">
-					<label htmlFor="addrEthProf">Dirección Ethereum del profesor</label>
-					<input type="text" id="addrEthProf" name="addrEthProf" />
+					<div className="form-group">
+						<label htmlFor="addrEthProf">Dirección Ethereum del profesor</label>
+						<div className="input-group">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="fab fa-ethereum fa-lg" />
+								</span>
+							</div>
+							<input type="text" className="form-control" id="addrEthProf" name="addrEthProf" />
+						</div>
+					</div>
 					
-					<label htmlFor="nombre">Nombre del profesor</label>
-					<input type="text" id="nombre" name="nombre" />
+					<div className="form-group">
+						<label htmlFor="nombre">Nombre del profesor</label>
+						<input type="text" className="form-control" id="nombre" name="nombre" />
+					</div>
 					
-					<label htmlFor="apellidos">Apellidos del profesor</label>
-					<input type="text" id="apellidos" name="apellidos" />
+					<div className="form-group">
+						<label htmlFor="apellidos">Apellidos del profesor</label>
+						<input type="text" className="form-control" id="apellidos" name="apellidos" />
+					</div>
 					
-					<label htmlFor="dni">DNI del profesor</label>
-					<input type="text" id="dni" name="dni" />
+					<div className="form-group">
+						<label htmlFor="dni">DNI del profesor</label>
+						<input type="text" className="form-control" id="dni" name="dni" />
+					</div>
 					
-					<label htmlFor="correoUpm">Correo de la UPM del profesor</label>
-					<input type="text" id="correoUpm" name="correoUpm" />
+					<div className="form-group">
+						<label htmlFor="correoUpm">Correo de la UPM del profesor</label>
+						<div className="input-group">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="fas fa-at fa-lg" />
+								</span>
+							</div>
+							<input type="text" className="form-control" id="correoUpm" name="correoUpm" />
+						</div>
+					</div>
 					
-					<label htmlFor="telefMovil">Teléfono móvil del profesor</label>
-					<input type="number" id="telefMovil" name="telefMovil" />
+					<div className="form-group">
+						<label htmlFor="telefMovil">Teléfono móvil del profesor</label>
+						<div className="input-group">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="fas fa-phone fa-lg" />
+								</span>
+							</div>
+							<input type="number" className="form-control" id="telefMovil" name="telefMovil" />
+						</div>
+					</div>
 					
-					<label htmlFor="fechaNac">Fecha de nacimiento del profesor (ToDo)</label>
-					<input type="date" id="fechaNac" name="fechaNac" />
+					<div className="form-group">
+						<label htmlFor="fechaNac">Fecha de nacimiento del profesor</label>
+						<div className="input-group">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="fas fa-birthday-cake fa-lg" />
+								</span>
+							</div>
+							<input type="date" className="form-control" id="fechaNac" name="fechaNac" />
+						</div>
+					</div>
 					
-					<label htmlFor="idUpm">ID de la UPM del profesor</label>
-					<input type="text" id="idUpm" name="idUpm" />
+					<div className="form-group">
+						<label htmlFor="idUpm">ID de la UPM del profesor</label>
+						<input type="text" className="form-control" id="idUpm" name="idUpm" />
+					</div>
 					
-					<button type="submit">Crear profesor</button>
+					<button type="submit" className="btn btn-primary">Crear profesor</button>
 				</form>
 			</>
 		);

@@ -2,10 +2,12 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {jsonInterface} from '../../../utils/varios.js';
-
 import AsignaturaListaEvaluaciones from './AsignaturaListaEvaluaciones';
 import AsignaturaAnadirEvaluacion from './AsignaturaAnadirEvaluacion';
+
+import NavbarAsignatura from '../NavbarAsignatura';
+
+import {jsonInterface} from '../../../utils/varios.js';
 
 const {ContractData} = newContextComponents;
 
@@ -56,26 +58,40 @@ class AsignaturaEvaluaciones extends React.Component {
 
 		return (
 			<>
-				<h3>Evaluaciones</h3>
-				<p>Nombre del contrato: {contractName}</p>
+				<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+									isOwner={this.props.isOwner}
+									isCoordinador={this.props.isCoordinador}
+									isProfesor={this.props.isProfesor}
+									isAlumno={this.props.isAlumno}
+									active={"evaluaciones"} />
 
-				<AsignaturaListaEvaluaciones	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contractName={this.props.contractName}
-												miDireccion={this.props.miDireccion}
-												owner={this.props.owner}
-												coordinador={this.props.coordinador}
-												alumnosLength={this.props.alumnosLength}
-												numAlumnos={this.props.numAlumnos}
-												profesoresLength={this.props.profesoresLength}
-												numProfesores={this.props.numProfesores}
-												evaluacionesLength={this.props.evaluacionesLength}
-												numEvaluaciones={this.props.numEvaluaciones}
-												numNotas={this.props.numNotas}
-												isOwner={this.props.isOwner}
-												isCoordinador={this.props.isCoordinador}
-												isProfesor={this.props.isProfesor}
-												isAlumno={this.props.isAlumno} />
+				<div className="card">
+					<div className="card-header">
+                        <h4>
+                            Evaluaciones
+                        </h4>
+                    </div>
+
+                    <div className="card-body">
+						<AsignaturaListaEvaluaciones	drizzle={drizzle}
+														drizzleState={drizzleState}
+														contractName={this.props.contractName}
+														miDireccion={this.props.miDireccion}
+														owner={this.props.owner}
+														coordinador={this.props.coordinador}
+														alumnosLength={this.props.alumnosLength}
+														numAlumnos={this.props.numAlumnos}
+														profesoresLength={this.props.profesoresLength}
+														numProfesores={this.props.numProfesores}
+														evaluacionesLength={this.props.evaluacionesLength}
+														numEvaluaciones={this.props.numEvaluaciones}
+														numNotas={this.props.numNotas}
+														isOwner={this.props.isOwner}
+														isCoordinador={this.props.isCoordinador}
+														isProfesor={this.props.isProfesor}
+														isAlumno={this.props.isAlumno} />
+                    </div>
+                </div>
 
 				{anadirEvaluacion}
 			</>

@@ -2,6 +2,8 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
+import MiDireccion from '../MiDireccion';
+
 import ListaAsignaturas from './ListaAsignaturas';
 import DesplegarYAnadirAsignatura from './DesplegarYAnadirAsignatura';
 
@@ -81,6 +83,8 @@ class GestionCatalogoAsignaturas extends React.Component {
 		owner = owner ? owner.value : "0x0";
 		console.log('GestionCatalogoAsignaturas - render - owner:', owner);
 
+		const isOwner = owner === miDireccion;
+
 		let asignaturasLength = instanceState.asignaturasLength[this.state.asignaturasLengthKey];
 		asignaturasLength = asignaturasLength ? asignaturasLength.value : -1;
 		console.log('GestionCatalogoAsignaturas - render - asignaturasLength:', asignaturasLength);
@@ -88,8 +92,6 @@ class GestionCatalogoAsignaturas extends React.Component {
 		let numAsignaturas = instanceState.numAsignaturas[this.state.numAsignaturasKey];
 		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
 		console.log('GestionCatalogoAsignaturas - render - numAsignaturas:', numAsignaturas);
-
-		const isOwner = owner === miDireccion;
 
 		let desplegarYAnadirAsignatura = [];
 		if (isOwner) {
@@ -101,7 +103,7 @@ class GestionCatalogoAsignaturas extends React.Component {
 		return (
 			<>
 				<h2>Gestión del catálogo de asignaturas</h2>
-				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
+				<MiDireccion miDireccion={miDireccion} owner={owner} />
 
 				<ListaAsignaturas	drizzle={drizzle}
 									drizzleState={drizzleState}

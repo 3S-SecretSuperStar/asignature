@@ -45,36 +45,66 @@ class AsignaturaAnadirNota extends React.Component {
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
 
-		return (
-			<>
-				<h3>Crear nota</h3>
-				<form onSubmit={this.crearNota} id="crear-nota-form">
-					<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
-					<input type="text" id="addrEthAlum" name="addrEthAlum" />
+        if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+        	return (
+        		<li className="list-group-item">
+        			<h5>Crear nota</h5>
+        			<form onSubmit={this.crearNota} id="crear-nota-form">
+        				<div className="form-group">
+							<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
 
-					<label htmlFor="indexEval">Índice de la evaluación</label>
-					<input type="number" id="indexEval" name="indexEval" min="0" step="1" />
+							<div className="input-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+	                                    <i className="fab fa-ethereum fa-lg" />
+	                                </span>
+								</div>
+								<input type="text" className="form-control" id="addrEthAlum" name="addrEthAlum" />
+							</div>
+        				</div>
 
-					<label htmlFor="tipoNota">Tipo de nota</label>
-					<label>
-						<input type="radio" name="tipoNota" id="tipoNota1" value="1" /> Normal
-					</label>
-					<label>
-						<input type="radio" name="tipoNota" id="tipoNota2" value="2" /> Matrícula de Honor (MH)
-					</label>
-					<label>
-						<input type="radio" name="tipoNota" id="tipoNota0" value="0" /> No presentado (NP) <br />
-					</label>
+        				<div className="form-group">
+							<label htmlFor="indexEval">Índice de la evaluación</label>
+							<input type="number" className="form-control" id="indexEval" name="indexEval" min="0" step="1" />
+        				</div>
 
-					<label htmlFor="calificacion">Calificación (0-100)</label>
-					<input type="number" id="calificacion" name="calificacion" min="0" max="100" step="1" />
+        				<div className="form-group">
+							<label htmlFor="tipoNota">Tipo de nota</label>
 
-					<button type="submit">Crear nota</button>
-				</form>
-			</>
-		);
+							<div className="input-group">
+								<div className="form-check form-check-inline">
+									<input type="radio" name="tipoNota" className="form-check-input" id="tipoNota1" value="1" checked />
+									<label className="form-check-label" for="tipoNota1">Normal</label>
+								</div>
+
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota2" value="2" />
+									<label className="form-check-label" for="tipoNota2">Matrícula de honor (MH)</label>
+								</div>
+
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota0" value="0" />
+									<label className="form-check-label" for="tipoNota0">No presentado (NP)</label>
+								</div>
+							</div>
+        				</div>
+
+        				<div className="form-group">
+							<label htmlFor="calificacion">Calificación (0-100)</label>
+							<input type="number" className="form-control"  id="calificacion" name="calificacion" min="0" max="100" step="1" />
+        				</div>
+
+        				<button type="submit" className="btn btn-primary">Crear nota</button>
+        			</form>
+        		</li>
+        	);
+        } else {
+        	return (
+        		<span></span>
+        	);
+        }
 	}
 
 }

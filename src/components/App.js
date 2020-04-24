@@ -9,8 +9,6 @@ import {
     Switch
 } from "react-router-dom";
 
-import Header from './Header';
-
 import GestionAlumnos from './GestionAlumnos';
 
 import GestionProfesores from './GestionProfesores';
@@ -19,15 +17,39 @@ import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 
 import GestionAsignatura from './GestionAsignatura';
 
+import PruebasInterfaz from './PruebasInterfaz';
+
 const Navegacion = () => (
-    <nav>
-        <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/gestion-alumnos">Gestión de alumnos</Link></li>
-            <li><Link to="/gestion-profesores">Gestión de profesores</Link></li>
-            <li><Link to="/gestion-catalogo-asignaturas">Gestión del catálogo de asignaturas</Link></li>
-        </ul>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <Link to="/" className="navbar-brand">Home</Link>
+
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+                <li className="nav-item">
+                    <Link to="/gestion-alumnos" className="nav-link">Gestión de alumnos</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/gestion-profesores" className="nav-link">Gestión de profesores</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/gestion-catalogo-asignaturas" className="nav-link">Gestión del catálogo de asignaturas</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/pruebas-interfaz" className="nav-link">Pruebas interfaz</Link>
+                </li>
+            </ul>
+        </div>
     </nav>
+);
+
+const Header = () => (
+    <header className="App">
+        <h1>UPM - Aplicación de gestión de Asignaturas</h1>
+    </header>
 );
 
 export default () => (
@@ -45,29 +67,37 @@ export default () => (
                 <Router>
                     <Navegacion />
 
-                    <Header />
-
-                    <Switch>
-                        <Route path="/gestion-alumnos">
-                            <GestionAlumnos drizzle={drizzle}
-                                            drizzleState={drizzleState} />
-                        </Route>
-
-                        <Route path="/gestion-profesores">
-                            <GestionProfesores  drizzle={drizzle}
+                    <div className="container">
+                        <Header />
+                        
+                        <Switch>
+                            <Route path="/gestion-alumnos">
+                                <GestionAlumnos drizzle={drizzle}
                                                 drizzleState={drizzleState} />
-                        </Route>
+                            </Route>
 
-                        <Route path="/gestion-catalogo-asignaturas">
-                            <GestionCatalogoAsignaturas drizzle={drizzle}
-                                                        drizzleState={drizzleState} />
-                        </Route>
+                            <Route path="/gestion-profesores">
+                                <GestionProfesores  drizzle={drizzle}
+                                                    drizzleState={drizzleState} />
+                            </Route>
 
-                        <Route path="/gestion-asignatura/:addrEthAsig">
-                            <GestionAsignatura  drizzle={drizzle}
-                                                drizzleState={drizzleState} />
-                        </Route>
-                    </Switch>
+                            <Route path="/gestion-catalogo-asignaturas">
+                                <GestionCatalogoAsignaturas drizzle={drizzle}
+                                                            drizzleState={drizzleState} />
+                            </Route>
+
+                            <Route path="/gestion-asignatura/:addrEthAsig">
+                                <GestionAsignatura  drizzle={drizzle}
+                                                    drizzleState={drizzleState} />
+                            </Route>
+
+                            <Route path="/pruebas-interfaz">
+                                <PruebasInterfaz    drizzle={drizzle}
+                                                    drizzleState={drizzleState} />
+                            </Route>
+                        </Switch>
+                    </div>
+
                     
                 </Router>
             )

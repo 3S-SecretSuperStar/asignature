@@ -76,61 +76,113 @@ class DesplegarYAnadirAsignatura extends React.Component {
 			<>
 				<h3>Desplegar asignatura y añadirla al catálogo</h3>
 				<form onSubmit={this.desplegarYAnadirAsignatura} id="desplegar-y-anadir-asignatura-form">
-					<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
-					<input type="text" id="addrEthCoord" name="addrEthCoord" />
-					
-					<label htmlFor="nombreAsig">Nombre de la asignatura</label>
-					<input type="text" id="nombreAsig" name="nombreAsig" />
-					
-					<label htmlFor="cursoAcad">Curso académico</label>
-					<input type="text" id="cursoAcad" name="cursoAcad" />
-					
-					<label htmlFor="codigoAsig">Código de la asignatura</label>
-					<input type="text" id="codigoAsig" name="codigoAsig" />
+					<div className="form-group">
+						<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
 
-					<label htmlFor="titulacion">Titulación</label>
-					<input type="text" id="titulacion" name="titulacion" />
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fab fa-ethereum fa-lg" />
+                                </span>
+                            </div>
+							<input type="text" className="form-control" id="addrEthCoord" name="addrEthCoord" />
+                        </div>
+					</div>
 					
-					<label htmlFor="numCreditos">Número de créditos</label>
-					<input type="text" id="numCreditos" name="numCreditos" />
+					<div className="form-group">
+						<label htmlFor="nombreAsig">Nombre de la asignatura</label>
+						<input type="text" className="form-control" id="nombreAsig" name="nombreAsig" />
+					</div>
 					
-					<label htmlFor="semestre">Semestre</label>
-					<label>
-						<input type="radio" name="semestre" id="semestre1" value="1" /> 1
-					</label>
-					<label>
-						<input type="radio" name="semestre" id="semestre2" value="2" /> 2 <br />
-					</label>
+					<div className="form-group">
+						<label htmlFor="cursoAcad">Curso académico</label>
+						<input type="text" className="form-control" id="cursoAcad" name="cursoAcad" />
+					</div>
 					
-					<label htmlFor="cursoAno">Curso</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno1" value="1" /> 1
-					</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno2" value="2" /> 2
-					</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno3" value="3" /> 3
-					</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno4" value="4" /> 4
-					</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno5" value="5" /> 5
-					</label>
-					<label>
-						<input type="radio" name="cursoAno" id="cursoAno6" value="6" /> 6 <br />
-					</label>
+					<div className="form-group">
+						<label htmlFor="codigoAsig">Código de la asignatura</label>
+						<input type="text" className="form-control" id="codigoAsig" name="codigoAsig" />
+					</div>
 
-					<label htmlFor="tipoAsig">Tipo de asignatura</label>
-					<label>
-						<input type="radio" name="tipoAsig" id="tipoAsig0" value="0" /> Obligatoria
-					</label>
-					<label>
-						<input type="radio" name="tipoAsig" id="tipoAsig1" value="1" /> Optativa <br />
-					</label>
+					<div className="form-group">
+						<label htmlFor="titulacion">Titulación</label>
+						<input type="text" className="form-control" id="titulacion" name="titulacion" />
+					</div>
 					
-					<button type="submit">Desplegar asignatura</button>
+					<div className="form-group">
+						<label htmlFor="numCreditos">Número de créditos</label>
+						<input type="number" className="form-control" id="numCreditos" name="numCreditos" />
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="semestre">Semestre</label>
+
+						<div className="input-group">
+							<div className="form-check form-check-inline">
+								<input type="radio" name="semestre" className="form-check-input" id="semestre1" value="1" />
+								<label className="form-check-label" for="semestre1">1</label>
+							</div>
+
+							<div className="form-check form-check-inline">
+							<input type="radio" name="semestre" className="form-check-input" id="semestre2" value="2" />
+								<label className="form-check-label" for="semestre2">2</label>
+							</div>
+						</div>
+					</div>
+					
+					<div className="form-group">
+						<label htmlFor="cursoAno">Curso</label>
+
+						<div className="input-group">
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno1" value="1" />
+								<label className="form-check-label" for="cursoAno1">1</label>
+							</div>
+							
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno2" value="2" />
+								<label className="form-check-label" for="cursoAno2">2</label>
+							</div>
+							
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno3" value="3" />
+								<label className="form-check-label" for="cursoAno3">3</label>
+							</div>
+							
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno4" value="4" />
+								<label className="form-check-label" for="cursoAno4">4</label>
+							</div>
+							
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno5" value="5" />
+								<label className="form-check-label" for="cursoAno5">5</label>
+							</div>
+							
+							<div className="form-check form-check-inline">
+								<input type="radio" name="cursoAno" className="form-check-input" id="cursoAno6" value="6" />
+								<label className="form-check-label" for="cursoAno6">6</label>
+							</div>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label>Tipo de asignatura</label>
+
+						<div className="input-group">
+							<div className="form-check form-check-inline">
+								<input type="radio" name="tipoAsig" className="form-check-input" id="tipoAsig0" value="0" />
+								<label className="form-check-label" for="tipoAsig0">Obligatoria</label>
+							</div>
+
+							<div className="form-check form-check-inline">
+								<input type="radio" name="tipoAsig" className="form-check-input" id="tipoAsig1" value="1" />
+								<label className="form-check-label" for="tipoAsig1">Optativa</label>
+							</div>
+						</div>
+					</div>
+					
+					<button type="submit" className="btn btn-primary">Desplegar asignatura</button>
 				</form>
 			</>
 		);

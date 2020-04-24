@@ -47,19 +47,37 @@ class AsignaturaAnadirProfesor extends React.Component {
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
 
-		return (
-			<>
-				<h3>Añadir profesor</h3>
-				<form onSubmit={this.anadirProfesor} id="anadir-profesor-form">
-					<label htmlFor="addrEthProf">Dirección Ethereum del profesor</label>
-					<input type="text" id="addrEthProf" name="addrEthProf" />
+        if (this.props.isOwner || this.props.isCoordinador) {
+			return (
+				<li className="list-group-item">
+					<h5>Añadir profesor</h5>
+					<form onSubmit={this.anadirProfesor} id="anadir-profesor-form">
+						<div className="form-group">
+							<label htmlFor="addrEthProf">Dirección Ethereum del profesor</label>
+							
+							<div className="input-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+	                                    <i className="fab fa-ethereum fa-lg" />
+	                                </span>
+								</div>
+								<input type="text" className="form-control"  id="addrEthProf" name="addrEthProf" />
+							</div>
+						</div>
 
-					<button type="submit">Añadir profesor</button>
-				</form>
-			</>
-		);
+						<button type="submit" className="btn btn-primary">Añadir profesor</button>
+					</form>
+				</li>
+			);
+
+        } else {
+        	return (
+				<span></span>
+			);
+        }
+
 	}
 
 }

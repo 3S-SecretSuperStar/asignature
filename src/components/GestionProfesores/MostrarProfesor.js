@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {timestampToDateString} from '../../utils/funciones.js';
+import {timestampToDateString, copyToClipboard} from '../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -87,119 +87,122 @@ class MostrarProfesor extends React.Component {
 
 		let eliminarProfesor = [];
 		if (this.props.miDireccion === this.props.owner) {
-			eliminarProfesor = <button onClick={() => this.eliminarProfesor(this.props.addrEthProf)}>Eliminar</button>;
+			eliminarProfesor = 	<div className="card-footer">
+									<button className="btn btn-danger" onClick={() => this.eliminarProfesor(this.props.addrEthProf)}>
+										<i className="fas fa-trash-alt fa-lg" style={{color: "red"}}></i>
+										Eliminar profesor
+									</button>
+								</div>;
 		}
 
 		return (
 			<>
-				<h3>Profesor {this.props.addrEthProf}</h3>
+				<div className="card">
+                    <div className="card-header">
+                        <h4>
+                        	Profesor {this.props.addrEthProf}
+                        	<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.addrEthProf)}>
+								<i className="far fa-copy fa-lg"></i>
+							</button>
+                        	</h4>
+                    </div>
 
-				<table>
-					<tbody>
-						<tr>
-							<td>Nombre</td>
-							<td>
+                    <div className="card-body">
+                    	<ul className="list-group list-group-flush">
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
+												drizzleState={drizzleState}
+												contract={"UpmProfesores"}
+												method={"mapProfesoresAddr"}
+												methodArgs={[this.props.addrEthProf]}
+												render={(profesor) => (
+													<span>
+														<strong>Nombre y apellidos:</strong> {profesor.nombre + " "}
+													</span>
+												)} />
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.nombre}</>
+													<span>
+														{profesor.apellidos}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>Apellidos</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.apellidos}</>
+													<span>
+														<strong>DNI:</strong> {profesor.dni}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>DNI</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.dni}</>
+													<span>
+														<strong>Correo UPM:</strong> {profesor.correoUpm}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>Correo UPM</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.correoUpm}</>
+													<span>
+														<strong>Teléfono móvil:</strong> {profesor.telefMovil}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>Teléfono móvil</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.telefMovil}</>
+													<span>
+														<strong>Fecha de nacimiento:</strong> {profesor.fechaNac ? timestampToDateString(profesor.fechaNac) : ""}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>Fecha de nacimiento</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmProfesores"}
 												method={"mapProfesoresAddr"}
 												methodArgs={[this.props.addrEthProf]}
 												render={(profesor) => (
-													<>{profesor.fechaNac ? timestampToDateString(profesor.fechaNac) : ""}</>
+													<span>
+														<strong>Id UPM:</strong> {profesor.idUpm}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
+                    	</ul>
+                    </div>
 
-						<tr>
-							<td>Id de la UPM</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmProfesores"}
-												method={"mapProfesoresAddr"}
-												methodArgs={[this.props.addrEthProf]}
-												render={(profesor) => (
-													<>{profesor.idUpm}</>
-												)} />
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				
-				{eliminarProfesor}
+                    {eliminarProfesor}
+                </div>
 
-				{this.renderRedirect()}
-
+                {this.renderRedirect()}
 			</>
 		);
 	}

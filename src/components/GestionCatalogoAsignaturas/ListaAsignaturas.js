@@ -54,9 +54,7 @@ class ListaAsignaturas extends React.Component {
 		console.log("Has pulsado el botón para eliminar la asignatura", addrEthAsignatura);
 
 		// coger drizzle y drizzleState
-		const {drizzle, drizzleState} = this.props;
-		const instance = drizzle.contracts.UpmCatalogo;
-		const instanceState = drizzleState.contracts.UpmCatalogo;
+		const instance = this.props.drizzle.contracts.UpmCatalogo;
 
 		// eliminar asignatura del catálogo
 		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
@@ -89,7 +87,18 @@ class ListaAsignaturas extends React.Component {
 				<tr key={i}>
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
-						<button onClick={() => copyToClipboard(addrEthAsignatura)}>Copy</button>
+						<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(addrEthAsignatura)}>
+							<i className="far fa-copy fa-lg"></i>
+						</button>
+						{
+							this.props.owner === this.props.miDireccion
+							?
+							<button type="button" className="btn btn-outline-danger" onClick={() => this.eliminarAsignatura(addrEthAsignatura)}>
+								<i className="fas fa-trash-alt fa-lg" title="Eliminar asignatura del catálogo" style={{color: "red"}}></i>
+							</button>
+							:
+							""
+						}
 					</td>
 
 					<td>
@@ -103,30 +112,29 @@ class ListaAsignaturas extends React.Component {
 										)} />
 					</td>
 
-					{
-						this.props.owner === this.props.miDireccion
-						?
-							<td>
-								<button onClick={() => this.eliminarAsignatura(addrEthAsignatura)}>Eliminar</button>
-							</td>
-						:
-							""
-					}
 
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>Ir</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>
+							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Alumnos"></i>
+						</Link>
 					</td>
 
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/profesores`}>Ir</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/profesores`}>
+							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Profesores"></i>
+						</Link>
 					</td>
 
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/evaluaciones`}>Ir</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/evaluaciones`}>
+							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Evaluaciones"></i>
+						</Link>
 					</td>
 
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/notas`}>Ir</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/notas`}>
+							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Notas"></i>
+						</Link>
 					</td>
 				</tr>
 			);
@@ -137,28 +145,17 @@ class ListaAsignaturas extends React.Component {
 		if (hayAlgunaAsignatura) {
 			return (
 				<>
-					<h3>Lista de asignaturas</h3>
+					<h4>Lista de asignaturas</h4>
 
-					<Link to="/gestion-asignatura/0x0eA9CE88927AC7CF566Db71f94AcF019A124af29/datos-asignatura">Asignatura desplegada a mano</Link>
+					<p>{this.props.asignaturasLength} asignaturasLength || {this.props.numAsignaturas} numAsignaturas</p>
 
-					<p>{this.props.asignaturasLength} asignaturasLength</p>
-					<p>{this.props.numAsignaturas} numAsignaturas</p>
-
-					<table>
-						<thead>
-							<tr>
+					<div className="table-responsive">
+						<table className="table table-sm table-bordered table-hover">
+							<thead className="thead-dark">
 								<th>Dirección</th>
 								
 								<th>Nombre a mostrar</th>
-								
-								{
-									this.props.owner === this.props.miDireccion
-									?
-										<th>Eliminar del catálogo</th>
-									:
-									""
-								}
-								
+
 								<th>Alumnos</th>
 								
 								<th>Profesores</th>
@@ -166,17 +163,18 @@ class ListaAsignaturas extends React.Component {
 								<th>Evaluaciones</th>
 								
 								<th>Notas</th>
-							</tr>
-						</thead>
-						<tbody>
-							{tbodyListaAsignaturas}
-						</tbody>
-					</table>
+							</thead>
+
+							<tbody>
+								{tbodyListaAsignaturas}
+							</tbody>
+						</table>
+					</div>
 				</>
 			);
 		} else {
 			return (
-				<h3>No hay ninguna asignatura creada</h3>
+				<h4>No hay ninguna asignatura creada</h4>
 			);
 		}
 

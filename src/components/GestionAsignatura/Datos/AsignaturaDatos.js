@@ -2,6 +2,8 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
+import NavbarAsignatura from '../NavbarAsignatura';
+
 import {jsonInterface} from '../../../utils/varios.js';
 import {crearObjetoFromFormData} from '../../../utils/funciones.js';
 
@@ -72,8 +74,6 @@ class AsignaturaDatos extends React.Component {
 	render() {
 		const {drizzle, drizzleState, contractName} = this.props;
 
-		console.log('AsignaturaDatos-', this.props.miDireccion);
-
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
@@ -81,185 +81,236 @@ class AsignaturaDatos extends React.Component {
 
 		let actualizarCoordinador = [];
 		if (this.props.isOwner || this.props.isCoordinador) {
-			actualizarCoordinador = <section>
-				<h3>Actualizar coordinador</h3>
-				<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
-					<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
-					<input type="text" id="addrEthCoord" name="addrEthCoord" />
+			actualizarCoordinador = <li className="list-group-item">
+										<h5>Actualizar coordinador</h5>
+										<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
+											<div className="form-group">
+												<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
+												
+												<div className="input-group">
+						                            <div className="input-group-prepend">
+						                                <span className="input-group-text">
+						                                    <i className="fab fa-ethereum fa-lg" />
+						                                </span>
+						                            </div>
+													<input type="text" className="form-control" id="addrEthCoord" name="addrEthCoord" />
+						                        </div>
+											</div>
 
-					<button type="submit">Actualizar coordinador</button>
-				</form>
-			</section>;
+											<button type="submit" className="btn btn-primary">Actualizar coordinador</button>
+										</form>
+									</li>;
 		}
 
 		let actualizarOwner = [];
 		if (this.props.isOwner) {
-			actualizarOwner = <section>
-				<h3>Actualizar owner</h3>
-				<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
-					<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>
-					<input type="text" id="addrEthOwner" name="addrEthOwner" />
+			actualizarOwner =	<li className="list-group-item">
+									<h5>Actualizar owner</h5>
+									<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
+										<div className="form-group">
+											<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>
+											
+											<div className="input-group">
+					                            <div className="input-group-prepend">
+					                                <span className="input-group-text">
+					                                    <i className="fab fa-ethereum fa-lg" />
+					                                </span>
+					                            </div>
+												<input type="text" className="form-control" id="addrEthOwner" name="addrEthOwner" />
+					                        </div>
+										</div>
 
-					<button type="submit">Actualizar owner</button>
-				</form>
-			</section>;
+										<button type="submit" className="btn btn-primary">Actualizar owner</button>
+									</form>
+								</li>;
 		}
 
 		return (
 			<>
-				<h3>Datos de la asignatura</h3>
-				<p>Nombre del contrato: {contractName}</p>
+				<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+									isOwner={this.props.isOwner}
+									isCoordinador={this.props.isCoordinador}
+									isProfesor={this.props.isProfesor}
+									isAlumno={this.props.isAlumno}
+									active={"datos"} />
 
-				<table>
-					<tbody>
-						<tr>
-							<td>Owner</td>
-							<td>
-								<ContractData 	drizzle={drizzle}
+				<div className="card">
+					<div className="card-header">
+                        <h4>
+                            Contrato asignatura {contractName}
+                        </h4>
+                    </div>
+
+                    <div className="card-body">
+                    	<ul className="list-group list-group-flush">
+                    		<li className="list-group-item">
+                    			<strong>Dirección:</strong> {this.props.addrEthAsig}
+                    		</li>
+
+                    		<li className="list-group-item">
+                    			<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
 												method={"owner"}
 												render={(owner) => (
-													<>{owner} {owner === this.props.miDireccion ? "(yo)" : ""}</>
+													<span>
+														<strong>Owner:</strong> {owner} {owner === this.props.miDireccion ? "(yo)" : ""}
+													</span>
 												)} />
-							</td>
-						</tr>
+                    		</li>
 
-						<tr>
-							<td>Coordinador</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
 												method={"coordinador"}
 												render={(coordinador) => (
-													<>{coordinador} {coordinador === this.props.miDireccion ? "(yo)" : ""}</>
+													<span>
+														<strong>Coordinador:</strong> {coordinador} {coordinador === this.props.miDireccion ? "(yo)" : ""}
+													</span>
 												)} />
-							</td>
-						</tr>						
+							</li>
 
-						<tr>
-							<td>Nombre asignatura</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"nombreAsignatura"} />
-							</td>
-						</tr>
+												method={"nombreAsignatura"}
+												render={(nombreAsignatura) => (
+													<span>
+														<strong>Nombre de la asignatura:</strong> {nombreAsignatura}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Curso académico</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"cursoAcademico"} />
-							</td>
-						</tr>
+												method={"cursoAcademico"}
+												render={(cursoAcademico) => (
+													<span>
+														<strong>Curso acádemico:</strong> {cursoAcademico}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Código asignatura</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"codigoAsignatura"} />
-							</td>
-						</tr>
+												method={"codigoAsignatura"}
+												render={(codigoAsignatura) => (
+													<span>
+														<strong>Código de la asigatura:</strong> {codigoAsignatura}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Titulación</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"titulacion"} />
-							</td>
-						</tr>
+												method={"titulacion"}
+												render={(titulacion) => (
+													<span>
+														<strong>Titulación:</strong> {titulacion}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Número de créditos</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"numCreditos"} />
-							</td>
-						</tr>
+												method={"numCreditos"}
+												render={(numCreditos) => (
+													<span>
+														<strong>Nº créditos:</strong> {numCreditos}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Semestre</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"semestre"} />
-							</td>
-						</tr>
+												method={"semestre"}
+												render={(semestre) => (
+													<span>
+														<strong>Semestre:</strong> {semestre}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Curso (1º, 2º, etc.)</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"cursoAno"} />
-							</td>
-						</tr>
+												method={"cursoAno"}
+												render={(cursoAno) => (
+													<span>
+														<strong>Curso:</strong> {cursoAno}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>Tipo de asignatura</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
 												method={"tipoAsignatura"}
 												render={tipoAsignatura => (
-													<>
-														{tipoAsignatura === "0" ? "Obligatoria" : ""}
-														{tipoAsignatura === "1" ? "Optativa" : ""}
-													</>
+													<span>
+														<strong>Tipo de asignatura:</strong>
+														{tipoAsignatura === "0" ? " Obligatoria" : ""}
+														{tipoAsignatura === "1" ? " Optativa" : ""}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>numAlumnos</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"numAlumnos"} />
-							</td>
-						</tr>
+												method={"numAlumnos"}
+												render={(numAlumnos) => (
+													<span>
+														<strong>Nº alumnos:</strong> {numAlumnos}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>numProfesores</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"numProfesores"} />
-							</td>
-						</tr>
+												method={"numProfesores"}
+												render={(numProfesores) => (
+													<span>
+														<strong>Nº profesores:</strong> {numProfesores}
+													</span>
+												)} />
+							</li>
 
-						<tr>
-							<td>numEvaluaciones</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={contractName}
-												method={"numEvaluaciones"} />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+												method={"numEvaluaciones"}
+												render={(numEvaluaciones) => (
+													<span>
+														<strong>Nº evaluaciones:</strong> {numEvaluaciones}
+													</span>
+												)} />
+							</li>
+                    	</ul>
+                    </div>
+				</div>
 
 				{actualizarCoordinador}
 
 				{actualizarOwner}
-				
 			</>
 		);
 	}

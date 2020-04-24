@@ -53,7 +53,6 @@ class ListaProfesores extends React.Component {
 
 		const instance = this.props.drizzle.contracts.UpmProfesores;
 
-		// eliminar profesor
 		const txId = instance.methods.borrarProfesorAddr.cacheSend(
 			addrEthProf,
 			{from: this.props.miDireccion}
@@ -85,7 +84,18 @@ class ListaProfesores extends React.Component {
 										<tr>
 											<td>
 												<Link to={`/gestion-profesores/profesor/${addrEthProf}`}>{addrEthProf}</Link>
-												<button onClick={() => copyToClipboard(addrEthProf)}>Copy</button>
+												<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(addrEthProf)}>
+													<i className="far fa-copy fa-lg"></i>
+												</button>
+												{
+													this.props.owner === this.props.miDireccion
+													?
+													<button type="button" className="btn btn-outline-danger" onClick={() => this.eliminarProfesor(addrEthProf)}>
+														<i className="far fa-trash-alt fa-lg" title="Eliminar profesor" style={{color: "red"}}></i>
+													</button>
+													:
+													""
+												}
 											</td>
 											
 											<td>{profesor.nombre}</td>
@@ -93,16 +103,6 @@ class ListaProfesores extends React.Component {
 											<td>{profesor.apellidos}</td>
 											
 											<td>{profesor.correoUpm}</td>
-											
-											{
-												this.props.owner === this.props.miDireccion
-												?
-													<td>
-														<button onClick={() => this.eliminarProfesor(addrEthProf)}>Eliminar</button>
-													</td>
-												:
-													""
-											}
 										</tr>
 									)}
 					/>
@@ -115,42 +115,34 @@ class ListaProfesores extends React.Component {
 		if (hayAlgunProfesor) {
 			return (
 				<>
-					<h3>Lista de profesores creados</h3>
+					<h4>Lista de profesores creados</h4>
 
-					<p>{this.props.profesoresLength} profesoresLength</p>
-					<p>{this.props.numProfesores} profesores</p>
+					<p>{this.props.profesoresLength} profesoresLength || {this.props.numProfesores} profesores</p>
 
-					<table>
-						<thead>
-							<tr>
-								<th>Dirección</th>
-								
-								<th>Nombre</th>
-								
-								<th>Apellidos</th>
-								
-								<th>Correo</th>
-								
-								{
-									this.props.owner === this.props.miDireccion
-									?
-										<th>Eliminar</th>
-									:
-									""
-								}
-							</tr>
-						</thead>
-						<tbody>
-							{tbodyListaProfesores}
-						</tbody>
-					</table>
+					<div className="table-responsive">
+						<table className="table table-sm table-bordered table-hover">
+							<thead className="thead-dark">
+								<tr>
+									<th>Dirección</th>
+									
+									<th>Nombre</th>
+									
+									<th>Apellidos</th>
+									
+									<th>Correo</th>
+								</tr>
+							</thead>
+							<tbody>
+								{tbodyListaProfesores}
+							</tbody>
+						</table>
+					</div>
 				</>
 			);
-
 		} else {
 			return (
-				<h3>No hay ningún profesor creado</h3>
-			)
+				<h4>No hay ningún profesor creado</h4>
+			);
 		}
 
 	}

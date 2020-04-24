@@ -7,6 +7,8 @@ import {
 
 import {newContextComponents} from "drizzle-react-components";
 
+import MiDireccion from '../MiDireccion';
+
 import ListaAlumnos from './ListaAlumnos';
 import CrearAlumno from './CrearAlumno';
 import ActualizarOwner from './ActualizarOwner';
@@ -109,7 +111,7 @@ class GestionAlumnos extends React.Component {
 		return (
 			<>
 				<h2>Gestión de alumnos</h2>
-				<p>Mi dirección: {miDireccion} {miDireccion === owner ? "(owner)" : "(no owner)"}</p>
+				<MiDireccion miDireccion={miDireccion} owner={owner} />
 
 				<Switch>
 					<Route exact path="/gestion-alumnos">

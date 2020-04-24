@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
+import NavbarAsignatura from '../NavbarAsignatura';
+
 import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
@@ -100,38 +102,56 @@ class AsignaturaMisNotas extends React.Component {
 				<tr>
 					<td>
 						<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}>Yo ({this.props.miDireccion})</Link>
-						<button onClick={() => copyToClipboard(this.props.miDireccion)}>Copy</button>
+						<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.miDireccion)}>
+							<i className="far fa-copy fa-lg"></i>
+						</button>
 					</td>
 					{notasUnAlumno}
 				</tr>
 			);
 
-			listaNotas = <table>
-							<thead>
-								<tr>
-									<th>A\E</th>
-									{theadtr}
-								</tr>
-							</thead>
-							<tbody>
-								{tbodyListaNotas}
-							</tbody>
-						</table>;
+			listaNotas =	<div className="table-responsive">
+								<table className="table table-sm table-bordered table-hover">
+									<thead className="thead-dark">
+										<tr>
+											<th>A\E</th>
+											{theadtr}
+										</tr>
+									</thead>
+
+									<tbody>
+										{tbodyListaNotas}
+									</tbody>
+								</table>
+							</div>;
 		} else {
-			listaNotas = <h3>No hay ninguna nota mía</h3>
+			listaNotas = <p>No hay ninguna nota mía</p>
 		}
 
 		if (isAlumno) {
 			return (
 				<>
-					<h3>Mis notas</h3>
-					<p>Nombre del contrato: {this.props.contractName}</p>
+					<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+										isOwner={this.props.isOwner}
+										isCoordinador={this.props.isCoordinador}
+										isProfesor={this.props.isProfesor}
+										isAlumno={this.props.isAlumno}
+										active={"misNotas"} />
+
+					<h5>Mis notas</h5>
 
 					{listaNotas}
 				</>
 			);
 		} else {
-			return (<></>);
+			return (
+				<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+									isOwner={this.props.isOwner}
+									isCoordinador={this.props.isCoordinador}
+									isProfesor={this.props.isProfesor}
+									isAlumno={this.props.isAlumno}
+									active={"misNotas"} />
+			);
 		}
 		
 	}

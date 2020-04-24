@@ -19,34 +19,14 @@ import {jsonInterface} from '../../utils/varios.js';
 
 const {ContractData, AccountData} = newContextComponents;
 
-const NavBar = (props) => (
-    <nav>
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>Datos de la asignatura</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/alumnos`}>Alumnos</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/profesores`}>Profesores</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		
-		<Link to={`/gestion-asignatura/${props.addrEthAsig}/evaluaciones`}>Evaluaciones</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		
-		{(props.isOwner || props.isCoordinador || props.isProfesor)
-			?
-		<>
-			<Link to={`/gestion-asignatura/${props.addrEthAsig}/notas`}>Notas</Link><span>&nbsp;&nbsp;&nbsp;</span>
-		</>
-			:
-		<></>
-		}
-		
-		{props.isAlumno
-			?
-		<>
-			<Link to={`/gestion-asignatura/${props.addrEthAsig}/mis-notas`}>Mis notas</Link>
-		</>
-			: 
-		<></>
-		}
-	</nav>
+const MiDireccionAsignatura = (props) => (
+	<p>
+		Mi dirección: {props.miDireccion}
+		{props.isOwner ? " (owner)" : " (no owner)"}
+		{props.isCoordinador ? " (coordinador)" : " (no coordinador)"}
+		{props.isProfesor ? " (profesor)" : " (no profesor)"}
+		{props.isAlumno ? " (alumno)" : " (no alumno)"}
+	</p>
 );
 
 class MainGestionAsignatura extends React.Component {
@@ -213,7 +193,7 @@ class MainGestionAsignatura extends React.Component {
 	render() {
 		const {drizzle, drizzleState, addrEthAsig} = this.props;
 
-		console.log('\n\n\n\n\n\n\n\n\n\n\n\n', this.props);
+		console.log('\n\n\n\n\n', this.props);
 
 		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 
@@ -297,45 +277,20 @@ class MainGestionAsignatura extends React.Component {
 
 		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
-		/*
-		<p>
-			Dirección ContractData:
-			<ContractData	drizzle={drizzle}
-							drizzleState={drizzleState}
-							contract={this.state.contractName}
-							method={"miDireccion"} />
-		</p>
-
-		<p>
-			AccountData:
-			<AccountData	drizzle={drizzle}
-							drizzleState={drizzleState}
-							accountIndex="0"
-							units="ether"
-							precision="9" />
-		</p>
-		*/
-
 		return (
 			<>
 				<h2>Gestión de la asignatura {addrEthAsig}</h2>
-				<p>
-					Mi dirección: {miDireccion}
-					{isOwner ? " (owner)" : " (no owner)"}
-					{isCoordinador ? " (coordinador)" : " (no coordinador)"}
-					{isProfesor ? " (profesor)" : " (no profesor)"}
-					{isAlumno ? " (alumno)" : " (no alumno)"}
-				</p>
-				
-				<NavBar	addrEthAsig={addrEthAsig}
-						isOwner={isOwner}
-						isCoordinador={isCoordinador}
-						isProfesor={isProfesor}
-						isAlumno={isAlumno} />
+
+				<MiDireccionAsignatura	miDireccion={miDireccion}
+										isOwner={isOwner}
+										isCoordinador={isCoordinador}
+										isProfesor={isProfesor}
+										isAlumno={isAlumno} />
 
 				<Route path="/gestion-asignatura/:addrEthAsig/datos-asignatura">
 					<AsignaturaDatos	drizzle={drizzle}
 										drizzleState={drizzleState}
+										addrEthAsig={addrEthAsig}
 										contractName={this.state.contractName}
 										miDireccion={miDireccion}
 										owner={owner}
@@ -356,6 +311,7 @@ class MainGestionAsignatura extends React.Component {
                 <Route path="/gestion-asignatura/:addrEthAsig/alumnos">
 					<AsignaturaAlumnos	drizzle={drizzle}
 										drizzleState={drizzleState}
+										addrEthAsig={addrEthAsig}
 										contractName={this.state.contractName}
 										miDireccion={miDireccion}
 										owner={owner}
@@ -376,6 +332,7 @@ class MainGestionAsignatura extends React.Component {
                 <Route path="/gestion-asignatura/:addrEthAsig/profesores">
 					<AsignaturaProfesores	drizzle={drizzle}
 											drizzleState={drizzleState}
+											addrEthAsig={addrEthAsig}
 											contractName={this.state.contractName}
 											miDireccion={miDireccion}
 											owner={owner}
@@ -396,6 +353,7 @@ class MainGestionAsignatura extends React.Component {
                 <Route path="/gestion-asignatura/:addrEthAsig/evaluaciones">
 					<AsignaturaEvaluaciones	drizzle={drizzle}
 											drizzleState={drizzleState}
+											addrEthAsig={addrEthAsig}
 											contractName={this.state.contractName}
 											miDireccion={miDireccion}
 											owner={owner}
@@ -416,6 +374,7 @@ class MainGestionAsignatura extends React.Component {
                 <Route path="/gestion-asignatura/:addrEthAsig/notas">
 					<AsignaturaNotas	drizzle={drizzle}
 										drizzleState={drizzleState}
+										addrEthAsig={addrEthAsig}
 										contractName={this.state.contractName}
 										miDireccion={miDireccion}
 										owner={owner}
@@ -436,6 +395,7 @@ class MainGestionAsignatura extends React.Component {
                 <Route path="/gestion-asignatura/:addrEthAsig/mis-notas">
 					<AsignaturaMisNotas	drizzle={drizzle}
 										drizzleState={drizzleState}
+										addrEthAsig={addrEthAsig}
 										contractName={this.state.contractName}
 										miDireccion={miDireccion}
 										owner={owner}

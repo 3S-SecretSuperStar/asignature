@@ -42,28 +42,38 @@ class AsignaturaAnadirAlumno extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState, isOwner, isCoordinador, isProfesor} = this.props;
+		const {drizzle, drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
         }
 
-        if (isOwner || isCoordinador || isProfesor) {
+        if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
         	return (
-				<>
-					<h3>Añadir alumno</h3>
+				<li className="list-group-item">
+					<h5>Añadir alumno</h5>
 					<form onSubmit={this.anadirAlumno} id="anadir-alumno-form">
-						<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
-						<input type="text" id="addrEthAlum" name="addrEthAlum" />
+						<div className="form-group">
+							<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
 
-						<button type="submit">Añadir alumno</button>
+							<div className="input-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+	                                    <i className="fab fa-ethereum fa-lg" />
+	                                </span>
+								</div>
+								<input type="text" className="form-control" id="addrEthAlum" name="addrEthAlum" />
+							</div>
+						</div>
+
+						<button type="submit" className="btn btn-primary">Añadir alumno</button>
 					</form>
-				</>
+				</li>
         	);
         } else {
         	return (
-        		<h3>Sección oculta. Sólo el owner, el coordinador o el profesor pueden añadir alumnos a la asignatura.</h3>
+        		<span></span>
         	);
         }
 	}

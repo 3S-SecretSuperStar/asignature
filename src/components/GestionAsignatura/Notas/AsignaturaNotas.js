@@ -2,11 +2,12 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {jsonInterface} from '../../../utils/varios.js';
-
 import AsignaturaListaNotas from './AsignaturaListaNotas';
 import AsignaturaAnadirNota from './AsignaturaAnadirNota';
-import AsignaturaEliminarNota from './AsignaturaEliminarNota';
+
+import NavbarAsignatura from '../NavbarAsignatura';
+
+import {jsonInterface} from '../../../utils/varios.js';
 
 const {ContractData} = newContextComponents;
 
@@ -37,30 +38,12 @@ class AsignaturaNotas extends React.Component {
 		const hayAlgunaEvaluacion = this.props.numEvaluaciones > 0;
 		const hayAlgunaNota = this.props.numNotas > 0;
 
-		let listaNotas = [];
-		listaNotas = <AsignaturaListaNotas	drizzle={drizzle}
-											drizzleState={drizzleState}
-											contractName={this.props.contractName}
-											miDireccion={this.props.miDireccion}
-											owner={this.props.owner}
-											coordinador={this.props.coordinador}
-											alumnosLength={this.props.alumnosLength}
-											numAlumnos={this.props.numAlumnos}
-											profesoresLength={this.props.profesoresLength}
-											numProfesores={this.props.numProfesores}
-											numEvaluaciones={this.props.numEvaluaciones}
-											numNotas={this.props.numNotas}
-											isOwner={isOwner}
-											isCoordinador={isCoordinador}
-											isProfesor={isProfesor}
-											isAlumno={isAlumno} />;
-
 		let anadirNota = [];
 		if (!hayAlgunAlumno && !hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <p>No se puede añadir una nota porque no hay alumnos ni evaluaciones</p>
-		} else if (!hayAlgunAlumno && (isOwner || isCoordinador || isProfesor)) {
+		} else if (!hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <p>No se puede añadir una nota porque no hay ningún alumno</p>
-		} else if (!hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
+		} else if (hayAlgunAlumno && !hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <p>No se puede añadir una nota porque no hay ninguna evaluación</p>
 		} else if (hayAlgunAlumno && hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {
 			anadirNota = <AsignaturaAnadirNota	drizzle={drizzle}
@@ -74,12 +57,32 @@ class AsignaturaNotas extends React.Component {
 												profesoresLength={this.props.profesoresLength}
 												numProfesores={this.props.numProfesores}
 												numEvaluaciones={this.props.numEvaluaciones}
-												numNotas={this.props.numNotas} />
+												numNotas={this.props.numNotas}
+												isOwner={this.props.isOwner}
+												isCoordinador={this.props.isCoordinador}
+												isProfesor={this.props.isProfesor}
+												isAlumno={this.props.isAlumno} />
 		}
 
-		let eliminarNota = [];
-		if (hayAlgunaNota && (isOwner || isCoordinador || isProfesor)) {
-			eliminarNota = <AsignaturaEliminarNota 	drizzle={drizzle}
+		if (isOwner || isCoordinador || isProfesor) {
+			return (
+				<>
+					<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+										isOwner={this.props.isOwner}
+										isCoordinador={this.props.isCoordinador}
+										isProfesor={this.props.isProfesor}
+										isAlumno={this.props.isAlumno}
+										active={"notas"} />
+
+					<div className="card">
+						<div className="card-header">
+	                        <h4>
+	                            Notas de la asignatura
+	                        </h4>
+	                    </div>
+
+	                    <div className="card-body">
+							<AsignaturaListaNotas	drizzle={drizzle}
 													drizzleState={drizzleState}
 													contractName={this.props.contractName}
 													miDireccion={this.props.miDireccion}
@@ -90,24 +93,26 @@ class AsignaturaNotas extends React.Component {
 													profesoresLength={this.props.profesoresLength}
 													numProfesores={this.props.numProfesores}
 													numEvaluaciones={this.props.numEvaluaciones}
-													numNotas={this.props.numNotas} />
-		}
-
-		if (isOwner || isCoordinador || isProfesor) {
-			return (
-				<>
-					<h3>Notas</h3>
-					<p>Nombre del contrato: {contractName}</p>
-
-					{listaNotas}
+													numNotas={this.props.numNotas}
+													isOwner={isOwner}
+													isCoordinador={isCoordinador}
+													isProfesor={isProfesor}
+													isAlumno={isAlumno} />
+	                    </div>
+	                </div>
 
 					{anadirNota}
-
-					{eliminarNota}
 				</>
 			);
 		} else {
-			return (<></>);
+			return (
+				<NavbarAsignatura	addrEthAsig={this.props.addrEthAsig}
+									isOwner={this.props.isOwner}
+									isCoordinador={this.props.isCoordinador}
+									isProfesor={this.props.isProfesor}
+									isAlumno={this.props.isAlumno}
+									active={"notas"} />
+			);
 		}
 
 	}

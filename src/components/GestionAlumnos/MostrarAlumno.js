@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {timestampToDateString} from '../../utils/funciones.js';
+import {timestampToDateString, copyToClipboard} from '../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -87,119 +87,122 @@ class MostrarAlumno extends React.Component {
 
 		let eliminarAlumno = [];
 		if (this.props.miDireccion === this.props.owner) {
-			eliminarAlumno = <button onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>Eliminar</button>;
+			eliminarAlumno = 	<div className="card-footer">
+									<button className="btn btn-danger" onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>
+										<i className="fas fa-trash-alt fa-lg" style={{color: "red"}}></i>
+										Eliminar alumno
+									</button>
+								</div>;
 		}
 
 		return (
 			<>
-				<h3>Alumno {this.props.addrEthAlum}</h3>
+				<div className="card">
+					<div className="card-header">
+						<h4>
+							Alumno {this.props.addrEthAlum}
+							<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.addrEthAlum)}>
+								<i className="far fa-copy fa-lg"></i>
+							</button>
+						</h4>
+					</div>
 
-				<table>
-					<tbody>
-						<tr>
-							<td>Nombre</td>
-							<td>
+					<div className="card-body">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.nombre}</>
+													<span>
+														<strong>Nombre y apellidos:</strong> {alumno.nombre + " "}
+													</span>
 												)} />
-							</td>
-						</tr>
-
-						<tr>
-							<td>Apellidos</td>
-							<td>
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.apellidos}</>
+													<span>
+														{alumno.apellidos}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>DNI</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.dni}</>
+													<span>
+														<strong>DNI:</strong> {alumno.dni}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>Correo UPM</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.correoUpm}</>
+													<span>
+														<strong>Correo UPM:</strong> {alumno.correoUpm}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>Teléfono móvil</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.telefMovil}</>
+													<span>
+														<strong>Teléfono móvil:</strong> {alumno.telefMovil}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>Fecha de nacimiento</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.fechaNac ? timestampToDateString(alumno.fechaNac) : ""}</>
+													<span>
+														<strong>Fecha de nacimiento:</strong> {alumno.fechaNac ? timestampToDateString(alumno.fechaNac) : ""}
+													</span>
 												)} />
-							</td>
-						</tr>
+							</li>
 
-						<tr>
-							<td>Id de la UPM</td>
-							<td>
+							<li className="list-group-item">
 								<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
-													<>{alumno.idUpm}</>
+													<span>
+														<strong>Id UPM:</strong> {alumno.idUpm}
+													</span>
 												)} />
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				
-				{eliminarAlumno}
+							</li>
+						</ul>
+					</div>
+
+					{eliminarAlumno}
+				</div>
 
 				{this.renderRedirect()}
-
 			</>
 		);
 	}

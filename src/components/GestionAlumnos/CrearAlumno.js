@@ -92,33 +92,78 @@ class CrearAlumno extends React.Component {
 
 		return (
 			<>
-				<h3>Crear alumno</h3>
+				<h4>Crear alumno</h4>
 				<form onSubmit={this.crearAlumno} id="crear-alumno-form">
-					<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
-					<input type="text" id="addrEthAlum" name="addrEthAlum" />
+					<div className="form-group">
+						<label htmlFor="addrEthAlum">Dirección Ethereum del alumno</label>
 
-					<label htmlFor="nombre">Nombre del alumno</label>
-					<input type="text" id="nombre" name="nombre" />
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fab fa-ethereum fa-lg" />
+                                </span>
+                            </div>
+							<input type="text" className="form-control" id="addrEthAlum" name="addrEthAlum" />
+                        </div>
+					</div>
 
-					<label htmlFor="apellidos">Apellidos del alumno</label>
-					<input type="text" id="apellidos" name="apellidos" />
+					<div className="form-group">
+						<label htmlFor="nombre">Nombre del alumno</label>
+						<input type="text" className="form-control" id="nombre" name="nombre" />
+					</div>
 
-					<label htmlFor="dni">DNI del alumno</label>
-					<input type="text" id="dni" name="dni" />
+					<div className="form-group">
+						<label htmlFor="apellidos">Apellidos del alumno</label>
+						<input type="text" className="form-control" id="apellidos" name="apellidos" />
+					</div>
 
-					<label htmlFor="correoUpm">Correo de la UPM del alumno</label>
-					<input type="text" id="correoUpm" name="correoUpm" />
+					<div className="form-group">
+						<label htmlFor="dni">DNI del alumno</label>
+						<input type="text" className="form-control" id="dni" name="dni" />
+					</div>
 
-					<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
-					<input type="number" id="telefMovil" name="telefMovil" />
+					<div className="form-group">
+						<label htmlFor="correoUpm">Correo de la UPM del alumno</label>
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fas fa-at fa-lg" />
+                                </span>
+                            </div>
+							<input type="text" className="form-control" id="correoUpm" name="correoUpm" />
+                        </div>
+					</div>
+	
+					<div className="form-group">
+						<label htmlFor="telefMovil">Teléfono móvil del alumno</label>
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fas fa-phone fa-lg" />
+                                </span>
+                            </div>
+							<input type="number" className="form-control" id="telefMovil" name="telefMovil" />
+                        </div>
+					</div>
 
-					<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
-					<input type="date" id="fechaNac" name="fechaNac" />
+					<div className="form-group">
+						<label htmlFor="fechaNac">Fecha de nacimiento del alumno</label>
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fas fa-birthday-cake fa-lg" />
+                                </span>
+                            </div>
+							<input type="date" className="form-control" id="fechaNac" name="fechaNac" />
+                        </div>
+					</div>
 
-					<label htmlFor="idUpm">ID de la UPM del alumno</label>
-					<input type="text" id="idUpm" name="idUpm" />
+					<div className="form-group">
+						<label htmlFor="idUpm">ID de la UPM del alumno</label>
+						<input type="text" className="form-control" id="idUpm" name="idUpm" />
+					</div>
 
-					<button type="submit">Crear alumno</button>
+					<button type="submit" className="btn btn-primary">Crear alumno</button>
 				</form>
 			</>
 		);

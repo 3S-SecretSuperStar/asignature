@@ -46,45 +46,82 @@ class AsignaturaAnadirEvaluacion extends React.Component {
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
-        }        
+        }
+
+        if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
+        	return (
+        		<li className="list-group-item">
+					<h5>Crear evaluación</h5>
+					<form onSubmit={this.crearEvaluacion} id="crear-evaluacion-form">
+						<div className="form-group">
+							<label htmlFor="nombre">Nombre de la evaluación</label>
+							<input type="text" className="form-control" id="nombre" name="nombre" />
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="fecha">Fecha</label>
+							<input type="date" className="form-control" id="fecha" name="fecha" />
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="obligatoria">¿Es obligatoria?</label>
+
+							<div className="input-group">
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" checked />
+									<label className="form-check-label" for="semestre1">Obligatoria</label>
+								</div>
+
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria1" value="1" />
+									<label className="form-check-label" for="semestre2">No obligatoria</label>
+								</div>
+							</div>
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="notaMinima">Nota mínima (0-100)</label>
+							<input type="number" className="form-control"  id="notaMinima" name="notaMinima" />
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="porcAportacion">Porcentaje de aportación (0-100)</label>
+							<input type="number" className="form-control" id="porcAportacion" name="porcAportacion" />
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="tipoConvocatoria">Tipo de convocatoria</label>
+
+							<div className="input-group">
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" checked />
+									<label className="form-check-label" for="semestre1">Ordinaria Continua</label>
+								</div>
+
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" />
+									<label className="form-check-label" for="semestre2">Ordinaria Final</label>
+								</div>
+
+								<div className="form-check form-check-inline">
+									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" />
+									<label className="form-check-label" for="semestre2">Extraordinaria</label>
+								</div>
+							</div>
+						</div>
+
+						<button type="submit" className="btn btn-primary">Crear evaluación</button>
+					</form>
+        		</li>
+        	);
+        } else {
+        	return (
+				<span></span>
+			);
+        }
 
 		return (
 			<>
-				<h3>Crear evaluación</h3>
-				<form onSubmit={this.crearEvaluacion} id="crear-evaluacion-form">
-					<label htmlFor="nombre">Nombre de la evaluación</label>
-					<input type="text" id="nombre" name="nombre" />
-
-					<label htmlFor="fecha">Fecha</label>
-					<input type="date" id="fecha" name="fecha" />
-
-					<label htmlFor="obligatoria">¿Es obligatoria? (0=Sí, 1=No)</label>
-					<label>
-						<input type="radio" name="obligatoria" id="obligatoria0" value="0" /> Obligatoria
-					</label>
-					<label>
-						<input type="radio" name="obligatoria" id="obligatoria1" value="1" /> No obligatoria <br />
-					</label>
-
-					<label htmlFor="notaMinima">Nota mínima (0-100)</label>
-					<input type="text" id="notaMinima" name="notaMinima" />
-
-					<label htmlFor="porcAportacion">Porcentaje de aportación (0-100)</label>
-					<input type="text" id="porcAportacion" name="porcAportacion" />
-
-					<label htmlFor="tipoConvocatoria">Tipo de convocatoria (0=Ord. Continua, 1=Ord. Final, 2=Extraordinaria)</label>
-					<label>
-						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" /> Ordinaria Continua
-					</label>
-					<label>
-						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" /> Ordinaria Final
-					</label>
-					<label>
-						<input type="radio" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" /> Extraordinaria <br />
-					</label>
-
-					<button type="submit">Crear evaluación</button>
-				</form>
 			</>
 		);
 	}
