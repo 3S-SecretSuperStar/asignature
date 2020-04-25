@@ -130,12 +130,6 @@ class ListaAsignaturas extends React.Component {
 							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Evaluaciones"></i>
 						</Link>
 					</td>
-
-					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/notas`}>
-							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Notas"></i>
-						</Link>
-					</td>
 				</tr>
 			);
 		}
@@ -161,8 +155,6 @@ class ListaAsignaturas extends React.Component {
 								<th>Profesores</th>
 								
 								<th>Evaluaciones</th>
-								
-								<th>Notas</th>
 							</thead>
 
 							<tbody>
