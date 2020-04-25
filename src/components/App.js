@@ -20,7 +20,7 @@ import GestionAsignatura from './GestionAsignatura';
 import PruebasInterfaz from './PruebasInterfaz';
 
 const Navegacion = () => (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <Link to="/" className="navbar-brand">Home</Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,9 +37,6 @@ const Navegacion = () => (
                 </li>
                 <li className="nav-item">
                     <Link to="/gestion-catalogo-asignaturas" className="nav-link">Gestión del catálogo de asignaturas</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/pruebas-interfaz" className="nav-link">Pruebas interfaz</Link>
                 </li>
             </ul>
         </div>
@@ -88,11 +85,6 @@ export default () => (
 
                             <Route path="/gestion-asignatura/:addrEthAsig">
                                 <GestionAsignatura  drizzle={drizzle}
-                                                    drizzleState={drizzleState} />
-                            </Route>
-
-                            <Route path="/pruebas-interfaz">
-                                <PruebasInterfaz    drizzle={drizzle}
                                                     drizzleState={drizzleState} />
                             </Route>
                         </Switch>
