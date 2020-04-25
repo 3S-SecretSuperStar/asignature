@@ -4,6 +4,8 @@ import {copyToClipboard} from '../utils/funciones.js';
 
 const MiDireccion = (props) => {
 
+	console.log(props.miDireccion);
+
 	return (
 		<p>
 			Mi dirección: {props.miDireccion}

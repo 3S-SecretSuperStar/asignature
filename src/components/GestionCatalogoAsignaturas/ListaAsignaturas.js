@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {copyToClipboard} from '../../utils/funciones.js';
+import {copyToClipboard, shortenEthAddress} from '../../utils/funciones.js';
 
 import {
     BrowserRouter as Router,
@@ -86,7 +86,7 @@ class ListaAsignaturas extends React.Component {
 			tbodyListaAsignaturas[i] = (
 				<tr key={i}>
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{addrEthAsignatura}</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{shortenEthAddress(addrEthAsignatura)}</Link>
 						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAsignatura)}>
 							<i className="far fa-copy fa-lg"></i>
 						</button>

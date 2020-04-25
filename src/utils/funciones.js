@@ -78,3 +78,9 @@ function padNumbers(number, digits) {
 	}
 	return "" + number;
 }
+
+export function shortenEthAddress(ethAddress) {
+	if (ethAddress.length > 16) {
+		return ethAddress.slice(0, 8) + "..." + ethAddress.slice(-8);
+	}
+}

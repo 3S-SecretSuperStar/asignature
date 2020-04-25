@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {copyToClipboard} from '../../../utils/funciones.js';
+import {copyToClipboard, shortenEthAddress} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -85,7 +85,7 @@ class AsignaturaListaAlumnos extends React.Component {
 									render={(alumno) => (
 										<tr>
 											<td>
-												<Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link>
+												<Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{shortenEthAddress(alumno.addrEthAlum)}</Link>
 												<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)}>
 													<i className="far fa-copy fa-lg"></i>
 												</button>
@@ -98,6 +98,7 @@ class AsignaturaListaAlumnos extends React.Component {
 													:
 													""
 												}
+												{alumno.addrEthAlum === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
 											</td>
 
 											<td>{alumno.nombre}</td>
