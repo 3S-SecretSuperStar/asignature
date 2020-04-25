@@ -61,7 +61,7 @@ class AsignaturaAnadirNota extends React.Component {
 	                                    <i className="fab fa-ethereum fa-lg" />
 	                                </span>
 								</div>
-								<input type="text" className="form-control" id="addrEthAlum" name="addrEthAlum" />
+								<input type="text" className="form-control code" id="addrEthAlum" name="addrEthAlum" />
 							</div>
         				</div>
 

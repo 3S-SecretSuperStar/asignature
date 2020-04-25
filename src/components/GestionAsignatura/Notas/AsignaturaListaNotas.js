@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {copyToClipboard} from '../../../utils/funciones.js';
+import {copyToClipboard, shortenEthAddress} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -48,7 +48,6 @@ class AsignaturaListaNotas extends React.Component {
 	}
 
 	eliminarNota = (addrEthAlum, indexEval) => {
-		// mandar transacción
 		const instance = this.props.drizzle.contracts[this.props.contractName];
 
 		const txId = instance.methods.borrarNota.cacheSend(
@@ -119,7 +118,11 @@ class AsignaturaListaNotas extends React.Component {
 				tbodyListaNotas[i] = (
 					<tr>
 						<td>
-							A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)
+							A<sub>{i}</sub> (
+								<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>
+									<span className="code">{shortenEthAddress(addrEthAlum)}</span>
+								</Link>
+								)
 							<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>

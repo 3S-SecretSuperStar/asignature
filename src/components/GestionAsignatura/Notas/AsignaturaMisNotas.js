@@ -6,7 +6,7 @@ import {newContextComponents} from "drizzle-react-components";
 
 import NavbarAsignatura from '../NavbarAsignatura';
 
-import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
+import {copyToClipboard, shortenEthAddress} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -101,7 +101,7 @@ class AsignaturaMisNotas extends React.Component {
 			tbodyListaNotas.push(
 				<tr>
 					<td>
-						<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}>Yo ({this.props.miDireccion})</Link>
+						Yo<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}> ({shortenEthAddress(this.props.miDireccion)})</Link>
 						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.miDireccion)}>
 							<i className="far fa-copy fa-lg"></i>
 						</button>

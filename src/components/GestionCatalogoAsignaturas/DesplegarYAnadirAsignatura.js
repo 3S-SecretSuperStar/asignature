@@ -85,7 +85,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
                                     <i className="fab fa-ethereum fa-lg" />
                                 </span>
                             </div>
-							<input type="text" className="form-control" id="addrEthCoord" name="addrEthCoord" />
+							<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" />
                         </div>
 					</div>
 					

@@ -83,7 +83,9 @@ class ListaProfesores extends React.Component {
 									render={(profesor) => (
 										<tr>
 											<td>
-												<Link to={`/gestion-profesores/profesor/${addrEthProf}`}>{shortenEthAddress(addrEthProf)}</Link>
+												<Link to={`/gestion-profesores/profesor/${addrEthProf}`}>
+													<span className="code">{shortenEthAddress(addrEthProf)}</span>
+												</Link>
 												<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthProf)}>
 													<i className="far fa-copy fa-lg"></i>
 												</button>

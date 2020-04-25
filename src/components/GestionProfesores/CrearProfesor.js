@@ -76,7 +76,7 @@ class CrearProfesor extends React.Component {
 									<i className="fab fa-ethereum fa-lg" />
 								</span>
 							</div>
-							<input type="text" className="form-control" id="addrEthProf" name="addrEthProf" />
+							<input type="text" className="form-control code" id="addrEthProf" name="addrEthProf" />
 						</div>
 					</div>
 					

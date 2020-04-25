@@ -93,7 +93,7 @@ class AsignaturaDatos extends React.Component {
 						                                    <i className="fab fa-ethereum fa-lg" />
 						                                </span>
 						                            </div>
-													<input type="text" className="form-control" id="addrEthCoord" name="addrEthCoord" />
+													<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" />
 						                        </div>
 											</div>
 
@@ -116,7 +116,7 @@ class AsignaturaDatos extends React.Component {
 					                                    <i className="fab fa-ethereum fa-lg" />
 					                                </span>
 					                            </div>
-												<input type="text" className="form-control" id="addrEthOwner" name="addrEthOwner" />
+												<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner" />
 					                        </div>
 										</div>
 
@@ -136,15 +136,13 @@ class AsignaturaDatos extends React.Component {
 
 				<div className="card">
 					<div className="card-header">
-                        <h4>
-                            Contrato asignatura {contractName}
-                        </h4>
+                        <h4>Datos de la asignatura</h4>
                     </div>
 
                     <div className="card-body">
                     	<ul className="list-group list-group-flush">
                     		<li className="list-group-item">
-                    			<strong>Dirección:</strong> {this.props.addrEthAsig}
+                    			<strong>Dirección:</strong> <span className="code">{this.props.addrEthAsig}</span>
                     			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
 									<i className="far fa-copy fa-lg"></i>
 								</button>
@@ -157,7 +155,7 @@ class AsignaturaDatos extends React.Component {
 												method={"owner"}
 												render={(owner) => (
 													<span>
-														<strong>Owner:</strong> {owner}
+														<strong>Owner:</strong> <span className="code">{owner}</span>
 														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
 															<i className="far fa-copy fa-lg"></i>
 														</button>
@@ -173,7 +171,7 @@ class AsignaturaDatos extends React.Component {
 												method={"coordinador"}
 												render={(coordinador) => (
 													<span>
-														<strong>Coordinador:</strong> {coordinador}
+														<strong>Coordinador:</strong> <span className="code">{coordinador}</span>
 														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
 															<i className="far fa-copy fa-lg"></i>
 														</button>

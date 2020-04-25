@@ -22,7 +22,7 @@ const {ContractData, AccountData} = newContextComponents;
 
 const MiDireccionAsignatura = (props) => (
 	<p>
-		Mi dirección: {props.miDireccion}
+		Mi dirección: <span className="code">{props.miDireccion}</span>
 		<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(props.miDireccion)}>
 			<i className="far fa-copy fa-lg"></i>
 		</button>
@@ -307,7 +307,7 @@ class MainGestionAsignatura extends React.Component {
 
 		return (
 			<>
-				<h2>Gestión de la asignatura {addrEthAsig}</h2>
+				<h2>Gestión de la asignatura</h2>
 
 				<MiDireccionAsignatura	miDireccion={miDireccion}
 										isOwner={isOwner}

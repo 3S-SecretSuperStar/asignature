@@ -86,7 +86,9 @@ class ListaAsignaturas extends React.Component {
 			tbodyListaAsignaturas[i] = (
 				<tr key={i}>
 					<td>
-						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>{shortenEthAddress(addrEthAsignatura)}</Link>
+						<Link to={`/gestion-asignatura/${addrEthAsignatura}/datos-asignatura`}>
+							<span className="code">{shortenEthAddress(addrEthAsignatura)}</span>
+						</Link>
 						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAsignatura)}>
 							<i className="far fa-copy fa-lg"></i>
 						</button>

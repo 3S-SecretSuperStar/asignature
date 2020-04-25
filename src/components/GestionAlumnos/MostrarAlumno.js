@@ -99,7 +99,7 @@ class MostrarAlumno extends React.Component {
 				<div className="card">
 					<div className="card-header">
 						<h4>
-							Alumno {this.props.addrEthAlum}
+							Alumno <span className="code">{this.props.addrEthAlum}</span>
 							<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAlum)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>
