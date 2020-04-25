@@ -5,7 +5,13 @@ const MiDireccion = (props) => {
 	return (
 		<p>
 			Mi dirección: {props.miDireccion}
-			{props.miDireccion === props.owner ? " (owner)" : " (no owner)"}
+			{
+				props.miDireccion === props.owner
+				?
+				<span class="badge badge-primary">owner</span>
+				:
+				""
+			}
 		</p>
 	);
 

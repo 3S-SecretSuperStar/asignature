@@ -22,10 +22,34 @@ const {ContractData, AccountData} = newContextComponents;
 const MiDireccionAsignatura = (props) => (
 	<p>
 		Mi dirección: {props.miDireccion}
-		{props.isOwner ? " (owner)" : " (no owner)"}
-		{props.isCoordinador ? " (coordinador)" : " (no coordinador)"}
-		{props.isProfesor ? " (profesor)" : " (no profesor)"}
-		{props.isAlumno ? " (alumno)" : " (no alumno)"}
+		{
+			props.isOwner
+			?
+			<span class="badge badge-primary">owner</span>
+			:
+			""
+		}
+		{
+			props.isCoordinador
+			?
+			<span class="badge badge-secondary">coordinador</span>
+			:
+			""
+		}
+		{
+			props.isProfesor
+			?
+			<span class="badge badge-success">profesor</span>
+			:
+			""
+		}
+		{
+			props.isAlumno
+			?
+			<span class="badge badge-info">alumno</span>
+			:
+			""
+		}
 	</p>
 );
 
