@@ -88,8 +88,7 @@ class MostrarProfesor extends React.Component {
 		let eliminarProfesor = [];
 		if (this.props.miDireccion === this.props.owner) {
 			eliminarProfesor = 	<div className="card-footer">
-									<button className="btn btn-danger" onClick={() => this.eliminarProfesor(this.props.addrEthProf)}>
-										<i className="fas fa-trash-alt fa-lg" style={{color: "red"}}></i>
+									<button className="btn btn-danger btn-delete" onClick={() => this.eliminarProfesor(this.props.addrEthProf)}>
 										Eliminar profesor
 									</button>
 								</div>;
@@ -101,7 +100,7 @@ class MostrarProfesor extends React.Component {
                     <div className="card-header">
                         <h4>
                         	Profesor {this.props.addrEthProf}
-                        	<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.addrEthProf)}>
+                        	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthProf)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>
                         	</h4>
@@ -200,6 +199,7 @@ class MostrarProfesor extends React.Component {
                     </div>
 
                     {eliminarProfesor}
+
                 </div>
 
                 {this.renderRedirect()}

@@ -5,3 +5,13 @@
 .badge {
 	margin-left: .5em;
 }
+
+.btn-copy {
+	margin-left: .5em;
+	padding: .1em .3em;	
+}
+
+.btn-delete {
+	margin-left: .5em;
+	padding: .1em .3em;	
+}

@@ -16,12 +16,16 @@ import AsignaturaNotas from './Notas/AsignaturaNotas';
 import AsignaturaMisNotas from './Notas/AsignaturaMisNotas';
 
 import {jsonInterface} from '../../utils/varios.js';
+import {copyToClipboard} from '../../utils/funciones.js';
 
 const {ContractData, AccountData} = newContextComponents;
 
 const MiDireccionAsignatura = (props) => (
 	<p>
 		Mi dirección: {props.miDireccion}
+		<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(props.miDireccion)}>
+			<i className="far fa-copy fa-lg"></i>
+		</button>
 		{
 			props.isOwner
 			?

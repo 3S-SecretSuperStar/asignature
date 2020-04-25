@@ -95,7 +95,7 @@ class AsignaturaListaNotas extends React.Component {
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
 					let eliminarNota = [];
 					if (isOwner || isCoordinador || isProfesor) {
-						eliminarNota = 	<button type="button" className="btn btn-outline-danger" onClick={() => this.eliminarNota(addrEthAlum, j)}>
+						eliminarNota = 	<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarNota(addrEthAlum, j)}>
 											<i className="fas fa-trash-alt fa-lg" title="Eliminar nota" style={{color: "red"}}></i>
 										</button>;
 					}
@@ -120,7 +120,7 @@ class AsignaturaListaNotas extends React.Component {
 					<tr>
 						<td>
 							A<sub>{i}</sub> (<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>{addrEthAlum}</Link>)
-							<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(addrEthAlum)}>
+							<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>
 						</td>

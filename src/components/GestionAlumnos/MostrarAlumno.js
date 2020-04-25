@@ -88,8 +88,7 @@ class MostrarAlumno extends React.Component {
 		let eliminarAlumno = [];
 		if (this.props.miDireccion === this.props.owner) {
 			eliminarAlumno = 	<div className="card-footer">
-									<button className="btn btn-danger" onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>
-										<i className="fas fa-trash-alt fa-lg" style={{color: "red"}}></i>
+									<button className="btn btn-danger btn-delete" onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>
 										Eliminar alumno
 									</button>
 								</div>;
@@ -101,7 +100,7 @@ class MostrarAlumno extends React.Component {
 					<div className="card-header">
 						<h4>
 							Alumno {this.props.addrEthAlum}
-							<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.addrEthAlum)}>
+							<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAlum)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>
 						</h4>

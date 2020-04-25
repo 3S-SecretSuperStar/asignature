@@ -86,13 +86,13 @@ class AsignaturaListaAlumnos extends React.Component {
 										<tr>
 											<td>
 												<Link to={`/gestion-alumnos/alumno/${alumno.addrEthAlum}`}>{alumno.addrEthAlum}</Link>
-												<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(addrEthAlum)}>
+												<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)}>
 													<i className="far fa-copy fa-lg"></i>
 												</button>
 												{
 													this.props.owner === this.props.miDireccion
 													?
-													<button type="button" className="btn btn-outline-danger" onClick={() => this.eliminarAlumno(addrEthAlum)}>
+													<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarAlumno(addrEthAlum)}>
 														<i className="fas fa-trash-alt fa-lg" title="Eliminar alumno" style={{color: "red"}}></i>
 													</button>
 													:

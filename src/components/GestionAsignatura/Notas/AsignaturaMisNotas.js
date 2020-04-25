@@ -102,7 +102,7 @@ class AsignaturaMisNotas extends React.Component {
 				<tr>
 					<td>
 						<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}>Yo ({this.props.miDireccion})</Link>
-						<button type="button" className="btn btn-outline-primary" onClick={() => copyToClipboard(this.props.miDireccion)}>
+						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.miDireccion)}>
 							<i className="far fa-copy fa-lg"></i>
 						</button>
 					</td>

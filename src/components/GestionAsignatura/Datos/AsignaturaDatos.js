@@ -5,7 +5,7 @@ import {newContextComponents} from "drizzle-react-components";
 import NavbarAsignatura from '../NavbarAsignatura';
 
 import {jsonInterface} from '../../../utils/varios.js';
-import {crearObjetoFromFormData} from '../../../utils/funciones.js';
+import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -145,6 +145,9 @@ class AsignaturaDatos extends React.Component {
                     	<ul className="list-group list-group-flush">
                     		<li className="list-group-item">
                     			<strong>Dirección:</strong> {this.props.addrEthAsig}
+                    			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+									<i className="far fa-copy fa-lg"></i>
+								</button>
                     		</li>
 
                     		<li className="list-group-item">
@@ -154,7 +157,11 @@ class AsignaturaDatos extends React.Component {
 												method={"owner"}
 												render={(owner) => (
 													<span>
-														<strong>Owner:</strong> {owner} {owner === this.props.miDireccion ? "(yo)" : ""}
+														<strong>Owner:</strong> {owner}
+														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+															<i className="far fa-copy fa-lg"></i>
+														</button>
+														{owner === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
 													</span>
 												)} />
                     		</li>
@@ -166,7 +173,11 @@ class AsignaturaDatos extends React.Component {
 												method={"coordinador"}
 												render={(coordinador) => (
 													<span>
-														<strong>Coordinador:</strong> {coordinador} {coordinador === this.props.miDireccion ? "(yo)" : ""}
+														<strong>Coordinador:</strong> {coordinador}
+														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+															<i className="far fa-copy fa-lg"></i>
+														</button>
+														{coordinador === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
 													</span>
 												)} />
 							</li>
