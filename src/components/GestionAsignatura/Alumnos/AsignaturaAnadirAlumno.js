@@ -51,7 +51,7 @@ class AsignaturaAnadirAlumno extends React.Component {
 
         if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
         	return (
-				<li className="list-group-item">
+				<li className="list-group-item mt-3">
 					<h5>Añadir alumno</h5>
 					<form onSubmit={this.anadirAlumno} id="anadir-alumno-form">
 						<div className="form-group">

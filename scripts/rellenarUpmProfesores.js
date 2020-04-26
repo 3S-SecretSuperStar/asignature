@@ -16,10 +16,10 @@ module.exports = async callback => {
         // crear un alumno
         await upmProfesores.crearProfesor(
             accounts[1],
-            "Profesor1",
-            "ApellidoProf1 ApellidoProf2",
+            "Santiago",
+            "Menéndez Manises",
             "95103214D",
-            "profesor1.apellidoprof1.apellidoprof2@alumnos.upm.es",
+            "santiago.menendez.manises@upm.es",
             693017210,
             -315622800,
             "hgujik3tlgk3qkg434"
@@ -33,10 +33,10 @@ module.exports = async callback => {
         // crear otro alumno
         await upmProfesores.crearProfesor(
             accounts[2],
-            "Profesor2",
-            "ApellidoProf3 ApellidoProf4",
+            "José María",
+            "San Pedro Heredia",
             "97103002V",
-            "profesor2.apellidoprof3.apellidoprof4@alumnos.upm.es",
+            "josemaria.sanpedro.heredia@upm.es",
             663147115,
             -484880400,
             "mknja9hdfn6a7duf"

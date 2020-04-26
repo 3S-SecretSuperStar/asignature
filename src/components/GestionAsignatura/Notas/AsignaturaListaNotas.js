@@ -144,14 +144,14 @@ class AsignaturaListaNotas extends React.Component {
 
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">
-							<thead className="thead-dark">
+							<thead className="thead-dark center">
 								<tr>
 									<th>A\E</th>
 									{theadtr}
 								</tr>
 							</thead>
 
-							<tbody>
+							<tbody className="center">
 								{tbodyListaNotas}
 							</tbody>
 						</table>

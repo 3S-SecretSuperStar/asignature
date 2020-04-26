@@ -117,19 +117,19 @@ class ListaAsignaturas extends React.Component {
 
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/alumnos`}>
-							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Alumnos"></i>
+							<i className="fas fa-sign-out-alt fa-2x d-flex justify-content-center" title="Ir a Alumnos"></i>
 						</Link>
 					</td>
 
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/profesores`}>
-							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Profesores"></i>
+							<i className="fas fa-sign-out-alt fa-2x d-flex justify-content-center" title="Ir a Profesores"></i>
 						</Link>
 					</td>
 
 					<td>
 						<Link to={`/gestion-asignatura/${addrEthAsignatura}/evaluaciones`}>
-							<i className="fas fa-sign-out-alt fa-2x" title="Ir a Evaluaciones"></i>
+							<i className="fas fa-sign-out-alt fa-2x d-flex justify-content-center" title="Ir a Evaluaciones"></i>
 						</Link>
 					</td>
 				</tr>
@@ -152,11 +152,11 @@ class ListaAsignaturas extends React.Component {
 								
 								<th>Nombre a mostrar</th>
 
-								<th>Alumnos</th>
+								<th className="center">Alumnos</th>
 								
-								<th>Profesores</th>
+								<th className="center">Profesores</th>
 								
-								<th>Evaluaciones</th>
+								<th className="center">Evaluaciones</th>
 							</thead>
 
 							<tbody>

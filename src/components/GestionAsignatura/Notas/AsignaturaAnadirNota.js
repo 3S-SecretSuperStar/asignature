@@ -49,7 +49,7 @@ class AsignaturaAnadirNota extends React.Component {
 
         if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
         	return (
-        		<li className="list-group-item">
+        		<li className="list-group-item mt-3">
         			<h5>Crear nota</h5>
         			<form onSubmit={this.crearNota} id="crear-nota-form">
         				<div className="container p-0">

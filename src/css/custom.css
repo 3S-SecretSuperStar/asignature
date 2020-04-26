@@ -35,3 +35,11 @@
 .btn-crear-alumno-y-profesor {
 	margin-bottom: 2em;
 }
+
+.center {
+	text-align: center;
+}
+
+.border-top-width {
+	border-top-width: 1px !important;
+}

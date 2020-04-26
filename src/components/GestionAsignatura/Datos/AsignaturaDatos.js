@@ -81,7 +81,7 @@ class AsignaturaDatos extends React.Component {
 
 		let actualizarCoordinador = [];
 		if (this.props.isOwner || this.props.isCoordinador) {
-			actualizarCoordinador = <li className="list-group-item">
+			actualizarCoordinador = <li className="list-group-item mt-3">
 										<h5>Actualizar coordinador</h5>
 										<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
 											<div className="form-group">
@@ -104,7 +104,7 @@ class AsignaturaDatos extends React.Component {
 
 		let actualizarOwner = [];
 		if (this.props.isOwner) {
-			actualizarOwner =	<li className="list-group-item">
+			actualizarOwner =	<li className="list-group-item mt-3 border-top-width">
 									<h5>Actualizar owner</h5>
 									<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
 										<div className="form-group">

@@ -50,7 +50,7 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 
         if (this.props.isOwner || this.props.isCoordinador || this.props.isProfesor) {
         	return (
-        		<li className="list-group-item">
+        		<li className="list-group-item mt-3">
 					<h5>Crear evaluación</h5>
 					<form onSubmit={this.crearEvaluacion} id="crear-evaluacion-form">
 						<div className="container p-0">

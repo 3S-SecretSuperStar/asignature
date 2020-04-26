@@ -47,20 +47,26 @@ class AsignaturaListaEvaluaciones extends React.Component {
 								methodArgs={[i]}
 								render={(evaluacion) => (
 									<tr>
-										<td>{evaluacion.indexEvaluacion}</td>
-										<td>
+										<td className="center">{evaluacion.indexEvaluacion}</td>
+
+										<td className="center">
 											{evaluacion.tipoConvocatoria === "0" ? "Ord. continua" : ""}
 											{evaluacion.tipoConvocatoria === "1" ? "Ord. final" : ""}
 											{evaluacion.tipoConvocatoria === "2" ? "Extraordinaria" : ""}
 										</td>
-										<td>
+
+										<td className="center">
 											{evaluacion.obligatoria === "0" ? "Sí" : ""}
 											{evaluacion.obligatoria === "1" ? "No" : ""}
 										</td>
-										<td>{evaluacion.nombre}</td>
-										<td>{evaluacion.fecha ? timestampToDateString(evaluacion.fecha) : ""}</td>
-										<td>{evaluacion.porcAportacion}%</td>
-										<td>{evaluacion.notaMinima ? (evaluacion.notaMinima / 10).toFixed(1) : ""}</td>
+
+										<td className="center">{evaluacion.nombre}</td>
+
+										<td className="center">{evaluacion.fecha ? timestampToDateString(evaluacion.fecha) : ""}</td>
+
+										<td className="center">{evaluacion.porcAportacion}%</td>
+
+										<td className="center">{evaluacion.notaMinima ? (evaluacion.notaMinima / 10).toFixed(1) : ""}</td>
 									</tr>
 								)} />
 			);
@@ -80,19 +86,19 @@ class AsignaturaListaEvaluaciones extends React.Component {
 						<table className="table table-sm table-bordered table-hover">
 							<thead className="thead-dark">
 								<tr>
-									<th>Índice</th>
+									<th className="center">Índice</th>
 
-									<th>Tipo de convocatoria</th>
+									<th className="center">Tipo de convocatoria</th>
 
-									<th>Obligatoria</th>
+									<th className="center">Obligatoria</th>
 
-									<th>Nombre</th>
+									<th className="center">Nombre</th>
 
-									<th>Fecha</th>
+									<th className="center">Fecha</th>
 
-									<th>% aportación</th>
+									<th className="center">% aportación</th>
 
-									<th>Nota mínima</th>
+									<th className="center">Nota mínima</th>
 								</tr>
 							</thead>
 
