@@ -141,178 +141,278 @@ class AsignaturaDatos extends React.Component {
 
                     <div className="card-body">
                     	<ul className="list-group list-group-flush">
-                    		<li className="list-group-item">
-                    			<strong>Dirección:</strong> <span className="code">{this.props.addrEthAsig}</span>
-                    			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
-									<i className="far fa-copy fa-lg"></i>
-								</button>
-                    		</li>
+                    		<div className="container">
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Dirección:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+	                    					<span className="code">{this.props.addrEthAsig}</span>
+			                    			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+												<i className="far fa-copy fa-lg"></i>
+											</button>
+										</div>
+	                    			</div>
 
-                    		<li className="list-group-item">
-                    			<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"owner"}
-												render={(owner) => (
-													<span>
-														<strong>Owner:</strong> <span className="code">{owner}</span>
-														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
-															<i className="far fa-copy fa-lg"></i>
-														</button>
-														{owner === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
-													</span>
-												)} />
-                    		</li>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"coordinador"}
-												render={(coordinador) => (
-													<span>
-														<strong>Coordinador:</strong> <span className="code">{coordinador}</span>
-														<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
-															<i className="far fa-copy fa-lg"></i>
-														</button>
-														{coordinador === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Owner:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+			                    			<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"owner"}
+															render={(owner) => (
+																<span>
+																	<span className="code">{owner}</span>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+																		<i className="far fa-copy fa-lg"></i>
+																	</button>
+																	{owner === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"nombreAsignatura"}
-												render={(nombreAsignatura) => (
-													<span>
-														<strong>Nombre de la asignatura:</strong> {nombreAsignatura}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Coordinador:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"coordinador"}
+															render={(coordinador) => (
+																<span>
+																	<span className="code">{coordinador}</span>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+																		<i className="far fa-copy fa-lg"></i>
+																	</button>
+																	{coordinador === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"cursoAcademico"}
-												render={(cursoAcademico) => (
-													<span>
-														<strong>Curso acádemico:</strong> {cursoAcademico}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Nombre de la asignatura:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"nombreAsignatura"}
+															render={(nombreAsignatura) => (
+																<span>
+																	 {nombreAsignatura}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"codigoAsignatura"}
-												render={(codigoAsignatura) => (
-													<span>
-														<strong>Código de la asigatura:</strong> {codigoAsignatura}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Curso acádemico:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"cursoAcademico"}
+															render={(cursoAcademico) => (
+																<span>
+																	 {cursoAcademico}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"titulacion"}
-												render={(titulacion) => (
-													<span>
-														<strong>Titulación:</strong> {titulacion}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Código de la asigatura:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"codigoAsignatura"}
+															render={(codigoAsignatura) => (
+																<span>
+																	 {codigoAsignatura}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"numCreditos"}
-												render={(numCreditos) => (
-													<span>
-														<strong>Nº créditos:</strong> {numCreditos}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Titulación:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"titulacion"}
+															render={(titulacion) => (
+																<span>
+																	 {titulacion}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"semestre"}
-												render={(semestre) => (
-													<span>
-														<strong>Semestre:</strong> {semestre}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Nº créditos:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"numCreditos"}
+															render={(numCreditos) => (
+																<span>
+																	 {numCreditos}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"cursoAno"}
-												render={(cursoAno) => (
-													<span>
-														<strong>Curso:</strong> {cursoAno}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Semestre:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"semestre"}
+															render={(semestre) => (
+																<span>
+																	 {semestre}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"tipoAsignatura"}
-												render={tipoAsignatura => (
-													<span>
-														<strong>Tipo de asignatura:</strong>
-														{tipoAsignatura === "0" ? " Obligatoria" : ""}
-														{tipoAsignatura === "1" ? " Optativa" : ""}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Curso:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"cursoAno"}
+															render={(cursoAno) => (
+																<span>
+																	 {cursoAno}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"numAlumnos"}
-												render={(numAlumnos) => (
-													<span>
-														<strong>Nº alumnos:</strong> {numAlumnos}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Tipo de asignatura:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"tipoAsignatura"}
+															render={tipoAsignatura => (
+																<span>
+																	{tipoAsignatura === "0" ? " Obligatoria" : ""}
+																	{tipoAsignatura === "1" ? " Optativa" : ""}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"numProfesores"}
-												render={(numProfesores) => (
-													<span>
-														<strong>Nº profesores:</strong> {numProfesores}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Nº alumnos:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"numAlumnos"}
+															render={(numAlumnos) => (
+																<span>
+																	 {numAlumnos}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={contractName}
-												method={"numEvaluaciones"}
-												render={(numEvaluaciones) => (
-													<span>
-														<strong>Nº evaluaciones:</strong> {numEvaluaciones}
-													</span>
-												)} />
-							</li>
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Nº profesores:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"numProfesores"}
+															render={(numProfesores) => (
+																<span>
+																	 {numProfesores}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
+
+	                    		<li className="list-group-item">
+	                    			<div className="row">
+	                    				<div className="col-12 col-md-4 col-lg-3">
+	                    					<strong>Nº evaluaciones:</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={contractName}
+															method={"numEvaluaciones"}
+															render={(numEvaluaciones) => (
+																<span>
+																	 {numEvaluaciones}
+																</span>
+															)} />
+										</div>
+	                    			</div>
+	                    		</li>
+							</div>
                     	</ul>
                     </div>
 				</div>

@@ -55,13 +55,13 @@ class ActualizarOwner extends React.Component {
 
         if (this.props.miDireccion !== this.props.owner) {
 			return (
-				<h3>Sección oculta. Sólo el owner puede actualizar el owner</h3>
+				<h4></h4>
 			);
 		}
 
 		return (
 			<>
-				<h3>Actualizar owner</h3>
+				<h4>Actualizar owner</h4>
 				<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
 					<div className="form-group">
 						<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>

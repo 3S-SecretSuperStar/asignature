@@ -88,7 +88,7 @@ class MostrarAlumno extends React.Component {
 		let eliminarAlumno = [];
 		if (this.props.miDireccion === this.props.owner) {
 			eliminarAlumno = 	<div className="card-footer">
-									<button className="btn btn-danger btn-delete" onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>
+									<button className="btn btn-danger btn-delete eliminar-big" onClick={() => this.eliminarAlumno(this.props.addrEthAlum)}>
 										Eliminar alumno
 									</button>
 								</div>;
@@ -108,93 +108,127 @@ class MostrarAlumno extends React.Component {
 
 					<div className="card-body">
 						<ul className="list-group list-group-flush">
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														<strong>Nombre y apellidos:</strong> {alumno.nombre + " "}
-													</span>
-												)} />
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														{alumno.apellidos}
-													</span>
-												)} />
-							</li>
+							<div className="container">
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>Nombre y apellidos</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={"UpmAlumnos"}
+															method={"mapAlumnosAddr"}
+															methodArgs={[this.props.addrEthAlum]}
+															render={(alumno) => (
+																<span>
+																	{alumno.nombre + " " + alumno.apellidos}
+																</span>
+															)} />
+										</div>
+									</div>
+								</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														<strong>DNI:</strong> {alumno.dni}
-													</span>
-												)} />
-							</li>
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>DNI</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={"UpmAlumnos"}
+															method={"mapAlumnosAddr"}
+															methodArgs={[this.props.addrEthAlum]}
+															render={(alumno) => (
+																<span>
+																	{alumno.dni}
+																</span>
+															)} />
+										</div>
+									</div>
+								</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														<strong>Correo UPM:</strong> {alumno.correoUpm}
-													</span>
-												)} />
-							</li>
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>Correo UPM</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={"UpmAlumnos"}
+															method={"mapAlumnosAddr"}
+															methodArgs={[this.props.addrEthAlum]}
+															render={(alumno) => (
+																<span>
+																	{alumno.correoUpm}
+																</span>
+															)} />
+										</div>
+									</div>
+								</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														<strong>Teléfono móvil:</strong> {alumno.telefMovil}
-													</span>
-												)} />
-							</li>
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>Móvil</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={"UpmAlumnos"}
+															method={"mapAlumnosAddr"}
+															methodArgs={[this.props.addrEthAlum]}
+															render={(alumno) => (
+																<span>
+																	{alumno.telefMovil}
+																</span>
+															)} />
+										</div>
+									</div>
+								</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>Fecha de nacimiento</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
 												drizzleState={drizzleState}
 												contract={"UpmAlumnos"}
 												method={"mapAlumnosAddr"}
 												methodArgs={[this.props.addrEthAlum]}
 												render={(alumno) => (
 													<span>
-														<strong>Fecha de nacimiento:</strong> {alumno.fechaNac ? timestampToDateString(alumno.fechaNac) : ""}
+														{alumno.fechaNac ? timestampToDateString(alumno.fechaNac) : ""}
 													</span>
 												)} />
-							</li>
+										</div>
+									</div>
+								</li>
 
-							<li className="list-group-item">
-								<ContractData 	drizzle={drizzle}
-												drizzleState={drizzleState}
-												contract={"UpmAlumnos"}
-												method={"mapAlumnosAddr"}
-												methodArgs={[this.props.addrEthAlum]}
-												render={(alumno) => (
-													<span>
-														<strong>Id UPM:</strong> {alumno.idUpm}
-													</span>
-												)} />
-							</li>
+								<li className="list-group-item">
+									<div className="row">
+										<div className="col-12 col-md-4 col-lg-3">
+											<strong>Id UPM</strong>
+										</div>
+										<div className="col-12 col-md-8 col-lg-9">
+											<ContractData 	drizzle={drizzle}
+															drizzleState={drizzleState}
+															contract={"UpmAlumnos"}
+															method={"mapAlumnosAddr"}
+															methodArgs={[this.props.addrEthAlum]}
+															render={(alumno) => (
+																<span>
+																	{alumno.idUpm}
+																</span>
+															)} />
+										</div>
+									</div>
+								</li>
+							</div>
 						</ul>
 					</div>
 

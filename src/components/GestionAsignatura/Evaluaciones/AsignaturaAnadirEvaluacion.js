@@ -53,64 +53,78 @@ class AsignaturaAnadirEvaluacion extends React.Component {
         		<li className="list-group-item">
 					<h5>Crear evaluación</h5>
 					<form onSubmit={this.crearEvaluacion} id="crear-evaluacion-form">
-						<div className="form-group">
-							<label htmlFor="nombre">Nombre de la evaluación</label>
-							<input type="text" className="form-control" id="nombre" name="nombre" />
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="fecha">Fecha</label>
-							<input type="date" className="form-control" id="fecha" name="fecha" />
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="obligatoria">¿Es obligatoria?</label>
-
-							<div className="input-group">
-								<div className="form-check form-check-inline">
-									<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" checked />
-									<label className="form-check-label" for="semestre1">Obligatoria</label>
-								</div>
-
-								<div className="form-check form-check-inline">
-									<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria1" value="1" />
-									<label className="form-check-label" for="semestre2">No obligatoria</label>
+						<div className="container p-0">
+							<div className="form-group">
+								<div className="row">
+									<div className="col-sm-12">
+										<label htmlFor="nombre">Nombre de la evaluación</label>
+										<input type="text" className="form-control" id="nombre" name="nombre" />
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div className="form-group">
-							<label htmlFor="notaMinima">Nota mínima (0-100)</label>
-							<input type="number" className="form-control"  id="notaMinima" name="notaMinima" />
-						</div>
+							<div className="form-group">
+								<div className="row">
+									<div className="col-sm-12 col-md-4">
+										<label htmlFor="fecha">Fecha</label>
+										<input type="date" className="form-control" id="fecha" name="fecha" />
+									</div>
 
-						<div className="form-group">
-							<label htmlFor="porcAportacion">Porcentaje de aportación (0-100)</label>
-							<input type="number" className="form-control" id="porcAportacion" name="porcAportacion" />
-						</div>
+									<div className="col-sm-12 col-md-4">
+										<label htmlFor="notaMinima">Nota mínima (0-100)</label>
+										<input type="number" className="form-control"  id="notaMinima" name="notaMinima" />
+									</div>
 
-						<div className="form-group">
-							<label htmlFor="tipoConvocatoria">Tipo de convocatoria</label>
-
-							<div className="input-group">
-								<div className="form-check form-check-inline">
-									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" checked />
-									<label className="form-check-label" for="semestre1">Ordinaria Continua</label>
-								</div>
-
-								<div className="form-check form-check-inline">
-									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" />
-									<label className="form-check-label" for="semestre2">Ordinaria Final</label>
-								</div>
-
-								<div className="form-check form-check-inline">
-									<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" />
-									<label className="form-check-label" for="semestre2">Extraordinaria</label>
+									<div className="col-sm-12 col-md-4">
+										<label htmlFor="porcAportacion">Porcentaje de aportación (0-100)</label>
+										<input type="number" className="form-control" id="porcAportacion" name="porcAportacion" />
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<button type="submit" className="btn btn-primary">Crear evaluación</button>
+							<div className="form-group">
+								<div className="row">
+									<div className="col-sm-12 col-md-4">
+										<label htmlFor="obligatoria">¿Es obligatoria?</label>
+
+										<div className="input-group">
+											<div className="form-check form-check-inline">
+												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" checked />
+												<label className="form-check-label" for="semestre1">Obligatoria</label>
+											</div>
+
+											<div className="form-check form-check-inline">
+												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria1" value="1" />
+												<label className="form-check-label" for="semestre2">No obligatoria</label>
+											</div>
+										</div>
+									</div>
+
+									<div className="col-sm-12 col-md-8">
+										<label htmlFor="tipoConvocatoria">Tipo de convocatoria</label>
+
+										<div className="input-group">
+											<div className="form-check form-check-inline">
+												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" checked />
+												<label className="form-check-label" for="semestre1">Ordinaria Continua</label>
+											</div>
+
+											<div className="form-check form-check-inline">
+												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" />
+												<label className="form-check-label" for="semestre2">Ordinaria Final</label>
+											</div>
+
+											<div className="form-check form-check-inline">
+												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" />
+												<label className="form-check-label" for="semestre2">Extraordinaria</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<button type="submit" className="btn btn-primary">Crear evaluación</button>
+						</div>
 					</form>
         		</li>
         	);

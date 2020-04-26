@@ -109,7 +109,7 @@ class ListaAlumnos extends React.Component {
 													:
 													""
 												}
-												{addrEthAlum === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+												{addrEthAlum === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}
 												
 											</td>
 											

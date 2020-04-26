@@ -53,15 +53,32 @@ class ActualizarOwner extends React.Component {
             return <span>Initializing...</span>;
         }
 
+        if (this.props.miDireccion !== this.props.owner) {
+			return (
+				<h4></h4>
+			);
+		}
+
 		return (
 			<>
-				<h3>Actualizar owner</h3>
+				<h4>Actualizar owner</h4>
 				<form onSubmit={this.actualizarOwner} id="actualizar-owner-form">
-					<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>
-					<input type="text" id="addrEthOwner" name="addrEthOwner" />
+					<div className="form-group">
+						<label htmlFor="addrEthOwner">Dirección Ethereum del owner</label>
+						<div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="fab fa-ethereum fa-lg" />
+                                </span>
+                            </div>
+							<input type="text" className="form-control" id="addrEthOwner" name="addrEthOwner"
+								placeholder={this.props.owner}
+							/>
+                        </div>
+					</div>
 
-					<button type="submit">Actualizar owner</button>
-				</form>	
+					<button type="submit" className="btn btn-primary">Actualizar owner</button>
+				</form>
 			</>
 		);
 	}

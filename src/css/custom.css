@@ -19,3 +19,19 @@
 .code {
 	font-family: Monaco, monospace;
 }
+
+.xxx {
+	border: 1px solid black;
+}
+
+.container {
+	max-width: 1540px;
+}
+
+.eliminar-big {
+	padding: 0.25em 0.5em;
+}
+
+.btn-crear-alumno-y-profesor {
+	margin-bottom: 2em;
+}
