@@ -108,7 +108,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
 								
 								<div className="col-4 col-lg-2 col-md-3">
 									<label htmlFor="numCreditos">Nº de créditos</label>
-									<input type="number" className="form-control" id="numCreditos" name="numCreditos" />
+									<input type="number" className="form-control" id="numCreditos" name="numCreditos" min="0" step="1" />
 								</div>
 
 								<div className="col-8 col-lg-3 col-md-6">

@@ -11,7 +11,7 @@ contract("UpmAlumnos", accounts => {
 	it("El owner es quien ha desplegado el contrato.", async () => {
 		let owner = await upmAlumnos.owner();
 		let desplegador = accounts[0];
-		assert.equal(desplegador, owner, "El owner debe ser quien ha desplegado el contrato.");
+		assert.equal(owner, desplegador, "El owner debe ser quien ha desplegado el contrato.");
 	});
 
 	it("Al principio no hay ningún alumno registrado.", async () => {
@@ -24,11 +24,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "leerAlumnoAddr - Alumno no creado.";
 		let error = false;
 
-		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavía no debe haber ningún alumno registrado.");
 
-		// intentar leer alumno no creado
 		try {
 			let alumno = await upmAlumnos.leerAlumnoAddr(addrEthAlum);
 		} catch(err) {
@@ -51,11 +49,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "actualizarAlumnoAddr - Alumno no creado.";
 		let error = false;
 
-		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavía no debe haber ningún alumno registrado.");
 
-		// intentar actualizar alumno no creado
 		try {
 			await upmAlumnos.actualizarAlumnoAddr(addrEthAlum, newNombreAlum, newApellidosAlum, newDniAlum, newCorreoUpmAlum, newTelefMovilAlum, newFechaNacAlum, newIdUpmAlum);
 		} catch(err) {
@@ -70,11 +66,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "borrarAlumnoAddr - Alumno no creado.";
 		let error = false;
 
-		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavía no debe haber ningún alumno registrado.");
 
-		// intentar eliminar alumno no creado
 		try {
 			await upmAlumnos.borrarAlumnoAddr(addrEthAlum);
 		} catch(err) {
@@ -98,11 +92,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "Sólo el owner puede hacer esta operación.";
 		let error = false;
 
-		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavía no debe haber ningún alumno registrado.");
 
-		// intentar crear un alumno
 		try {
 			await upmAlumnos.crearAlumno(addrEthAlum, nombreAlum, apellidosAlum, dniAlum, correoUpmAlum, telefMovilAlum, fechaNacAlum, idUpmAlum, {from: notOwner});
 		} catch(err) {
@@ -111,12 +103,11 @@ contract("UpmAlumnos", accounts => {
 			assert.equal(true, error, "Alguien que no es el owner no debería poder crear un alumno.");
 		}
 
-		// comprobar que sigue habiendo 0 alumnos
 		numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavía no debe haber ningún alumno registrado.");
 	});
 
-	it("Se crea correctamente un alumno.", async () => {
+	it("El owner crea correctamente un alumno.", async () => {
 		let addrEthAlum = accounts[1];
 		let indexAlum = 0;
 		let nombreAlum = "Nombre";
@@ -127,21 +118,16 @@ contract("UpmAlumnos", accounts => {
 		let fechaNacAlum = 789413486326;
 		let idUpmAlum = "23458ab63d";
 
-		// comprobar que hay 0 alumnos
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(0, numAlumnos, "Todavia no debe haber ningún alumno registrado.");
 
-		// crear alumno
 		await upmAlumnos.crearAlumno(addrEthAlum, nombreAlum, apellidosAlum, dniAlum, correoUpmAlum, telefMovilAlum, fechaNacAlum, idUpmAlum);
 
-		// comprobar que hay 1 alumno
 		numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe haber un alumno registrado.");
 		
-		// obtener alumno creado
 		let alumno = await upmAlumnos.mapAlumnosAddr(addrEthAlum);
 
-		// comprobar campos
 		assert.equal(addrEthAlum, alumno.addrEthAlum, "La dirección del alumno debe coincidir.");
 		assert.equal(indexAlum, alumno.indexAlum, "El índice del alumno debe coincidir.");
 		assert.equal(nombreAlum, alumno.nombre, "El nombre del alumno debe coincidir.");
@@ -166,11 +152,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "crearAlumno - Alumno ya creado.";
 		let error = false;
 
-		// comprobar que hay 1 alumno
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe haber un alumno registrado.");
 
-		// intentar crear alumno ya creado
 		try {
 			await upmAlumnos.crearAlumno(addrEthAlum, nombreAlum, apellidosAlum, dniAlum, correoUpmAlum, telefMovilAlum, fechaNacAlum, idUpmAlum);
 		} catch(err) {
@@ -179,12 +163,11 @@ contract("UpmAlumnos", accounts => {
 			assert.equal(true, error, "No se debería permitir crear un alumno que ya ha sido creado.");
 		}
 
-		// comprobar que sigue habiendo 1 alumno
 		numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 	});
 
-	it("Se lee correctamente un alumno creado", async () => {
+	it("El owner lee correctamente un alumno creado", async () => {
 		let addrEthAlum = accounts[1];
 		let indexAlum = 0;
 		let nombreAlum = "Nombre";
@@ -221,11 +204,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "Sólo el owner puede hacer esta operación.";
 		let error = false;
 
-		// comprobar que hay 1 alumno
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 
-		// intentar actualizar un alumno
 		try {
 			await upmAlumnos.actualizarAlumnoAddr(addrEthAlum, newNombreAlum, newApellidosAlum, newDniAlum, newCorreoUpmAlum, newTelefMovilAlum, newFechaNacAlum, newIdUpmAlum, {from: notOwner});
 		} catch(err) {
@@ -235,7 +216,7 @@ contract("UpmAlumnos", accounts => {
 		}
 	});
 
-	it("Se actualiza correctamente un alumno", async () => {
+	it("El owner actualiza correctamente un alumno", async () => {
 		let addrEthAlum = accounts[1];
 		let indexAlum = 0;
 		let newNombreAlum = "NewNombre";
@@ -246,17 +227,13 @@ contract("UpmAlumnos", accounts => {
 		let newFechaNacAlum = 119413486326;
 		let newIdUpmAlum = "NN23458ab63d";
 
-		// comprobar que hay 1 alumno
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 		
-		// actualizar alumno
 		await upmAlumnos.actualizarAlumnoAddr(addrEthAlum, newNombreAlum, newApellidosAlum, newDniAlum, newCorreoUpmAlum, newTelefMovilAlum, newFechaNacAlum, newIdUpmAlum);
 		
-		// obtener alumno actualizado
 		let alumno = await upmAlumnos.mapAlumnosAddr(addrEthAlum);
 
-		// comprobar campos
 		assert.equal(addrEthAlum, alumno.addrEthAlum, "La dirección del alumno debe coincidir.");
 		assert.equal(indexAlum, alumno.indexAlum, "El índice del alumno debe coincidir.");
 		assert.equal(newNombreAlum, alumno.nombre, "El nombre del alumno debe coincidir.");
@@ -274,11 +251,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "Sólo el owner puede hacer esta operación.";
 		let error = false;
 
-		// comprobar que hay 1 alumno
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 
-		// intentar borrar un alumno
 		try {
 			await upmAlumnos.borrarAlumnoAddr(addrEthAlum, {from: notOwner});
 		} catch(err) {
@@ -287,24 +262,19 @@ contract("UpmAlumnos", accounts => {
 			assert.equal(true, error, "Alguien que no es el owner no debería poder borrar un alumno.");
 		}
 
-		// comprobar que todavia hay 1 alumno
 		numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 	});
 
-	it("Se borra correctamente un alumno", async () => {
+	it("El owner borra correctamente un alumno", async () => {
 		let addrEthAlum = accounts[1];
 
-		// comprobar que todavia hay 1 alumno
 		let numAlumnos = await upmAlumnos.numAlumnos();
 		assert.equal(1, numAlumnos, "Debe seguir habiendo un alumno registrado.");
 
-		// borrar alumno
 		await upmAlumnos.borrarAlumnoAddr(addrEthAlum);
 
-		// comprobar que hay 0 alumnos
 		numAlumnos = await upmAlumnos.numAlumnos();
-
 		assert.equal(0, numAlumnos, "No debe haber ningún alumno registrado.");
 	});
 
@@ -314,11 +284,9 @@ contract("UpmAlumnos", accounts => {
 		let errorMsg = "Sólo el owner puede hacer esta operación.";
 		let error = false;
 
-		// comprobar el owner actual
 		let owner = await upmAlumnos.owner();
 		assert.equal(desplegador, owner, "El owner debe ser quien ha desplegado el contrato.");
 
-		// intentar actualizar el owner
 		try {
 			await upmAlumnos.actualizarOwner(newOwner, {from: newOwner});
 		} catch(err) {
@@ -327,7 +295,6 @@ contract("UpmAlumnos", accounts => {
 			assert.equal(true, error, "Alguien que no es el owner no debería poder actualizar el owner.");
 		}
 
-		// comprobar que el owner no se ha actualizado
 		let newOwnerAct = await upmAlumnos.owner();
 		assert.equal(desplegador, newOwnerAct, "El owner se ha actualizado y no tendría que haber ocurrido.");
 	});
@@ -335,15 +302,12 @@ contract("UpmAlumnos", accounts => {
 	it("El owner actualiza correctamente el owner", async () => {
 		let newOwner = accounts[1];
 
-		// comprobar el owner actual
 		let owner = await upmAlumnos.owner();
 		let desplegador = accounts[0];
 		assert.equal(desplegador, owner, "El owner debe ser quien ha desplegado el contrato.");
 
-		// actualizar owner
 		await upmAlumnos.actualizarOwner(newOwner);
 
-		// comprobar que el owner se ha actualizado
 		let newOwnerAct = await upmAlumnos.owner();
 		assert.equal(newOwner, newOwnerAct, "El owner no se ha actualizado correctamente.");
 	});
