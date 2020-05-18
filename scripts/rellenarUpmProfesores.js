@@ -13,7 +13,7 @@ module.exports = async callback => {
         console.log('numProfesores:', numProfesores.toNumber());
         console.log('profesoresLength:', profesoresLength.toNumber());
 
-        // crear un alumno
+        // crear un profesor
         await upmProfesores.crearProfesor(
             accounts[1],
             "Santiago",
@@ -30,7 +30,7 @@ module.exports = async callback => {
         console.log('numProfesores:', numProfesores.toNumber());
         console.log('profesoresLength:', profesoresLength.toNumber());
 
-        // crear otro alumno
+        // crear otro profesor
         await upmProfesores.crearProfesor(
             accounts[2],
             "José María",
@@ -49,7 +49,7 @@ module.exports = async callback => {
     } catch(err) {
         console.log(err);
     } finally {
-        console.log('Fin');
+        console.log('Fin.');
     }
 
     callback();

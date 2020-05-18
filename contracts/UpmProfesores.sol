@@ -55,6 +55,7 @@ contract UpmProfesores {
         _indexProf = uint8(listaProfesores.length);
         
         mapProfesoresAddr[_addrEthProf] = Profesor(_addrEthProf, _indexProf, _nombre, _apellidos, _dni, _correoUpm, _telefMovil, _fechaNac, _idUpm);
+        
         listaProfesores.push(_addrEthProf);
         
         numProfesores++;
@@ -117,7 +118,6 @@ contract UpmProfesores {
         
         numProfesores--;
     }
-
 
 
     modifier soloOwner() {

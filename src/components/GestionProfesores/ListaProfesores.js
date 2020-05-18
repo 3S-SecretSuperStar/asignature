@@ -121,7 +121,7 @@ class ListaProfesores extends React.Component {
 				<>
 					<h4>Lista de profesores creados</h4>
 
-					<p>{this.props.profesoresLength} profesoresLength || {this.props.numProfesores} profesores</p>
+					<p>{this.props.numProfesores} profesores</p>
 
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">

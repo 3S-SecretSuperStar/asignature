@@ -143,7 +143,7 @@ class ListaAsignaturas extends React.Component {
 				<>
 					<h4>Lista de asignaturas</h4>
 
-					<p>{this.props.asignaturasLength} asignaturasLength || {this.props.numAsignaturas} numAsignaturas</p>
+					<p>{this.props.numAsignaturas} numAsignaturas</p>
 
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">

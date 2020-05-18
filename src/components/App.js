@@ -45,7 +45,7 @@ const Navegacion = () => (
 
 const Header = () => (
     <header className="App">
-        <h1>UPM - Aplicación de gestión de Asignaturas</h1>
+        <h1 className="mt-2">UPM - Aplicación de gestión de Asignaturas</h1>
     </header>
 );
 

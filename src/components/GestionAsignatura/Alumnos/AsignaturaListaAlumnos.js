@@ -122,7 +122,7 @@ class AsignaturaListaAlumnos extends React.Component {
 				<>
 					<h5>Lista de alumnos añadidos</h5>
 
-					<p>{this.props.alumnosLength} alumnosLength || {this.props.numAlumnos} alumnos</p>
+					<p>{this.props.numAlumnos} alumnos</p>
 
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">

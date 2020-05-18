@@ -80,7 +80,7 @@ class AsignaturaListaEvaluaciones extends React.Component {
 				<>
 					<h5>Lista de evaluaciones creadas</h5>
 
-					<p>{this.props.evaluacionesLength} evaluacionesLength || {this.props.numEvaluaciones} evaluaciones</p>
+					<p>{this.props.numEvaluaciones} evaluaciones</p>
 
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">
