@@ -17,8 +17,6 @@ import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 
 import GestionAsignatura from './GestionAsignatura';
 
-import PruebasInterfaz from './PruebasInterfaz';
-
 const Navegacion = () => (
     <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <Link to="/" className="navbar-brand">Home</Link>
@@ -56,7 +54,9 @@ export default () => (
 
             if (!initialized) {
                 return (
-                    <main><h1><span role="img">⚙</span>️ Cargando dApp...</h1></main>
+                    <main>
+                        <h1><span role="img">⚙</span>️ Cargando dApp...</h1>
+                    </main>
                 );
             }
 

@@ -1,14 +1,11 @@
-// Importar los artefactos de los contratos
 import UpmAlumnos from './contracts/UpmAlumnos.json';
-import UpmAsignatura from './contracts/UpmAsignatura.json';
 import UpmCatalogo from './contracts/UpmCatalogo.json';
 import UpmProfesores from './contracts/UpmProfesores.json';
 
 require('dotenv').config();
 
-// Opciones de Drizzle:
 const options = {
-	contracts: [UpmAlumnos, UpmCatalogo, UpmProfesores/*, UpmAsignatura*/],
+	contracts: [UpmAlumnos, UpmCatalogo, UpmProfesores],
     web3: {
     	fallback: {
     		type: "ws",

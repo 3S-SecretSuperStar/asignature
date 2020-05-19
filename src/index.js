@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 import { Drizzle } from 'drizzle';
 import { DrizzleContext } from "drizzle-react";
 
-//import './css/index.css';
-//import './css/App.css';
 import './css/custom.css';
 
 import App from './components/App';
