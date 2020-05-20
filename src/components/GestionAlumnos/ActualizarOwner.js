@@ -12,7 +12,7 @@ class ActualizarOwner extends React.Component {
 		this.setState({ready: true});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	componentDidUpdate() {
 		
 	}
 
