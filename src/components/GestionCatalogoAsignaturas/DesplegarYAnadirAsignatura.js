@@ -176,7 +176,7 @@ class DesplegarYAnadirAsignatura extends React.Component {
 							</div>
 						</div>
 						
-						<button type="submit" className="btn btn-primary">Desplegar asignatura</button>
+						<button type="submit" className="btn btn-primary margin-bottom-2">Desplegar asignatura</button>
 					</div>
 				</form>
 			</>

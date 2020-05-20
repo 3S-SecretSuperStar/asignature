@@ -4,6 +4,7 @@ import MiDireccion from '../MiDireccion';
 
 import ListaAsignaturas from './ListaAsignaturas';
 import DesplegarYAnadirAsignatura from './DesplegarYAnadirAsignatura';
+import ActualizarOwner from './ActualizarOwner';
 
 class GestionCatalogoAsignaturas extends React.Component {
 
@@ -72,10 +73,10 @@ class GestionCatalogoAsignaturas extends React.Component {
 		}
 
 		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
-		miDireccion = miDireccion ? miDireccion.value :"0x0";
+		miDireccion = miDireccion ? miDireccion.value :"0x0000000000000000000000000000000000000000";
 
 		let owner = instanceState.owner[this.state.ownerKey];
-		owner = owner ? owner.value : "0x0";
+		owner = owner ? owner.value : "0x0000000000000000000000000000000000000000";
 
 		const isOwner = owner === miDireccion;
 
@@ -86,10 +87,16 @@ class GestionCatalogoAsignaturas extends React.Component {
 		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
 
 		let desplegarYAnadirAsignatura = [];
+		let actualizarOwner = [];
 		if (isOwner) {
 			desplegarYAnadirAsignatura = <DesplegarYAnadirAsignatura	drizzle={drizzle}
 																		drizzleState={drizzleState}
 																		miDireccion={miDireccion} />
+
+			actualizarOwner = <ActualizarOwner 	drizzle={drizzle}
+												drizzleState={drizzleState}
+												miDireccion={miDireccion}
+												owner={owner} />;
 		}
 
 		return (
@@ -105,6 +112,8 @@ class GestionCatalogoAsignaturas extends React.Component {
 									owner={owner} />
 
 				{desplegarYAnadirAsignatura}
+
+				{actualizarOwner}
 			</>
 		);
 	}

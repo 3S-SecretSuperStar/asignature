@@ -28,10 +28,10 @@ class ActualizarOwner extends React.Component {
 
 		const {drizzle, drizzleState} = this.props;
 
-		const instanceState = drizzleState.contracts.UpmAlumnos;
+		const instanceState = drizzleState.contracts.UpmCatalogo;
 		if (!instanceState || !instanceState.initialized) return;
 
-		const instance = drizzle.contracts.UpmAlumnos;
+		const instance = drizzle.contracts.UpmCatalogo;
 
 		instance.methods.actualizarOwner.cacheSend(
 			addrEthOwner,
@@ -42,7 +42,7 @@ class ActualizarOwner extends React.Component {
 	render() {
 		const {drizzle, drizzleState} = this.props;
 
-        const instanceState = drizzleState.contracts.UpmAlumnos;
+        const instanceState = drizzleState.contracts.UpmCatalogo;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
         }

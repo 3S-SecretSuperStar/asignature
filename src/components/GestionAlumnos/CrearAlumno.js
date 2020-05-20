@@ -149,7 +149,7 @@ class CrearAlumno extends React.Component {
 							</div>
 						</div>
 
-						<button type="submit" className="btn btn-primary btn-crear-alumno-y-profesor">Crear alumno</button>
+						<button type="submit" className="btn btn-primary margin-bottom-2">Crear alumno</button>
 					</div>
 				</form>
 			</>
