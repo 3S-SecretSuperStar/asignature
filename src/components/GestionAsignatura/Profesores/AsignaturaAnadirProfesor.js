@@ -19,17 +19,14 @@ class AsignaturaAnadirProfesor extends React.Component {
 	anadirProfesor = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthProf} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('anadir-profesor-form').reset();
 
-		// mandar transacción
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 

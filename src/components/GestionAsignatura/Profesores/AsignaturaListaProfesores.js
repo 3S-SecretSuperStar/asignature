@@ -49,13 +49,9 @@ class AsignaturaListaProfesores extends React.Component {
 	}
 
 	eliminarProfesor = (addrEthProf) => {
-		console.log("Has pulsado el botón para eliminar el profesor", addrEthProf);
-
-		// coger drizzle y drizzleState
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 		const instance = drizzle.contracts[this.props.contractName];
 
-		// eliminar profesor
 		const txId = instance.methods.eliminarProfesor.cacheSend(
 			addrEthProf,
 			{from: this.props.miDireccion}

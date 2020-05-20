@@ -25,17 +25,17 @@ class ActualizarOwner extends React.Component {
 	actualizarOwner = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthOwner} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-owner-form').reset();
 
-		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
+
+		const instanceState = drizzleState.contracts.UpmAlumnos;
+		if (!instanceState || !instanceState.initialized) return;
 
 		const instance = drizzle.contracts.UpmAlumnos;
 
@@ -55,7 +55,7 @@ class ActualizarOwner extends React.Component {
 
         if (this.props.miDireccion !== this.props.owner) {
 			return (
-				<h4></h4>
+				<span></span>
 			);
 		}
 

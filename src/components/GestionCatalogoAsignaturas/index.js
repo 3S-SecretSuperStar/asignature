@@ -1,13 +1,9 @@
 import React from 'react';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import MiDireccion from '../MiDireccion';
 
 import ListaAsignaturas from './ListaAsignaturas';
 import DesplegarYAnadirAsignatura from './DesplegarYAnadirAsignatura';
-
-const {ContractData} = newContextComponents;
 
 class GestionCatalogoAsignaturas extends React.Component {
 
@@ -77,21 +73,17 @@ class GestionCatalogoAsignaturas extends React.Component {
 
 		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
 		miDireccion = miDireccion ? miDireccion.value :"0x0";
-		console.log('GestionCatalogoAsignaturas - render - miDireccion:', miDireccion);
 
 		let owner = instanceState.owner[this.state.ownerKey];
 		owner = owner ? owner.value : "0x0";
-		console.log('GestionCatalogoAsignaturas - render - owner:', owner);
 
 		const isOwner = owner === miDireccion;
 
 		let asignaturasLength = instanceState.asignaturasLength[this.state.asignaturasLengthKey];
 		asignaturasLength = asignaturasLength ? asignaturasLength.value : -1;
-		console.log('GestionCatalogoAsignaturas - render - asignaturasLength:', asignaturasLength);
 
 		let numAsignaturas = instanceState.numAsignaturas[this.state.numAsignaturasKey];
 		numAsignaturas = numAsignaturas ? numAsignaturas.value : -2;
-		console.log('GestionCatalogoAsignaturas - render - numAsignaturas:', numAsignaturas);
 
 		let desplegarYAnadirAsignatura = [];
 		if (isOwner) {

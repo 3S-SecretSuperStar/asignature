@@ -12,36 +12,33 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 		this.setState({ready: true});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	componentDidUpdate() {
 
 	}
 
 	crearEvaluacion = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria} = objFormData;
 		fecha = dateStringToTimestamp(fecha);
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('crear-evaluacion-form').reset();
 
-		// mandar transacción
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 
-		const txId = instance.methods.crearEvaluacion.cacheSend(
+		instance.methods.crearEvaluacion.cacheSend(
 			nombre, fecha, obligatoria, notaMinima, porcAportacion, tipoConvocatoria,
 			{from: this.props.miDireccion}
 		);
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -90,12 +87,12 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 										<div className="input-group">
 											<div className="form-check form-check-inline">
 												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" checked />
-												<label className="form-check-label" for="semestre1">Obligatoria</label>
+												<label className="form-check-label" htmlFor="obligatoria0">Obligatoria</label>
 											</div>
 
 											<div className="form-check form-check-inline">
 												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria1" value="1" />
-												<label className="form-check-label" for="semestre2">No obligatoria</label>
+												<label className="form-check-label" htmlFor="obligatoria1">No obligatoria</label>
 											</div>
 										</div>
 									</div>
@@ -106,17 +103,17 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 										<div className="input-group">
 											<div className="form-check form-check-inline">
 												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" checked />
-												<label className="form-check-label" for="semestre1">Ordinaria Continua</label>
+												<label className="form-check-label" htmlFor="tipoConvocatoria0">Ordinaria Continua</label>
 											</div>
 
 											<div className="form-check form-check-inline">
 												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria1" value="1" />
-												<label className="form-check-label" for="semestre2">Ordinaria Final</label>
+												<label className="form-check-label" htmlFor="tipoConvocatoria1">Ordinaria Final</label>
 											</div>
 
 											<div className="form-check form-check-inline">
 												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria2" value="2" />
-												<label className="form-check-label" for="semestre2">Extraordinaria</label>
+												<label className="form-check-label" htmlFor="tipoConvocatoria2">Extraordinaria</label>
 											</div>
 										</div>
 									</div>
@@ -128,10 +125,6 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 					</form>
         		</li>
         	);
-        } else {
-        	return (
-				<span></span>
-			);
         }
 
 		return (

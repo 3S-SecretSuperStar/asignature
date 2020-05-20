@@ -1,15 +1,9 @@
 import React from 'react';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import AsignaturaListaProfesores from './AsignaturaListaProfesores';
 import AsignaturaAnadirProfesor from './AsignaturaAnadirProfesor';
 
 import NavbarAsignatura from '../NavbarAsignatura';
-
-import {jsonInterface} from '../../../utils/varios.js';
-
-const {ContractData} = newContextComponents;
 
 class AsignaturaProfesores extends React.Component {
 

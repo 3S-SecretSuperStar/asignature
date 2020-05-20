@@ -4,39 +4,37 @@ import { Link } from "react-router-dom";
 
 const NavbarAsignatura = (props) => {
 
-	console.log(props.active);
-
 	return (
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
+		<ul className="nav nav-tabs">
+			<li className="nav-item">
 				<Link
 					className={props.active === 'datos' ? 'nav-link active' : 'nav-link'}
 					to={`/gestion-asignatura/${props.addrEthAsig}/datos-asignatura`}>
 						Datos de la asignatura
 				</Link>
 			</li>
-			<li class="nav-item">
+			<li className="nav-item">
 				<Link
 					className={props.active === 'alumnos' ? 'nav-link active' : 'nav-link'}
 					to={`/gestion-asignatura/${props.addrEthAsig}/alumnos`}>
 						Alumnos
 				</Link>
 			</li>
-			<li class="nav-item">
+			<li className="nav-item">
 				<Link
 					className={props.active === 'profesores' ? 'nav-link active' : 'nav-link'}
 					to={`/gestion-asignatura/${props.addrEthAsig}/profesores`}>
 						Profesores
 				</Link>
 			</li>
-			<li class="nav-item">
+			<li className="nav-item">
 				<Link
 					className={props.active === 'evaluaciones' ? 'nav-link active' : 'nav-link'}
 					to={`/gestion-asignatura/${props.addrEthAsig}/evaluaciones`}>
 						Evaluaciones
 				</Link>
 			</li>
-			<li class="nav-item">
+			<li className="nav-item">
 				{
 					props.isOwner || props.isCoordinador || props.isProfesor
 					?
@@ -49,7 +47,7 @@ const NavbarAsignatura = (props) => {
 					""
 				}
 			</li>
-			<li class="nav-item">
+			<li className="nav-item">
 				{
 					props.isAlumno
 					?

@@ -5,8 +5,6 @@ import {
 	Route,
 } from 'react-router-dom';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import MiDireccion from '../MiDireccion';
 
 import ListaProfesores from './ListaProfesores';
@@ -14,8 +12,6 @@ import CrearProfesor from './CrearProfesor';
 import ActualizarOwner from './ActualizarOwner';
 
 import HookMostrarProfesor from './HookMostrarProfesor';
-
-const {ContractData} = newContextComponents;
 
 class GestionProfesores extends React.Component {
 

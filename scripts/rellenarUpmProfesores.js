@@ -2,18 +2,14 @@ module.exports = async callback => {
     try {
         const UpmProfesores = artifacts.require('./UpmProfesores.sol');
 
-        // usar las cuentas de Ganache
         const accounts = await web3.eth.getAccounts();
         if (accounts.length !== 10) throw new Error('No hay 10 cuentas');
 
         let upmProfesores = await UpmProfesores.deployed();
 
         let numProfesores = await upmProfesores.numProfesores();
-        let profesoresLength = await upmProfesores.profesoresLength();
-        console.log('numProfesores:', numProfesores.toNumber());
-        console.log('profesoresLength:', profesoresLength.toNumber());
+        console.log('numProfesores inicial:', numProfesores.toNumber());
 
-        // crear un profesor
         await upmProfesores.crearProfesor(
             accounts[1],
             "Santiago",
@@ -24,13 +20,8 @@ module.exports = async callback => {
             -315622800,
             "hgujik3tlgk3qkg434"
         );
+        console.log("Primer profesor creado.");
 
-        numProfesores = await upmProfesores.numProfesores();
-        profesoresLength = await upmProfesores.profesoresLength();
-        console.log('numProfesores:', numProfesores.toNumber());
-        console.log('profesoresLength:', profesoresLength.toNumber());
-
-        // crear otro profesor
         await upmProfesores.crearProfesor(
             accounts[2],
             "José María",
@@ -41,15 +32,27 @@ module.exports = async callback => {
             -484880400,
             "mknja9hdfn6a7duf"
         );
+        console.log("Segundo profesor creado.");
+
+        await upmProfesores.crearProfesor(
+            accounts[3],
+            "Torcuato",
+            "Vega Zamora",
+            "96147220T",
+            "torcuato.vega.zamora@upm.es",
+            695147110,
+            32486400,
+            "asldfa8setkwengaa"
+        );
+        console.log("Tercer profesor creado.");
 
         numProfesores = await upmProfesores.numProfesores();
-        profesoresLength = await upmProfesores.profesoresLength();
-        console.log('numProfesores:', numProfesores.toNumber());
-        console.log('profesoresLength:', profesoresLength.toNumber());
+        console.log('numProfesores final:', numProfesores.toNumber());
+
     } catch(err) {
         console.log(err);
     } finally {
-        console.log('Fin.');
+        console.log('\nFin del script: rellenado con tres profesores.');
     }
 
     callback();

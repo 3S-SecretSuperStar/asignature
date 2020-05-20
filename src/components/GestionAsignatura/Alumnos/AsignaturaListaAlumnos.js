@@ -49,12 +49,8 @@ class AsignaturaListaAlumnos extends React.Component {
 	}
 
 	eliminarAlumno = (addrEthAlum) => {
-		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
-
-		// coger drizzle
 		const instance = this.props.drizzle.contracts[this.props.contractName];
 
-		// eliminar alumno
 		const txId = instance.methods.eliminarAlumno.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}

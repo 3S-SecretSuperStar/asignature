@@ -5,7 +5,6 @@ import {useParams} from 'react-router-dom';
 import MainGestionAsignatura from './MainGestionAsignatura';
 
 const GestionAsignatura = (props) => {
-
 	return (
 		<>
 			<MainGestionAsignatura 	drizzle={props.drizzle}
@@ -14,7 +13,6 @@ const GestionAsignatura = (props) => {
 									addrEthAsig={useParams().addrEthAsig} />
 		</>	
 	);
-
 }
 
 export default GestionAsignatura;

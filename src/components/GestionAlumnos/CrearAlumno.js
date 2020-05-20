@@ -13,29 +13,20 @@ class CrearAlumno extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		const {drizzle, drizzleState} = this.props;
-
-		const instanceState = drizzleState.contracts.UpmAlumnos;
-		if (!instanceState || !instanceState.initialized) return;
-
-		const instance = drizzle.contracts.UpmAlumnos;
 
 	}
 
 	crearAlumno = async (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthAlum, nombre, apellidos, dni, correoUpm, telefMovil, fechaNac, idUpm} = objFormData;
 		fechaNac = dateStringToTimestamp(fechaNac);
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('crear-alumno-form').reset();
 
-		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
 
 		const instanceState = drizzleState.contracts.UpmAlumnos;
@@ -54,41 +45,15 @@ class CrearAlumno extends React.Component {
 			idUpm,
 			{from: this.props.miDireccion}
 		);
-
-		console.log('~~crear~~~0~ txId:', txId);
-
-		console.log('~~crear~~~0~ drizzleState:', drizzleState);
-		console.log('~~crear~~~0~ drizzleState.transactionStack:', drizzleState.transactionStack);
-		console.log('~~crear~~~0~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
-
-		console.log('~~crear~~~0~ drizzleState.transactions:', drizzleState.transactions);
-
-
-		//console.log('~~crear~~~1~ txId:', txId);
-
-		//console.log('~~crear~~~1~ drizzleState:', drizzleState);
-		//console.log('~~crear~~~1~ drizzleState.transactionStack:', drizzleState.transactionStack);
-		//console.log('~~crear~~~1~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
-
-		//console.log('~~crear~~~1~ drizzleState.transactions:', drizzleState.transactions);
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts.UpmAlumnos;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
             return <span>Initializing...</span>;
         }
-
-		console.log('~~renderCre~ drizzleState.transactionStack:', drizzleState.transactionStack);
-
-		console.log('~~renderCre~ drizzleState.transactions:', drizzleState.transactions);
-
-		if (drizzleState.transactionStack[0]) {
-			const txHash = drizzleState.transactionStack[0];
-			console.log('~~renderCre~ drizzleState.transaction:', drizzleState.transactions[txHash]);
-		}
 
 		return (
 			<>

@@ -4,11 +4,7 @@ import {newContextComponents} from "drizzle-react-components";
 
 import {copyToClipboard, shortenEthAddress} from '../../utils/funciones.js';
 
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const {ContractData} = newContextComponents;
 
@@ -51,12 +47,8 @@ class ListaAsignaturas extends React.Component {
 	}
 
 	eliminarAsignatura = (addrEthAsignatura) => {
-		console.log("Has pulsado el botón para eliminar la asignatura", addrEthAsignatura);
-
-		// coger drizzle y drizzleState
 		const instance = this.props.drizzle.contracts.UpmCatalogo;
 
-		// eliminar asignatura del catálogo
 		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
 	}
 
@@ -77,8 +69,6 @@ class ListaAsignaturas extends React.Component {
 				direccionesAsignaturasAnadidas.push(asignaturaAddr);
 			}
 		}
-		console.log('ListaAsignaturas - render - direccionesAsignaturasAnadidas', direccionesAsignaturasAnadidas);
-		console.log('ListaAsignaturas - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
 		let tbodyListaAsignaturas = [];
 		for (let i in direccionesAsignaturasAnadidas) {

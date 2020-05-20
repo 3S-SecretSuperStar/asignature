@@ -64,7 +64,7 @@ class AsignaturaMisNotas extends React.Component {
 			let theadtr = [];
 			for (let i = 0; i < this.props.numEvaluaciones; i++) {
 				theadtr.push(
-					<th>
+					<th className="center">
 						E<sub>{i}</sub> (
 						<ContractData	drizzle={drizzle}
 										drizzleState={drizzleState}
@@ -88,7 +88,7 @@ class AsignaturaMisNotas extends React.Component {
 									method={"mapNotas"}
 									methodArgs={[this.props.miDireccion, j]}
 									render={(nota) => (
-										<td>
+										<td className="center">
 											{nota.tipoNota === "0" ? "NP" : ""}
 				                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
 				                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
@@ -100,7 +100,7 @@ class AsignaturaMisNotas extends React.Component {
 			let tbodyListaNotas = [];
 			tbodyListaNotas.push(
 				<tr>
-					<td>
+					<td className="center">
 						Yo<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}> ({shortenEthAddress(this.props.miDireccion)})</Link>
 						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.miDireccion)}>
 							<i className="far fa-copy fa-lg"></i>
@@ -114,7 +114,7 @@ class AsignaturaMisNotas extends React.Component {
 								<table className="table table-sm table-bordered table-hover">
 									<thead className="thead-dark">
 										<tr>
-											<th>A\E</th>
+											<th className="center">A\E</th>
 											{theadtr}
 										</tr>
 									</thead>
@@ -138,9 +138,16 @@ class AsignaturaMisNotas extends React.Component {
 										isAlumno={this.props.isAlumno}
 										active={"misNotas"} />
 
-					<h5>Mis notas</h5>
+					<div className="card">
+						<div className="card-header">
+							<h4>Mis notas</h4>
+						</div>
 
-					{listaNotas}
+						<div className="card-body">
+							<h5>Lista de mis notas</h5>
+							{listaNotas}
+						</div>
+					</div>
 				</>
 			);
 		} else {

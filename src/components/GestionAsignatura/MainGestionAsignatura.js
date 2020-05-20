@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from "react-router-dom";
-
-import {newContextComponents} from "drizzle-react-components";
+import { Route } from "react-router-dom";
 
 import AsignaturaDatos from './Datos/AsignaturaDatos';
 import AsignaturaAlumnos from './Alumnos/AsignaturaAlumnos';
@@ -18,8 +12,6 @@ import AsignaturaMisNotas from './Notas/AsignaturaMisNotas';
 import {jsonInterface} from '../../utils/varios.js';
 import {copyToClipboard} from '../../utils/funciones.js';
 
-const {ContractData, AccountData} = newContextComponents;
-
 const MiDireccionAsignatura = (props) => (
 	<p>
 		Mi dirección: <span className="code">{props.miDireccion}</span>
@@ -29,28 +21,28 @@ const MiDireccionAsignatura = (props) => (
 		{
 			props.isOwner
 			?
-			<span class="badge badge-primary">owner</span>
+			<span className="badge badge-primary">owner</span>
 			:
 			""
 		}
 		{
 			props.isCoordinador
 			?
-			<span class="badge badge-secondary">coordinador</span>
+			<span className="badge badge-secondary">coordinador</span>
 			:
 			""
 		}
 		{
 			props.isProfesor
 			?
-			<span class="badge badge-success">profesor</span>
+			<span className="badge badge-success">profesor</span>
 			:
 			""
 		}
 		{
 			props.isAlumno
 			?
-			<span class="badge badge-info">alumno</span>
+			<span className="badge badge-info">alumno</span>
 			:
 			""
 		}
@@ -100,10 +92,7 @@ class MainGestionAsignatura extends React.Component {
 	componentDidMount() {
 		this.setState({ready: true});
 
-		// añadir dinámicamente contrato a vigilar
 		this.anadirContratoDinamicamente();
-
-		console.log('MainGestionAsignatura - componentDidMount - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 	}
 
 	componentDidUpdate() {
@@ -221,89 +210,50 @@ class MainGestionAsignatura extends React.Component {
 	render() {
 		const {drizzle, drizzleState, addrEthAsig} = this.props;
 
-		console.log('\n\n\n\n\n', this.props);
-
-		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
-
 		const instanceState = drizzleState.contracts[this.state.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
 
-		// por alguna extraña razón, este método que suele funcionar devuelve siempre la dirección 0 de Ganache
-		// ContractData llamando a miDireccion() también devuelve la dirección 0 de Ganache
-		// AccountData, en cambio, sí que da la dirección buena con la que se está usando la dApp
-		let miDireccion2 = instanceState.miDireccion[this.state.miDireccionKey];
-		miDireccion2 = miDireccion2 ? miDireccion2.value : "0x0";
-		console.log('MainGestionAsignatura - render - miDireccion2:', miDireccion2);
-
-		/*let miDireccion = "0x0";
-		if (drizzleState && drizzleState.accounts && Object.keys(drizzleState.accounts).length > 0) {
-			miDireccion = drizzleState.accounts[0];
-		}*/
-		//let miDireccion = Object.keys(drizzleState.accounts).length > 0 ? drizzleState.accounts[0] : "0x0";
-		let miDireccion = drizzleState.accounts[0];
-		console.log('MainGestionAsignatura - render - miDireccion:', miDireccion);
+		let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
+		miDireccion = miDireccion ? miDireccion.value : "0x0000000000000000000000000000000000000000";
 
 		let owner = instanceState.owner[this.state.ownerKey];
-		owner = owner ? owner.value : "0x0";
-		console.log('MainGestionAsignatura - render - owner:', owner);
+		owner = owner ? owner.value : "0x0000000000000000000000000000000000000000";
 
 		let coordinador = instanceState.coordinador[this.state.coordinadorKey];
-		coordinador = coordinador ? coordinador.value : "0x0";
-		console.log('MainGestionAsignatura - render - coordinador:', coordinador);
+		coordinador = coordinador ? coordinador.value : "0x0000000000000000000000000000000000000000";
 
 		let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
 		alumnosLength = alumnosLength ? alumnosLength.value : "0";
-		//console.log('MainGestionAsignatura - render - alumnosLength:', alumnosLength);
 
 		let numAlumnos = instanceState.numAlumnos[this.state.numAlumnosKey];
 		numAlumnos = numAlumnos ? numAlumnos.value : "0";
-		//console.log('MainGestionAsignatura - render - numAlumnos:', numAlumnos);
 
 		let profesoresLength = instanceState.profesoresLength[this.state.profesoresLengthKey];
 		profesoresLength = profesoresLength ? profesoresLength.value : "0";
-		//console.log('MainGestionAsignatura - render - profesoresLength:', profesoresLength);
 
 		let numProfesores = instanceState.numProfesores[this.state.numProfesoresKey];
 		numProfesores = numProfesores ? numProfesores.value : "0";
-		//console.log('MainGestionAsignatura - render - numProfesores:', numProfesores);
 
 		let evaluacionesLength = instanceState.evaluacionesLength[this.state.evaluacionesLengthKey];
 		evaluacionesLength = evaluacionesLength ? evaluacionesLength.value : "0";
-		//console.log('MainGestionAsignatura - render - evaluacionesLength:', evaluacionesLength);
 
 		let numEvaluaciones = instanceState.numEvaluaciones[this.state.numEvaluacionesKey];
 		numEvaluaciones = numEvaluaciones ? numEvaluaciones.value : "0";
-		//console.log('MainGestionAsignatura - render - numEvaluaciones:', numEvaluaciones);
 
 		let numNotas = instanceState.numNotas[this.state.numNotasKey];
 		numNotas = numNotas ? numNotas.value : "0";
-		//console.log('MainGestionAsignatura - render - numNotas:', numNotas);
 
 		let isOwner = miDireccion === owner;
-		console.log('MainGestionAsignatura - render - isOwner:', isOwner);
-
-		let isOwner2 = instanceState.isOwner[this.state.isOwnerKey];
-		isOwner2 = isOwner2 ? isOwner2.value : "0";
-		console.log('MainGestionAsignatura - render - isOwner2:', isOwner2);
 
 		let isCoordinador = miDireccion === coordinador;
-		console.log('MainGestionAsignatura - render - isCoordinador:', isCoordinador);
-
-		let isCoordinador2 = instanceState.isCoordinador[this.state.isCoordinadorKey];
-		isCoordinador2 = isCoordinador2 ? isCoordinador2.value : "0";
-		console.log('MainGestionAsignatura - render - isCoordinador2:', isCoordinador2);
 
 		let isProfesor = instanceState.isProfesor[this.state.isProfesorKey];
 		isProfesor = isProfesor ? isProfesor.value : "0";
-		console.log('MainGestionAsignatura - render - isProfesor:', isProfesor);
 
 		let isAlumno = instanceState.isAlumno[this.state.isAlumnoKey];
 		isAlumno = isAlumno ? isAlumno.value : "0";
-		console.log('MainGestionAsignatura - render - isAlumno:', isAlumno);
-
-		console.log('MainGestionAsignatura - render - contratos vigilados:', Object.keys(drizzle.contracts));
 
 		return (
 			<>

@@ -12,24 +12,21 @@ class AsignaturaAnadirNota extends React.Component {
 		this.setState({ready: true});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	componentDidUpdate() {
 
 	}
 
 	crearNota = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthAlum, indexEval, tipoNota, calificacion} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('crear-nota-form').reset();
 
-		// mandar transacción
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 
@@ -89,18 +86,18 @@ class AsignaturaAnadirNota extends React.Component {
 
 								<div className="input-group">
 									<div className="form-check form-check-inline">
-										<input type="radio" name="tipoNota" className="form-check-input" id="tipoNota1" value="1" checked />
-										<label className="form-check-label" for="tipoNota1">Normal</label>
+										<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota1" value="1" checked />
+										<label className="form-check-label" htmlFor="tipoNota1">Normal</label>
 									</div>
 
 									<div className="form-check form-check-inline">
 										<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota2" value="2" />
-										<label className="form-check-label" for="tipoNota2">Matrícula de honor (MH)</label>
+										<label className="form-check-label" htmlFor="tipoNota2">Matrícula de honor (MH)</label>
 									</div>
 
 									<div className="form-check form-check-inline">
 										<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota0" value="0" />
-										<label className="form-check-label" for="tipoNota0">No presentado (NP)</label>
+										<label className="form-check-label" htmlFor="tipoNota0">No presentado (NP)</label>
 									</div>
 								</div>
 	        				</div>

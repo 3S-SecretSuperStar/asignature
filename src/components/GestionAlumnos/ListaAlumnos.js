@@ -51,19 +51,10 @@ class ListaAlumnos extends React.Component {
 	eliminarAlumno = (addrEthAlum) => {
 		const instance = this.props.drizzle.contracts.UpmAlumnos;
 
-		// eliminar alumno
 		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
-		);
-
-		//console.log('~~eliminar~~ txId:', txId);
-
-		//console.log('~~eliminar~~ drizzleState:', drizzleState);
-		//console.log('~~eliminar~~ drizzleState.transactionStack:', drizzleState.transactionStack);
-		//console.log('~~eliminar~~ drizzleState.transactionStack[txId]:', drizzleState.transactionStack[txId]);
-
-		//console.log('~~eliminar~~ drizzleState.transactions:', drizzleState.transactions);
+		)
 	}
 
 	render() {
@@ -73,10 +64,6 @@ class ListaAlumnos extends React.Component {
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
-
-		//console.log('~~renderEli~ drizzleState.transactionStack:', drizzleState.transactionStack);
-
-		//console.log('~~renderEli~ drizzleState.transactions:', drizzleState.transactions);
 
 		let tbodyListaAlumnos = [];
 		for (let i = 0; i < this.props.alumnosLength; i++) {
@@ -97,14 +84,14 @@ class ListaAlumnos extends React.Component {
 												<Link to={`/gestion-alumnos/alumno/${addrEthAlum}`}>
 													<span className="code">{shortenEthAddress(addrEthAlum)}</span>
 												</Link>
-												<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)}>
+												<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(addrEthAlum)} title="Copiar dirección">
 													<i className="far fa-copy fa-lg"></i>
 												</button>
 												{
 													this.props.owner === this.props.miDireccion
 													?
-													<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarAlumno(addrEthAlum)}>
-														<i className="fas fa-trash-alt fa-lg" title="Eliminar alumno" style={{color: "red"}}></i>
+													<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarAlumno(addrEthAlum)} title="Eliminar alumno">
+														<i className="fas fa-trash-alt fa-lg" style={{color: "red"}}></i>
 													</button>
 													:
 													""

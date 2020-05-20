@@ -1,15 +1,9 @@
 import React from 'react';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import AsignaturaListaEvaluaciones from './AsignaturaListaEvaluaciones';
 import AsignaturaAnadirEvaluacion from './AsignaturaAnadirEvaluacion';
 
 import NavbarAsignatura from '../NavbarAsignatura';
-
-import {jsonInterface} from '../../../utils/varios.js';
-
-const {ContractData} = newContextComponents;
 
 class AsignaturaEvaluaciones extends React.Component {
 
@@ -26,8 +20,7 @@ class AsignaturaEvaluaciones extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState, contractName, isOwner, isCoordinador, isProfesor, isAlumno} = this.props;
-		console.log('AsignaturaEvaluaciones - render - this.props:', this.props);
+		const {drizzle, drizzleState, contractName, isOwner, isCoordinador, isProfesor} = this.props;
 
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {

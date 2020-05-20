@@ -26,16 +26,13 @@ class AsignaturaDatos extends React.Component {
 	actualizarCoordinador = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthCoord} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-coordinador-form').reset();
 
-		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
@@ -51,16 +48,13 @@ class AsignaturaDatos extends React.Component {
 	actualizarOwner = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthOwner} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-owner-form').reset();
 
-		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
@@ -79,29 +73,6 @@ class AsignaturaDatos extends React.Component {
 			return <span>Initializing...</span>;
 		}
 
-		let actualizarCoordinador = [];
-		if (this.props.isOwner || this.props.isCoordinador) {
-			actualizarCoordinador = <li className="list-group-item mt-3">
-										<h5>Actualizar coordinador</h5>
-										<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
-											<div className="form-group">
-												<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
-												
-												<div className="input-group">
-						                            <div className="input-group-prepend">
-						                                <span className="input-group-text">
-						                                    <i className="fab fa-ethereum fa-lg" />
-						                                </span>
-						                            </div>
-													<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" />
-						                        </div>
-											</div>
-
-											<button type="submit" className="btn btn-primary">Actualizar coordinador</button>
-										</form>
-									</li>;
-		}
-
 		let actualizarOwner = [];
 		if (this.props.isOwner) {
 			actualizarOwner =	<li className="list-group-item mt-3 border-top-width">
@@ -116,13 +87,36 @@ class AsignaturaDatos extends React.Component {
 					                                    <i className="fab fa-ethereum fa-lg" />
 					                                </span>
 					                            </div>
-												<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner" />
+												<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner" placeholder={this.props.owner} />
 					                        </div>
 										</div>
 
 										<button type="submit" className="btn btn-primary">Actualizar owner</button>
 									</form>
 								</li>;
+		}
+
+		let actualizarCoordinador = [];
+		if (this.props.isOwner || this.props.isCoordinador) {
+			actualizarCoordinador = <li className="list-group-item mt-3">
+										<h5>Actualizar coordinador</h5>
+										<form onSubmit={this.actualizarCoordinador} id="actualizar-coordinador-form">
+											<div className="form-group">
+												<label htmlFor="addrEthCoord">Dirección Ethereum del coordinador</label>
+												
+												<div className="input-group">
+						                            <div className="input-group-prepend">
+						                                <span className="input-group-text">
+						                                    <i className="fab fa-ethereum fa-lg" />
+						                                </span>
+						                            </div>
+													<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" placeholder={this.props.coordinador} />
+						                        </div>
+											</div>
+
+											<button type="submit" className="btn btn-primary">Actualizar coordinador</button>
+										</form>
+									</li>;
 		}
 
 		return (
@@ -170,7 +164,7 @@ class AsignaturaDatos extends React.Component {
 															render={(owner) => (
 																<span>
 																	<span className="code">{owner}</span>
-																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.owner)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
 																	{owner === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
@@ -193,7 +187,7 @@ class AsignaturaDatos extends React.Component {
 															render={(coordinador) => (
 																<span>
 																	<span className="code">{coordinador}</span>
-																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.coordinador)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
 																	{coordinador === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
@@ -417,9 +411,9 @@ class AsignaturaDatos extends React.Component {
                     </div>
 				</div>
 
-				{actualizarCoordinador}
-
 				{actualizarOwner}
+
+				{actualizarCoordinador}
 			</>
 		);
 	}

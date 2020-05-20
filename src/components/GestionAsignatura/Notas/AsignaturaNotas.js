@@ -1,15 +1,9 @@
 import React from 'react';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import AsignaturaListaNotas from './AsignaturaListaNotas';
 import AsignaturaAnadirNota from './AsignaturaAnadirNota';
 
 import NavbarAsignatura from '../NavbarAsignatura';
-
-import {jsonInterface} from '../../../utils/varios.js';
-
-const {ContractData} = newContextComponents;
 
 class AsignaturaNotas extends React.Component {
 
@@ -27,7 +21,6 @@ class AsignaturaNotas extends React.Component {
 
 	render() {
 		const {drizzle, drizzleState, contractName, isOwner, isCoordinador, isProfesor, isAlumno} = this.props;
-		console.log('AsignaturaNotas - render - this.props:', this.props);
 
 		const instanceState = drizzleState.contracts[contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -36,7 +29,6 @@ class AsignaturaNotas extends React.Component {
 
 		const hayAlgunAlumno = this.props.numAlumnos > 0;
 		const hayAlgunaEvaluacion = this.props.numEvaluaciones > 0;
-		const hayAlgunaNota = this.props.numNotas > 0;
 
 		let anadirNota = [];
 		if (!hayAlgunAlumno && !hayAlgunaEvaluacion && (isOwner || isCoordinador || isProfesor)) {

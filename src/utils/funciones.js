@@ -47,7 +47,7 @@ export function copyToClipboard(textToCopy) {
 }
 
 /*
- * convierte lo que da un input type="date", que es un string aaaa-mm-dd
+ * convierte lo que proporciona un input type="date", que es un string aaaa-mm-dd
  * a un timestamp en segundos, que es lo que necesita Solidity
 */
 export function dateStringToTimestamp(dateStringToTimestamp) {

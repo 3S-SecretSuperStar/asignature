@@ -13,29 +13,20 @@ class CrearProfesor extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		const {drizzle, drizzleState} = this.props;
-
-		const instanceState = drizzleState.contracts.UpmProfesores;
-		if (!instanceState || !instanceState.initialized) return;
-
-		const instance = drizzle.contracts.UpmProfesores;
-
+		
 	}
 
 	crearProfesor = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthProf, nombre, apellidos, dni, correoUpm, telefMovil, fechaNac, idUpm} = objFormData;
 		fechaNac = dateStringToTimestamp(fechaNac);
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('crear-profesor-form').reset();
 
-		// mandar transacción
 		const {drizzle, drizzleState} = this.props;
 
 		const instanceState = drizzleState.contracts.UpmProfesores;
@@ -57,7 +48,7 @@ class CrearProfesor extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts.UpmProfesores;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

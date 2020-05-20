@@ -42,9 +42,15 @@ const Navegacion = () => (
 );
 
 const Header = () => (
-    <header className="App">
+    <header>
         <h1 className="mt-2">UPM - Aplicación de gestión de Asignaturas</h1>
     </header>
+);
+
+const LoadingDapp = () => (
+    <main>
+        <h1><span role="img">⚙</span>️ Cargando dApp...</h1>
+    </main>
 );
 
 export default () => (
@@ -53,11 +59,7 @@ export default () => (
             const {drizzle, drizzleState, initialized} = drizzleContext;
 
             if (!initialized) {
-                return (
-                    <main>
-                        <h1><span role="img">⚙</span>️ Cargando dApp...</h1>
-                    </main>
-                );
+                return <LoadingDapp />;
             }
 
             return (
@@ -89,8 +91,6 @@ export default () => (
                             </Route>
                         </Switch>
                     </div>
-
-                    
                 </Router>
             )
         }}

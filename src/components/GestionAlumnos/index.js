@@ -5,8 +5,6 @@ import {
 	Route,
 } from 'react-router-dom';
 
-import {newContextComponents} from "drizzle-react-components";
-
 import MiDireccion from '../MiDireccion';
 
 import ListaAlumnos from './ListaAlumnos';
@@ -14,8 +12,6 @@ import CrearAlumno from './CrearAlumno';
 import ActualizarOwner from './ActualizarOwner';
 
 import HookMostrarAlumno from './HookMostrarAlumno';
-
-const {ContractData} = newContextComponents;
 
 class GestionAlumnos extends React.Component {
 
@@ -84,10 +80,10 @@ class GestionAlumnos extends React.Component {
         }
 
         let miDireccion = instanceState.miDireccion[this.state.miDireccionKey];
-        miDireccion = miDireccion ? miDireccion.value :"0x0";
+        miDireccion = miDireccion ? miDireccion.value :"0x0000000000000000000000000000000000000000";
 
         let owner = instanceState.owner[this.state.ownerKey];
-        owner = owner ? owner.value : "0x0";
+        owner = owner ? owner.value : "0x0000000000000000000000000000000000000000";
 
         let alumnosLength = instanceState.alumnosLength[this.state.alumnosLengthKey];
         alumnosLength = alumnosLength ? alumnosLength.value : -1;

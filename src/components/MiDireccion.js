@@ -4,8 +4,6 @@ import {copyToClipboard} from '../utils/funciones.js';
 
 const MiDireccion = (props) => {
 
-	console.log(props.miDireccion);
-
 	return (
 		<p>
 			Mi dirección: <span className="code">{props.miDireccion}</span>
@@ -15,7 +13,7 @@ const MiDireccion = (props) => {
 			{
 				props.miDireccion === props.owner
 				?
-				<span class="badge badge-primary">owner</span>
+				<span className="badge badge-primary">owner</span>
 				:
 				""
 			}
