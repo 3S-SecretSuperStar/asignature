@@ -34,7 +34,7 @@ class CrearProfesor extends React.Component {
 
 		const instance = drizzle.contracts.UpmProfesores;
 
-		const txId = instance.methods.crearProfesor.cacheSend(
+		instance.methods.crearProfesor.cacheSend(
 			addrEthProf,
 			nombre,
 			apellidos,

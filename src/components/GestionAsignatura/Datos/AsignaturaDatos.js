@@ -4,7 +4,6 @@ import {newContextComponents} from "drizzle-react-components";
 
 import NavbarAsignatura from '../NavbarAsignatura';
 
-import {jsonInterface} from '../../../utils/varios.js';
 import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
@@ -33,13 +32,13 @@ class AsignaturaDatos extends React.Component {
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-coordinador-form').reset();
 
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 
 		// TODO: comprobar que está el coordinador (profesor) creado
 
-		const txId = instance.methods.actualizarCoordinador.cacheSend(
+		instance.methods.actualizarCoordinador.cacheSend(
 			addrEthCoord,
 			{from: this.props.miDireccion}
 		);
@@ -55,11 +54,11 @@ class AsignaturaDatos extends React.Component {
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-owner-form').reset();
 
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 
-		const txId = instance.methods.actualizarOwner.cacheSend(
+		instance.methods.actualizarOwner.cacheSend(
 			addrEthOwner,
 			{from: this.props.miDireccion}
 		);
@@ -167,7 +166,7 @@ class AsignaturaDatos extends React.Component {
 																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.owner)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
-																	{owner === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+																	{owner === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}
 																</span>
 															)} />
 										</div>
@@ -190,7 +189,7 @@ class AsignaturaDatos extends React.Component {
 																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.coordinador)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
-																	{coordinador === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+																	{coordinador === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}
 																</span>
 															)} />
 										</div>

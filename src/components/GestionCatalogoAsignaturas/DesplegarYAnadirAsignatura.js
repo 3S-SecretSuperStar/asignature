@@ -19,11 +19,9 @@ class DesplegarYAnadirAsignatura extends React.Component {
 
 	desplegarYAnadirAsignatura = async (event) => {
 		event.preventDefault();
-		console.log('Has pulsado el botón para desplegar y añadir una asignatura');
 
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
-		console.log('DesplegarYAnadirAsignatura - desplegarYAnadirAsignatura - objFormData:', objFormData);
 		let {addrEthCoord, nombreAsig, cursoAcad, codigoAsig, titulacion, numCreditos, semestre, cursoAno, tipoAsig} = objFormData;
 
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
@@ -42,11 +40,9 @@ class DesplegarYAnadirAsignatura extends React.Component {
 		.send({from: this.props.miDireccion});
 
 		let addrAsignaturaDesplegada = contratoInstance.options.address;
-		console.log(codigoAsig, 'desplegada en:', addrAsignaturaDesplegada);
 
 		const nombreAMostrar = titulacion + " - " + nombreAsig;
-
-		const txId = instance.methods.anadirAsignatura.cacheSend(addrAsignaturaDesplegada, nombreAMostrar);
+		instance.methods.anadirAsignatura.cacheSend(addrAsignaturaDesplegada, nombreAMostrar);
 	}
 
 	render() {

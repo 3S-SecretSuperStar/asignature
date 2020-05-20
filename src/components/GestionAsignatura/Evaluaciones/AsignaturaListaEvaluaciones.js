@@ -2,7 +2,7 @@ import React from 'react';
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {crearObjetoFromFormData, timestampToDateString} from '../../../utils/funciones.js';
+import {timestampToDateString} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -24,8 +24,6 @@ class AsignaturaListaEvaluaciones extends React.Component {
 
 	eliminarEvaluacion = (event) => {
 		event.preventDefault();
-
-		console.log('Esta funcionalidad no está implementada.');
 	}
 
 	render() {
@@ -73,8 +71,6 @@ class AsignaturaListaEvaluaciones extends React.Component {
 		}
 
 		const hayAlgunaEvaluacion = this.props.evaluacionesLength > 0;
-
-		let listaEvaluaciones = [];
 		if (hayAlgunaEvaluacion) {
 			return (
 				<>

@@ -203,8 +203,6 @@ class MainGestionAsignatura extends React.Component {
 
 	componentWillUnmount() {
 		this.eliminarContratoDinamicamente();
-
-		console.log('MainGestionAsignatura - componentWillUnmount - contratos vigilados:', Object.keys(this.props.drizzle.contracts));
 	}
 
 	render() {

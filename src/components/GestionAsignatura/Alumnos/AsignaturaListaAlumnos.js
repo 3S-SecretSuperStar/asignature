@@ -51,7 +51,7 @@ class AsignaturaListaAlumnos extends React.Component {
 	eliminarAlumno = (addrEthAlum) => {
 		const instance = this.props.drizzle.contracts[this.props.contractName];
 
-		const txId = instance.methods.eliminarAlumno.cacheSend(
+		instance.methods.eliminarAlumno.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
 		);
@@ -96,7 +96,7 @@ class AsignaturaListaAlumnos extends React.Component {
 													:
 													""
 												}
-												{alumno.addrEthAlum === this.props.miDireccion ? <span class="badge badge-light">yo</span> : ""}
+												{alumno.addrEthAlum === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}
 											</td>
 
 											<td>{alumno.nombre}</td>

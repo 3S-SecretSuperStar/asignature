@@ -50,7 +50,7 @@ class AsignaturaListaNotas extends React.Component {
 	eliminarNota = (addrEthAlum, indexEval) => {
 		const instance = this.props.drizzle.contracts[this.props.contractName];
 
-		const txId = instance.methods.borrarNota.cacheSend(
+		instance.methods.borrarNota.cacheSend(
 			addrEthAlum, indexEval,
 			{from: this.props.miDireccion}
 		);
@@ -63,8 +63,6 @@ class AsignaturaListaNotas extends React.Component {
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
 			return <span>Initializing...</span>;
 		}
-
-		const contractAdress = this.props.contractName.replace("UpmAsignatura-", "");
 
 		let theadtr = [];
 		for (let i = 0; i < this.props.numEvaluaciones; i++) {
@@ -89,7 +87,7 @@ class AsignaturaListaNotas extends React.Component {
 			let addrEthAlum = instanceState.listaAlumnos[this.state.alumnosAddrsKeys[i]];
 			addrEthAlum = addrEthAlum ? addrEthAlum.value : "";
 
-			if (addrEthAlum != "" && addrEthAlum != "0x0000000000000000000000000000000000000000") {
+			if (addrEthAlum !== "" && addrEthAlum !== "0x0000000000000000000000000000000000000000") {
 				let notasUnAlumno = [];
 				for (let j = 0; j < this.props.numEvaluaciones; j++) {
 					let eliminarNota = [];

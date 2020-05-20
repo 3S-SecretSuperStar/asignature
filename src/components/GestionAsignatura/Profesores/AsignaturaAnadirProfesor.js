@@ -32,14 +32,14 @@ class AsignaturaAnadirProfesor extends React.Component {
 
 		// TODO: comprobar que está el profesor creado
 
-		const txId = instance.methods.anadirProfesor.cacheSend(
+		instance.methods.anadirProfesor.cacheSend(
 			addrEthProf,
 			{from: this.props.miDireccion}
 		);
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

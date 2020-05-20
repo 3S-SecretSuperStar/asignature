@@ -26,11 +26,7 @@ class ActualizarOwner extends React.Component {
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('actualizar-owner-form').reset();
 
-		const {drizzle, drizzleState} = this.props;
-
-		const instanceState = drizzleState.contracts.UpmCatalogo;
-		
-		if (!instanceState || !instanceState.initialized) return;
+		const {drizzle} = this.props;
 		
 		const instance = drizzle.contracts.UpmCatalogo;
 		
@@ -41,7 +37,7 @@ class ActualizarOwner extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts.UpmCatalogo;
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

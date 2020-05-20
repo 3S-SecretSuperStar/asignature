@@ -49,7 +49,7 @@ class ListaAsignaturas extends React.Component {
 	eliminarAsignatura = (addrEthAsignatura) => {
 		const instance = this.props.drizzle.contracts.UpmCatalogo;
 
-		const txId = instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
+		instance.methods.eliminarAsignatura.cacheSend(addrEthAsignatura);
 	}
 
 	render() {
@@ -138,15 +138,17 @@ class ListaAsignaturas extends React.Component {
 					<div className="table-responsive">
 						<table className="table table-sm table-bordered table-hover">
 							<thead className="thead-dark">
-								<th>Dirección</th>
-								
-								<th>Nombre a mostrar</th>
+								<tr>
+									<th>Dirección</th>
+									
+									<th>Nombre a mostrar</th>
 
-								<th className="center">Alumnos</th>
-								
-								<th className="center">Profesores</th>
-								
-								<th className="center">Evaluaciones</th>
+									<th className="center">Alumnos</th>
+									
+									<th className="center">Profesores</th>
+									
+									<th className="center">Evaluaciones</th>
+								</tr>	
 							</thead>
 
 							<tbody>

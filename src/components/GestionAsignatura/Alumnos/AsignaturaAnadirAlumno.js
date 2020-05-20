@@ -12,37 +12,34 @@ class AsignaturaAnadirAlumno extends React.Component {
 		this.setState({ready: true});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	componentDidUpdate() {
 
 	}
 
 	anadirAlumno = (event) => {
 		event.preventDefault();
 
-		// obtener valores del formulario
 		const formData = new FormData(event.target);
 		let objFormData = crearObjetoFromFormData(formData);
 		let {addrEthAlum} = objFormData;
 
-		// limpiar formulario
 		// https://stackoverflow.com/questions/43922508/clear-and-reset-form-input-fields/43922523#43922523
 		document.getElementById('anadir-alumno-form').reset();
 
-		// mandar transacción
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle} = this.props;
 
 		const instance = drizzle.contracts[this.props.contractName];
 
 		// TODO: comprobar que está el alumno creado
 
-		const txId = instance.methods.anadirAlumno.cacheSend(
+		instance.methods.anadirAlumno.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
 		);
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {

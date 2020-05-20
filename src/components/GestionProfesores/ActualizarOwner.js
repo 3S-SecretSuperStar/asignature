@@ -12,7 +12,7 @@ class ActualizarOwner extends React.Component {
 		this.setState({ready: true});
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	componentDidUpdate() {
 		
 	}
 
@@ -30,7 +30,7 @@ class ActualizarOwner extends React.Component {
 
 		const instance = drizzle.contracts.UpmProfesores;
 
-		const txId = instance.methods.actualizarOwner.cacheSend(
+		instance.methods.actualizarOwner.cacheSend(
 			addrEthOwner,
 			{from: this.props.miDireccion}
 		);

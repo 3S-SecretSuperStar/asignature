@@ -34,7 +34,7 @@ class CrearAlumno extends React.Component {
 
 		const instance = drizzle.contracts.UpmAlumnos;
 
-		const txId = instance.methods.crearAlumno.cacheSend(
+		instance.methods.crearAlumno.cacheSend(
 			addrEthAlum,
 			nombre,
 			apellidos,

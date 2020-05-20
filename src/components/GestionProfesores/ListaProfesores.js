@@ -49,11 +49,9 @@ class ListaProfesores extends React.Component {
 	}
 
 	eliminarProfesor = (addrEthProf) => {
-		console.log("Has pulsado el botón para eliminar el profesor", addrEthProf);
-
 		const instance = this.props.drizzle.contracts.UpmProfesores;
 
-		const txId = instance.methods.borrarProfesorAddr.cacheSend(
+		instance.methods.borrarProfesorAddr.cacheSend(
 			addrEthProf,
 			{from: this.props.miDireccion}
 		);

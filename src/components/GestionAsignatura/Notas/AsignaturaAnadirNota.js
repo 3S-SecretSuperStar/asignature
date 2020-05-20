@@ -30,14 +30,14 @@ class AsignaturaAnadirNota extends React.Component {
 
 		const instance = drizzle.contracts[this.props.contractName];
 
-		const txId = instance.methods.crearNota.cacheSend(
+		instance.methods.crearNota.cacheSend(
 			addrEthAlum, indexEval, tipoNota, calificacion,
 			{from: this.props.miDireccion}
 		);
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzleState} = this.props;
 
         const instanceState = drizzleState.contracts[this.props.contractName];
         if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -86,7 +86,7 @@ class AsignaturaAnadirNota extends React.Component {
 
 								<div className="input-group">
 									<div className="form-check form-check-inline">
-										<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota1" value="1" checked />
+										<input type="radio" className="form-check-input" name="tipoNota" id="tipoNota1" value="1" defaultChecked />
 										<label className="form-check-label" htmlFor="tipoNota1">Normal</label>
 									</div>
 

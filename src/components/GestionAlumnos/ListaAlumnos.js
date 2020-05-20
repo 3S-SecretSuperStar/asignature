@@ -51,7 +51,7 @@ class ListaAlumnos extends React.Component {
 	eliminarAlumno = (addrEthAlum) => {
 		const instance = this.props.drizzle.contracts.UpmAlumnos;
 
-		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
+		instance.methods.borrarAlumnoAddr.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
 		)

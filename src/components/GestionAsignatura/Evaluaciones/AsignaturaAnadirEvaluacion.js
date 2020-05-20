@@ -86,7 +86,7 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 
 										<div className="input-group">
 											<div className="form-check form-check-inline">
-												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" checked />
+												<input type="radio" className="form-check-input" name="obligatoria" id="obligatoria0" value="0" defaultChecked />
 												<label className="form-check-label" htmlFor="obligatoria0">Obligatoria</label>
 											</div>
 
@@ -102,7 +102,7 @@ class AsignaturaAnadirEvaluacion extends React.Component {
 
 										<div className="input-group">
 											<div className="form-check form-check-inline">
-												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" checked />
+												<input type="radio" className="form-check-input" name="tipoConvocatoria" id="tipoConvocatoria0" value="0" defaultChecked />
 												<label className="form-check-label" htmlFor="tipoConvocatoria0">Ordinaria Continua</label>
 											</div>
 

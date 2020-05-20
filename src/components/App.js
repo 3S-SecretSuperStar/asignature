@@ -17,6 +17,8 @@ import GestionCatalogoAsignaturas from './GestionCatalogoAsignaturas';
 
 import GestionAsignatura from './GestionAsignatura';
 
+require('dotenv').config();
+
 const Navegacion = () => (
     <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <Link to="/" className="navbar-brand">Home</Link>
@@ -47,10 +49,24 @@ const Header = () => (
     </header>
 );
 
+const AvisoEthers = () => (
+    <div className="jumbotron jumbotron-fluid">
+        <div className="container">
+            <h1>Aviso válido para Ropsten</h1>
+            <p className="lead">Si no tienes fondos, tienes que pedirlos en una faucet.</p>
+            <p><a href="https://faucet.metamask.io/" target="_blank" rel="noopener noreferrer">Faucet 1</a></p>
+            <p><a href="https://faucet.ropsten.be/" target="_blank" rel="noopener noreferrer">Faucet 2</a></p>
+        </div>
+    </div>
+);
+
 const LoadingDapp = () => (
-    <main>
-        <h1><span role="img">⚙</span>️ Cargando dApp...</h1>
-    </main>
+    <section>
+        <h1 className="display-1">
+            <span><i className="fa fa-cog fa-spin mr-3" /></span> Cargando dApp...
+        </h1>
+        <h4>¿No tienes MetaMask o Fortmatic?</h4>
+    </section>
 );
 
 export default () => (
@@ -68,7 +84,7 @@ export default () => (
 
                     <div className="container">
                         <Header />
-                        
+
                         <Switch>
                             <Route path="/gestion-alumnos">
                                 <GestionAlumnos drizzle={drizzle}
@@ -88,6 +104,10 @@ export default () => (
                             <Route path="/gestion-asignatura/:addrEthAsig">
                                 <GestionAsignatura  drizzle={drizzle}
                                                     drizzleState={drizzleState} />
+                            </Route>
+
+                            <Route path="/">
+                                <AvisoEthers />
                             </Route>
                         </Switch>
                     </div>

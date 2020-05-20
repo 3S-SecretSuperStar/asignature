@@ -65,11 +65,9 @@ class MostrarAlumno extends React.Component {
 	}
 
 	eliminarAlumno = (addrEthAlum) => {
-		console.log("Has pulsado el botón para eliminar el alumno", addrEthAlum);
-
 		const instance = this.props.drizzle.contracts.UpmAlumnos;
 
-		const txId = instance.methods.borrarAlumnoAddr.cacheSend(
+		instance.methods.borrarAlumnoAddr.cacheSend(
 			addrEthAlum,
 			{from: this.props.miDireccion}
 		);
