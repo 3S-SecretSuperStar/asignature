@@ -4,7 +4,7 @@ import {newContextComponents} from "drizzle-react-components";
 
 import NavbarAsignatura from '../NavbarAsignatura';
 
-import {crearObjetoFromFormData, copyToClipboard} from '../../../utils/funciones.js';
+import {crearObjetoFromFormData, copyToClipboard, shortenEthAddress} from '../../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -86,7 +86,7 @@ class AsignaturaDatos extends React.Component {
 					                                    <i className="fab fa-ethereum fa-lg" />
 					                                </span>
 					                            </div>
-												<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner" placeholder={this.props.owner} />
+												<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner" placeholder={shortenEthAddress(this.props.owner)} />
 					                        </div>
 										</div>
 
@@ -109,7 +109,7 @@ class AsignaturaDatos extends React.Component {
 						                                    <i className="fab fa-ethereum fa-lg" />
 						                                </span>
 						                            </div>
-													<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" placeholder={this.props.coordinador} />
+													<input type="text" className="form-control code" id="addrEthCoord" name="addrEthCoord" placeholder={shortenEthAddress(this.props.coordinador)} />
 						                        </div>
 											</div>
 
@@ -141,7 +141,7 @@ class AsignaturaDatos extends React.Component {
 	                    					<strong>Dirección:</strong>
 										</div>
 										<div className="col-12 col-md-8 col-lg-9">
-	                    					<span className="code code-shadow">{this.props.addrEthAsig}</span>
+	                    					<span className="code code-shadow">{shortenEthAddress(this.props.addrEthAsig)}</span>
 			                    			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
 												<i className="far fa-copy fa-lg"></i>
 											</button>
@@ -162,8 +162,8 @@ class AsignaturaDatos extends React.Component {
 															method={"owner"}
 															render={(owner) => (
 																<span>
-																	<span className="code code-shadow">{owner}</span>
-																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.owner)}>
+																	<span className="code code-shadow">{shortenEthAddress(owner)}</span>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(shortenEthAddress(this.props.owner))}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
 																	{owner === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}
@@ -185,8 +185,8 @@ class AsignaturaDatos extends React.Component {
 															method={"coordinador"}
 															render={(coordinador) => (
 																<span>
-																	<span className="code code-shadow">{coordinador}</span>
-																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.coordinador)}>
+																	<span className="code code-shadow">{shortenEthAddress(coordinador)}</span>
+																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(shortenEthAddress(this.props.coordinador))}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
 																	{coordinador === this.props.miDireccion ? <span className="badge badge-light">yo</span> : ""}

@@ -58,7 +58,7 @@ class AsignaturaListaAlumnos extends React.Component {
 	}
 
 	render() {
-		const {drizzle, drizzleState} = this.props;
+		const {drizzle, drizzleState, isOwner, isCoordinador, isProfesor} = this.props;
 
 		const instanceState = drizzleState.contracts[this.props.contractName];
 		if (!this.state.ready || !instanceState || !instanceState.initialized) {
@@ -88,7 +88,7 @@ class AsignaturaListaAlumnos extends React.Component {
 													<i className="far fa-copy fa-lg"></i>
 												</button>
 												{
-													this.props.owner === this.props.miDireccion
+													isOwner || isCoordinador || isProfesor 
 													?
 													<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarAlumno(addrEthAlum)}>
 														<i className="fas fa-trash-alt fa-lg" title="Eliminar alumno" style={{color: "red"}}></i>

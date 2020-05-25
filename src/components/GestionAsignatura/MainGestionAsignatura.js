@@ -10,11 +10,11 @@ import AsignaturaNotas from './Notas/AsignaturaNotas';
 import AsignaturaMisNotas from './Notas/AsignaturaMisNotas';
 
 import {jsonInterface} from '../../utils/varios.js';
-import {copyToClipboard} from '../../utils/funciones.js';
+import {copyToClipboard, shortenEthAddress} from '../../utils/funciones.js';
 
 const MiDireccionAsignatura = (props) => (
 	<p>
-		Mi dirección: <span className="code code-shadow">{props.miDireccion}</span>
+		Mi dirección: <span className="code code-shadow">{shortenEthAddress(props.miDireccion)}</span>
 		<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(props.miDireccion)}>
 			<i className="far fa-copy fa-lg"></i>
 		</button>

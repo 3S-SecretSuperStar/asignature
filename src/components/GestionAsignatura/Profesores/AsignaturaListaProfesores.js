@@ -89,7 +89,7 @@ class AsignaturaListaProfesores extends React.Component {
 													<i className="far fa-copy fa-lg"></i>
 												</button>
 												{
-													this.props.owner === this.props.miDireccion
+													this.props.isOwner || this.props.isCoordinador
 													?
 													<button type="button" className="btn btn-outline-danger btn-delete" onClick={() => this.eliminarProfesor(addrEthProf)}>
 														<i className="fas fa-trash-alt fa-lg" title="Eliminar profesor" style={{color: "red"}}></i>

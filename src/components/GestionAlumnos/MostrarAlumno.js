@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom";
 
 import {newContextComponents} from "drizzle-react-components";
 
-import {timestampToDateString, copyToClipboard} from '../../utils/funciones.js';
+import {timestampToDateString, copyToClipboard, shortenEthAddress} from '../../utils/funciones.js';
 
 const {ContractData} = newContextComponents;
 
@@ -97,7 +97,7 @@ class MostrarAlumno extends React.Component {
 				<div className="card">
 					<div className="card-header">
 						<h4>
-							Alumno <span className="code code-shadow">{this.props.addrEthAlum}</span>
+							Alumno <span className="code code-shadow">{shortenEthAddress(this.props.addrEthAlum)}</span>
 							<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAlum)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>
