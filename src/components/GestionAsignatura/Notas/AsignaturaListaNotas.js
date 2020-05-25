@@ -97,17 +97,26 @@ class AsignaturaListaNotas extends React.Component {
 										</button>;
 					}
 					notasUnAlumno.push(
-						<ContractData	drizzle={drizzle}
+						<ContractData	key={"nA" + i + j}
+										drizzle={drizzle}
 										drizzleState={drizzleState}
 										contract={this.props.contractName}
 										method={"mapNotas"}
 										methodArgs={[addrEthAlum, j]}
 										render={(nota) => (
 											<td>
-												{nota.tipoNota === "0" ? "NP" : ""}
-					                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
-					                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
-					                            {(nota.tipoNota === "1" || nota.tipoNota === "2")  ? eliminarNota : ""}
+												{
+													nota.existsNota
+													?
+													<>
+														<span>{nota.tipoNota === "0" ? "NP" : ""}</span>
+														<span>{nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}</span>
+														<span>{nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}</span>
+														<span>{eliminarNota}</span>
+													</>
+													:
+													""
+												}
 											</td>
 										)} />
 					);

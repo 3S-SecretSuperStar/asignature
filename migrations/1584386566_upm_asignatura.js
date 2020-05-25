@@ -2,7 +2,11 @@ require('dotenv').config();
 
 let UpmAsignatura = artifacts.require("UpmAsignatura");
 
-let addrCoordinador = process.env.REACT_APP_ADDR_COORD_DEPLOYER_ASIGNATURA;
+// hay que poner la dirección 9 de Ganache, la última
+let addrCoordinador = '0xe0d905A75a49B44b239e4A973e68Ac35793BccCE';
+//let addrCoordinador = process.env.REACT_APP_ADDR_COORD_DEPLOYER_ASIGNATURA;
+
+console.log('addrCoordinador', addrCoordinador);
 
 module.exports = function(deployer) {
 	deployer.deploy(UpmAsignatura,

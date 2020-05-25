@@ -66,7 +66,8 @@ class AsignaturaMisNotas extends React.Component {
 				theadtr.push(
 					<th className="center">
 						E<sub>{i}</sub> (
-						<ContractData	drizzle={drizzle}
+						<ContractData	key={"mn-e-" + i}
+										drizzle={drizzle}
 										drizzleState={drizzleState}
 										contract={this.props.contractName}
 										method={"listaEvaluaciones"}
@@ -82,16 +83,25 @@ class AsignaturaMisNotas extends React.Component {
 			let notasUnAlumno = [];
 			for (let j = 0; j < this.props.numEvaluaciones; j++) {
 				notasUnAlumno.push(
-					<ContractData	drizzle={drizzle}
+					<ContractData	key={"mn-" + j}
+									drizzle={drizzle}
 									drizzleState={drizzleState}
 									contract={this.props.contractName}
 									method={"mapNotas"}
 									methodArgs={[this.props.miDireccion, j]}
 									render={(nota) => (
-										<td className="center">
-											{nota.tipoNota === "0" ? "NP" : ""}
-				                            {nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}
-				                            {nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}
+										<td>
+											{
+												nota.existsNota
+												?
+												<>
+													<span>{nota.tipoNota === "0" ? "NP" : ""}</span>
+													<span>{nota.tipoNota === "1" ? (nota.calificacion / 10).toFixed(1) : ""}</span>
+													<span>{nota.tipoNota === "2" ? (nota.calificacion / 10).toFixed(1) + " (MH)" : ""}</span>
+												</>
+												:
+												""
+											}
 										</td>
 									)} />
 				);
@@ -100,7 +110,7 @@ class AsignaturaMisNotas extends React.Component {
 			let tbodyListaNotas = [];
 			tbodyListaNotas.push(
 				<tr>
-					<td className="center">
+					<td>
 						Yo<Link to={`/gestion-alumnos/alumno/${this.props.miDireccion}`}> ({shortenEthAddress(this.props.miDireccion)})</Link>
 						<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.miDireccion)}>
 							<i className="far fa-copy fa-lg"></i>
@@ -119,7 +129,7 @@ class AsignaturaMisNotas extends React.Component {
 										</tr>
 									</thead>
 
-									<tbody>
+									<tbody className="center">
 										{tbodyListaNotas}
 									</tbody>
 								</table>

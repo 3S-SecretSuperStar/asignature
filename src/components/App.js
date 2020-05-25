@@ -9,6 +9,9 @@ import {
     Switch
 } from "react-router-dom";
 
+import Fortmatic from 'fortmatic';
+import Web3 from 'web3';
+
 import GestionAlumnos from './GestionAlumnos';
 
 import GestionProfesores from './GestionProfesores';
@@ -49,25 +52,31 @@ const Header = () => (
     </header>
 );
 
-const AvisoEthers = () => (
+const AvisoEthers = (props) => (
     <div className="jumbotron jumbotron-fluid">
         <div className="container">
-            <h1>Aviso válido para Ropsten</h1>
-            <p className="lead">Si no tienes fondos, tienes que pedirlos en una faucet.</p>
+            <h1>Para Ropsten</h1>
+            
+                <p>Tu cuenta: {props.currentAccount}</p>
+                <p className="m-0">Tu balance: {Math.round(props.currentBalance*Math.pow(10, -18)*100000)/100000 + ' Eth'}</p>
+            
+            <p className="lead">Si no tienes fondos en tu cuenta, tienes que pedirlos en una faucet.</p>
             <p><a href="https://faucet.metamask.io/" target="_blank" rel="noopener noreferrer">Faucet 1</a></p>
             <p><a href="https://faucet.ropsten.be/" target="_blank" rel="noopener noreferrer">Faucet 2</a></p>
         </div>
     </div>
 );
-
 const LoadingDapp = () => (
-    <section>
+    <section className="loading">
         <h1 className="display-1">
             <span><i className="fa fa-cog fa-spin mr-3" /></span> Cargando dApp...
         </h1>
         <h4>¿No tienes MetaMask o Fortmatic?</h4>
     </section>
 );
+
+let isThereMetaMask = false;
+let isThereWeb3 = false;
 
 export default () => (
     <DrizzleContext.Consumer>
@@ -77,6 +86,29 @@ export default () => (
             if (!initialized) {
                 return <LoadingDapp />;
             }
+
+            if (typeof window.ethereum !== 'undefined') {
+                console.log('----- Es MetaMask');
+                isThereMetaMask = true;
+            } else {
+                console.log('----- No es MetaMask');
+            }
+
+            if (!window.ethereum) {
+                console.log('----- No hay Ethereum, pongo Fortmatic');
+                const fm = new Fortmatic(process.env.REACT_APP_FORTMATIC, 'ropsten');
+                window.web3 = new Web3(fm.getProvider());
+            } else {
+                console.log('----- Sí que hay Ethereum');
+            }
+
+            console.log(' ----- isThereMetaMask', isThereMetaMask);
+            console.log(' ----- isThereWeb3', isThereWeb3);
+
+            let currentAccount = Object.keys(drizzleState.accountBalances);
+            let currentBalance = drizzleState.accountBalances[Object.keys(drizzleState.accountBalances)[0]];
+            //console.log(currentAccount);
+            //console.log(currentBalance);
 
             return (
                 <Router>
@@ -107,7 +139,8 @@ export default () => (
                             </Route>
 
                             <Route path="/">
-                                <AvisoEthers />
+                                <AvisoEthers    currentAccount={currentAccount}
+                                                currentBalance={currentBalance} />
                             </Route>
                         </Switch>
                     </div>
