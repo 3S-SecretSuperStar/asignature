@@ -6,7 +6,7 @@ const MiDireccion = (props) => {
 
 	return (
 		<p>
-			Mi dirección: <span className="code">{props.miDireccion}</span>
+			Mi dirección: <span className="code code-shadow">{props.miDireccion}</span>
 			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(props.miDireccion)}>
 				<i className="far fa-copy fa-lg"></i>
 			</button>

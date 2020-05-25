@@ -24,7 +24,7 @@ require('dotenv').config();
 
 const Navegacion = () => (
     <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <Link to="/" className="navbar-brand">Home</Link>
+        <Link to="/" className="navbar-brand tamano">Home</Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -33,13 +33,13 @@ const Navegacion = () => (
         <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link to="/gestion-alumnos" className="nav-link">Gestión de alumnos</Link>
+                    <Link to="/gestion-alumnos" className="nav-link tamano">Gestión de alumnos</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/gestion-profesores" className="nav-link">Gestión de profesores</Link>
+                    <Link to="/gestion-profesores" className="nav-link tamano">Gestión de profesores</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/gestion-catalogo-asignaturas" className="nav-link">Gestión del catálogo de asignaturas</Link>
+                    <Link to="/gestion-catalogo-asignaturas" className="nav-link tamano">Gestión del catálogo de asignaturas</Link>
                 </li>
             </ul>
         </div>
@@ -83,11 +83,7 @@ export default () => (
         {drizzleContext => {
             const {drizzle, drizzleState, initialized} = drizzleContext;
 
-            if (!initialized) {
-                return <LoadingDapp />;
-            }
-
-            if (typeof window.ethereum !== 'undefined') {
+            /*if (typeof window.ethereum !== 'undefined') {
                 console.log('----- Es MetaMask');
                 isThereMetaMask = true;
             } else {
@@ -100,10 +96,82 @@ export default () => (
                 window.web3 = new Web3(fm.getProvider());
             } else {
                 console.log('----- Sí que hay Ethereum');
+            }*/
+            if (!window.ethereum) {
+                const fm = new Fortmatic(process.env.REACT_APP_FORTMATIC, 'ropsten');
+                window.web3 = new Web3(fm.getProvider());
             }
+
+            if (!initialized) {
+                return <LoadingDapp />;
+            }
+
+            // opcion 2
+            /*if (window.ethereum) {
+                console.log(1);
+                //window.web3 = new Web3(window.ethereum);
+            } else {
+                console.log(2);
+                const fm = new Fortmatic(process.env.REACT_APP_FORTMATIC, 'ropsten');
+                window.web3 = new Web3(fm.getProvider());
+            }
+
+            if (typeof web3 !== 'undefined') {
+                window.web3 = new Web3(web3.currentProvider);
+            } else {
+                const fm = new Fortmatic(process.env.REACT_APP_FORTMATIC, 'ropsten');
+                window.web3 = new Web3(fm.getProvider());
+            }*/
+
+            // opcion 3
+            /*console.log('window.ethereum', window.ethereum);
+            console.log('window.web3', window.web3);
+
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                console.log(1);
+                try {
+                    window.ethereum.enable();
+                    console.log(2);
+                } catch(err) {
+                    console.log(err);
+                    console.log(3);
+                }
+            }
+            //else if (window.web3) {
+                //window.web3 = new Web3(window.web3.currentProvider);
+                //console.log(4);
+            //}
+            else {
+                console.log('Non-Ethereum browser detected.');
+                console.log('process.env.REACT_APP_FORTMATIC', process.env.REACT_APP_FORTMATIC);
+                const fm = new Fortmatic(process.env.REACT_APP_FORTMATIC, 'ropsten');
+                console.log('fm', fm);
+                console.log('fm.getProvider()', fm.getProvider());
+                window.web3 = new Web3(fm.getProvider());
+                console.log(5);
+                try {
+                    //window.web3.enable();
+                    console.log(6);
+                } catch(err) {
+                    console.log(err);
+                    console.log(7);
+                }
+            }*/
+
+            /*if (window.web3) {
+                window.web3 = new Web3(window.web3.currentProvider);
+                console.log(10);
+            } else {
+                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+                console.log(11);
+            }*/
 
             console.log(' ----- isThereMetaMask', isThereMetaMask);
             console.log(' ----- isThereWeb3', isThereWeb3);
+
+            console.log(' ----- isMetaMask', window.web3.currentProvider.isMetaMask);
+            console.log(' ----- isFortmatic', window.web3.currentProvider.isFortmatic);
 
             let currentAccount = Object.keys(drizzleState.accountBalances);
             let currentBalance = drizzleState.accountBalances[Object.keys(drizzleState.accountBalances)[0]];

@@ -1,5 +1,5 @@
 * {
-	font-family: Segoe UI, Ubuntu;
+	font-family: Inter, sans-serif;
 }
 
 .badge {
@@ -17,7 +17,17 @@
 }
 
 .code {
-	font-family: Monaco, monospace;
+	font-family: 'Fira Code', monospace;
+}
+
+.tamano {
+	font-size: large;
+}
+
+.code-shadow {
+	background: #bebebe;
+	padding: 0.05em 0.2em;
+	border-radius: 0.5rem;
 }
 
 .container {

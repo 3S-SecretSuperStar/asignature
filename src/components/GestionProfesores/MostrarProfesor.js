@@ -97,7 +97,7 @@ class MostrarProfesor extends React.Component {
 				<div className="card">
                     <div className="card-header">
                         <h4>
-                        	Profesor <span className="code">{this.props.addrEthProf}</span>
+                        	Profesor <span className="code code-shadow">{this.props.addrEthProf}</span>
                         	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthProf)}>
 								<i className="far fa-copy fa-lg"></i>
 							</button>

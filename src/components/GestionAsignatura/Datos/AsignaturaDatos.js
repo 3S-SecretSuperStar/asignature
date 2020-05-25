@@ -141,7 +141,7 @@ class AsignaturaDatos extends React.Component {
 	                    					<strong>Dirección:</strong>
 										</div>
 										<div className="col-12 col-md-8 col-lg-9">
-	                    					<span className="code">{this.props.addrEthAsig}</span>
+	                    					<span className="code code-shadow">{this.props.addrEthAsig}</span>
 			                    			<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.addrEthAsig)}>
 												<i className="far fa-copy fa-lg"></i>
 											</button>
@@ -162,7 +162,7 @@ class AsignaturaDatos extends React.Component {
 															method={"owner"}
 															render={(owner) => (
 																<span>
-																	<span className="code">{owner}</span>
+																	<span className="code code-shadow">{owner}</span>
 																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.owner)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
@@ -185,7 +185,7 @@ class AsignaturaDatos extends React.Component {
 															method={"coordinador"}
 															render={(coordinador) => (
 																<span>
-																	<span className="code">{coordinador}</span>
+																	<span className="code code-shadow">{coordinador}</span>
 																	<button type="button" className="btn btn-outline-primary btn-copy" onClick={() => copyToClipboard(this.props.coordinador)}>
 																		<i className="far fa-copy fa-lg"></i>
 																	</button>
@@ -218,7 +218,7 @@ class AsignaturaDatos extends React.Component {
 	                    		<li className="list-group-item">
 	                    			<div className="row">
 	                    				<div className="col-12 col-md-4 col-lg-3">
-	                    					<strong>Curso acádemico:</strong>
+	                    					<strong>Curso académico:</strong>
 										</div>
 										<div className="col-12 col-md-8 col-lg-9">
 											<ContractData 	drizzle={drizzle}
@@ -237,7 +237,7 @@ class AsignaturaDatos extends React.Component {
 	                    		<li className="list-group-item">
 	                    			<div className="row">
 	                    				<div className="col-12 col-md-4 col-lg-3">
-	                    					<strong>Código de la asigatura:</strong>
+	                    					<strong>Código de la asignatura:</strong>
 										</div>
 										<div className="col-12 col-md-8 col-lg-9">
 											<ContractData 	drizzle={drizzle}
