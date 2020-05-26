@@ -48,7 +48,6 @@ module.exports = async callback => {
 
         numProfesores = await upmProfesores.numProfesores();
         console.log('numProfesores final:', numProfesores.toNumber());
-
     } catch(err) {
         console.log(err);
     } finally {

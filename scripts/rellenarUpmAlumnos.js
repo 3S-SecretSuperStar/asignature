@@ -8,9 +8,7 @@ module.exports = async callback => {
         let upmAlumnos = await UpmAlumnos.deployed();
 
         let numAlumnos = await upmAlumnos.numAlumnos();
-        let alumnosLength = await upmAlumnos.alumnosLength();
         console.log('numAlumnos:', numAlumnos.toNumber());
-        console.log('alumnosLength:', alumnosLength.toNumber());
 
         await upmAlumnos.crearAlumno(
             accounts[4],
@@ -85,9 +83,7 @@ module.exports = async callback => {
         console.log("Sexto alumno creado.");
 
         numAlumnos = await upmAlumnos.numAlumnos();
-        alumnosLength = await upmAlumnos.alumnosLength();
         console.log('numAlumnos:', numAlumnos.toNumber());
-        console.log('alumnosLength:', alumnosLength.toNumber());
     } catch(err) {
         console.log(err);
     } finally {

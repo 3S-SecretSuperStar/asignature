@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {crearObjetoFromFormData} from '../../utils/funciones.js';
+import {crearObjetoFromFormData, shortenEthAddress} from '../../utils/funciones.js';
 
 class ActualizarOwner extends React.Component {
 
@@ -62,8 +62,8 @@ class ActualizarOwner extends React.Component {
                                     <i className="fab fa-ethereum fa-lg" />
                                 </span>
                             </div>
-							<input type="text" className="form-control" id="addrEthOwner" name="addrEthOwner"
-								placeholder={this.props.owner}
+							<input type="text" className="form-control code" id="addrEthOwner" name="addrEthOwner"
+								placeholder={shortenEthAddress(this.props.owner)}
 							/>
                         </div>
 					</div>
