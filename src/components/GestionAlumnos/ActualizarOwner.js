@@ -68,7 +68,7 @@ class ActualizarOwner extends React.Component {
                         </div>
 					</div>
 
-					<button type="submit" className="btn btn-primary">Actualizar owner</button>
+					<button type="submit" className="btn btn-primary margin-bottom-1">Actualizar owner</button>
 				</form>	
 			</>
 		);
