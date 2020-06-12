@@ -1,68 +1,103 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Diseño y Desarrollo de un Servicio Blockchain para la Gestión de las Calificaciones Definidas en las Guías Docentes de los Títulos Universitarios
 
-## Available Scripts
+Aplicación blockchain para la gestión de una asignatura: alumnos, profesores, evaluaciones, notas...
 
-In the project directory, you can run:
+https://tfm-muirst-bc.netlify.app
 
-### `npm start`
+## Prerrequisitos
+Es necesario tener instalado Node.js 12 y git.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Instalación
+1. Clonar el repositorio:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+git clone https://github.com/tfm-muirst-bc/asignatura.git
+```
 
-### `npm test`
+2. Acceder a la carpeta e instalar las dependencias:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+cd asignatura
+npm install
+```
 
-### `npm run build`
+## Puesta en marcha en local
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Abrir Ganache y crear un nuevo *workspace* seleccionando el fichero `truffle-config.js`.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+2. Crear un fichero `.env` a partir de `.env.example` y rellenar, al menos, la variable `REACT_APP_ADDR_COORD_DEPLOYER_ASIGNATURA` con la última cuenta de Ganache (la número 9).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Ejecutar los test:
 
-### `npm run eject`
+```
+npx truffle test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Compilar los contratos y desplegarlos en la red local:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npx truffle migrate --compile-all --reset
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Abrir la extensión de MetaMask en el navegador y conectarse a la red de Ganache utilizando su *seed phrase*.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+6. Iniciar la dApp:
 
-## Learn More
+```
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+7. Rellenar los contratos, que inicialmente están vacíos, ejecutando los *scripts*:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npx truffle exec scripts/rellenarUpmAlumnos.js
+npx truffle exec scripts/rellenarUpmProfesores.js
+```
 
-### Code Splitting
+## Puesta en marcha en la nube (Ropsten + Netlify)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+1. Crear un fichero `.env` a partir de `.env.example` y rellenar las variables:
 
-### Analyzing the Bundle Size
+- `REACT_APP_MNEMONIC` con el mnemónico (*seed phrase*) de la cartera.
+- `REACT_APP_PROJECT_ID`con el identificador del proyecto de Infura.
+- `REACT_APP_FORTMATIC` con la clave de Fortmatic.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+2. Compilar los contratos y desplegarlos en la red Ropsten:
 
-### Making a Progressive Web App
+```
+npx truffle migrate --compile-all --reset --network ropsten
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+3. Generar la carpeta *build* para producción
 
-### Advanced Configuration
+```
+npm run build
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+4. Subir la carpeta *build* a Netlify (o a otro *hosting* de sitios estáticos).
 
-### Deployment
+5. Acceder a la página desplegada:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    5.1. Usar MetaMask
+    
+    Abrir la extensión de MetaMask en el navegador y conectarse a la red de Ganache utilizando la *seed phrase*.
+  
+    5.2. Usar MetaMask Mobile
+    
+    Abrir la aplicación de MetaMask Mobile y crear o importar una cuenta. Luego, acceder a la página.
+    
+    5.3. Usar Fortmatic
+    
+    Si no puedes o no quieres usar MetaMask, tras esperar unos segundos aparece una ventana de Fortmatic que pide correo y contraseña. Una vez introducidos, Fortmatic ya se encarga de la gestión de cuentas.
+    
+## Herramientas
+- [Ethereum](https://ethereum.org/)
+- [Solidity](https://solidity.readthedocs.io/en/latest/)
+- [web3.js](https://web3js.readthedocs.io/en/v1.2.9/)
+- [Ganache](https://www.trufflesuite.com/ganache)
+- [Truffle](https://www.trufflesuite.com/truffle)
+- [Drizzle](https://www.trufflesuite.com/drizzle)
+- [Infura](https://infura.io/)
+- [Netlify](https://www.netlify.com/)
+- [MetaMask](https://metamask.io/)
+- [Fortmatic](https://fortmatic.com/)
